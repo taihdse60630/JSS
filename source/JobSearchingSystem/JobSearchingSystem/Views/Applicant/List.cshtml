@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewBag.Title = "ManageAppliedRequest";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+
+<script src="~/Content/vendors/iCheck/custom.min.js"></script>
+<script src="~/Content/js/ui-checkbox-radio.js"></script>
+
+<script src="~/Content/js/table-action.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('input[type="checkbox"][name="userAccessNeeded"]').on('ifChecked', function (event) {
+            $('input').iCheck('check');
+           
+        });     
+        $('input[type="checkbox"][name="userAccessNeeded"]').on('ifUnchecked', function (event) {
+            $('input').iCheck('uncheck');
+          
+        });
+
+        });
+       
+  
+</script>
+
+<div class="page-content" style="padding: 20px 0px 20px 250px">
+    <div class="col-lg-9 panel panel-default">
+        <h3 style="font-weight:600;text-align:center">Quản lý ứng viên</h3>
+        <br />
+
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#" class="btn btn-green btn-sm">
+                    <i class="fa fa-check"></i>&nbsp;
+                    Chấp nhận
+                </a>
+                <a href="#" class="btn btn-danger btn-sm">
+                    <i class="fa fa-times"></i>&nbsp;
+                    Từ chối
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" data-toggle="dropdown" class="btn btn-grey dropdown-toggle"><i class="fa fa-filter"></i>  Lọc <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-user"></i> Tên ứng viên</a></li>
+                        <li><a href="#"><i class="fa fa-suitcase"></i>  Chức danh</a></li>
+                        <li><a href="#"><i class="fa fa-calendar"></i>  Ngày nhận</a></li>
+                        <li><a href="#"><i class="fa fa-tasks"></i>  Độ phù hợp</a></li>
+                        @*<li class="divider"></li>*@
+                      
+                    </ul>
+                </div>
+                <input type="text" class="form-control" />
+
+                <div class="input-group-btn">
+                    <a href="#" class="btn btn-yellow">
+                        Search
+                        &nbsp;<i class="fa fa-search"></i>
+                    </a>
+                </div>
+            </div>
+                </div>
+            </div>
+
+
+              
+                
+
+                <br />
+                <br />
+                <div class="table-container">
+
+                    <table class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                        <thead>
+                            <tr>
+                                <th width="3%"><input type="checkbox" class="checkall" id="select-all" name="userAccessNeeded" /></th>
+                                <th width="3%">No</th>
+                                <th width="15%">Tên ứng viên</th>
+                                <th width="15%">Chức danh</th>
+                                <th width="10%">Ngày nhận</th>
+                                <th width="13%">Độ phù hợp</th>
+                                <th width="23%">Tình trạng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>1</td>
+                                <td><a href="#">Hakun Nguyen</a></td>
+                                <td>Sales Manager</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td>
+                                    <div data-hover="tooltip" title="75%" class="progress progress-xs mbs">
+                                        <div role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;" class="progress-bar progress-bar-green"><span class="sr-only">75% Complete</span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-green btn-xs">
+                                        <i class="fa fa-check"></i>&nbsp;
+                                        Chấp thuận
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-times"></i>&nbsp;
+                                        Từ chối
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>2</td>
+                                <td>Hakun Nguyen</td>
+                                <td>Sales Manager</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td>
+                                    <div data-hover="tooltip" title="40%" class="progress progress-xs mbs">
+                                        <div role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;" class="progress-bar progress-bar-red six-sec-ease-in-out"><span class="sr-only">40% Complete</span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-green btn-xs">
+                                        <i class="fa fa-check"></i>&nbsp;
+                                        Chấp thuận
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-times"></i>&nbsp;
+                                        Từ chối
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>3</td>
+                                <td>Hakun Nguyen</td>
+
+                                <td>Sales Manager</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td>
+                                    <div data-hover="tooltip" title="80%" class="progress progress-xs mbs">
+                                        <div role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;" class="progress-bar progress-bar-yellow"><span class="sr-only">80% Complete</span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="label label-sm label-success">Đã chấp thuận</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>4</td>
+                                <td>Hakun Nguyen</td>
+                                <td>Sales Manager</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td>
+                                    <div data-hover="tooltip" title="60%" class="progress progress-xs mbs">
+                                        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;" class="progress-bar progress-bar-violet"><span class="sr-only">60% Complete</span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="label label-sm label-danger">Đã từ chối</span>
+                                </td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="pagination-panel">
+                                Page
+                                &nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-left"></i></a>&nbsp;<input type="text" maxlenght="5" value="1" class="pagination-panel-input form-control input-mini input-inline input-sm text-center">&nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-right"></i></a>&nbsp;
+                                of 6 | View
+                                &nbsp;<select class="form-control input-xsmall input-sm input-inline">
+                                    <option value="20" selected="selected">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="150">150</option>
+                                    <option value="-1">All</option>
+                                </select>&nbsp;
+                                records | Found total 58 records
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <div class="pagination-panel">
+                                <ul class="pagination pagination-sm man">
+                                    <li><a href="#">«</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+

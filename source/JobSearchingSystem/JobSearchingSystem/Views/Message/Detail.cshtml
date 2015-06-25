@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "ViewMessage";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+<script src="~/Content/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="~/Content/js/email-compose-mail.js"></script>
+<div id="modal-wide-width" tabindex="-1" role="dialog" aria-labelledby="modal-wide-width-label" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog modal-wide-width">
+        <div class="modal-content">
+            <div class="modal-header modal-header-primary">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                <h4 id="modal-header-primary-label" class="modal-title">Tin nhắn mới</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="compose-mail">
+                    <div class="portlet box portlet-white">
+
+                        <div class="portlet-body">
+                            <form role="form-horizontal" method="post">
+                                <div class="form-group">
+                                    <div class="input-group"><span class="input-group-addon">To:</span><input id="to" type="text" placeholder="" class="form-control" /></div>
+                                </div>
+                                <div class="form-group hidden">
+                                    <div class="input-group"><span class="input-group-addon">Cc:</span><input id="cc" type="text" placeholder="" class="form-control" /></div>
+                                </div>
+                                <div class="form-group hidden">
+                                    <div class="input-group"><span class="input-group-addon">Bcc:</span><input id="bcc" type="text" placeholder="" class="form-control" /></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group"><span class="input-group-addon">Subject:</span><input id="subject" type="text" placeholder="" class="form-control" /></div>
+                                </div>
+                                <div class="compose-editor mbl"><textarea rows="6" class="wysihtml5 form-control"></textarea></div>
+                                <div class="form-group">
+                                    <input type="file" />
+
+                                    <p class="help-block">
+                                        <i class="fa fa-paperclip"></i>&nbsp;
+                                        Attachments
+                                    </p>
+                                </div>
+
+                                @*<div class="compose-btn">
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                            Send
+                                        </button>
+                                        &nbsp;
+                                        <button class="btn btn-default btn-sm">
+                                            <i class="fa fa-times"></i>&nbsp;
+                                            Discard
+                                        </button>
+                                        &nbsp;
+                                        <button class="btn btn-sm btn-default">Draft</button>
+                                    </div>*@
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                <button class="btn btn-grey"><i class="fa fa-edit"></i> Draft</button>
+                <button type="button" class="btn btn-green"><i class="fa fa-check"></i> Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-content" style="padding: 20px 80px 795px 150px">
+    <div class="col-lg-12 panel panel-default">
+
+        <h2 style="font-weight:600;text-align:center">Quản lý tin nhắn</h2>
+   
+        <br />
+        <div class="row">
+            <div class="col-sm-3 col-md-2">
+            </div>
+            <div class="col-sm-9 col-md-10">  
+                <a href="@Url.Action("ManageMessage")" class="btn btn-info">
+                    <i class="fa fa-arrow-circle-o-left"></i>&nbsp;
+                    Quay lại hộp tin
+                </a>             
+            </div>
+        </div>
+        <div class="mtl mbl"></div>
+        <div class="row">
+            <div class="col-sm-3 col-md-2">
+                <button type="button" data-target="#modal-wide-width" data-toggle="modal" class="btn btn-danger btn-sm btn-block"><i class="fa fa-pencil" style="margin-right:10px"></i>Viết tin nhắn mới</button>
+                <div class="mtm mbm"></div>
+                <ul style="border-style: solid;background: #FFF;border-color: rgb(230, 232, 216);" class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#"><span class="badge pull-right">42</span><i class="fa fa-inbox fa-fw mrs"></i>Hộp tin</a></li>
+                    @*<li><a href="#"><i class="fa fa-star-o fa-fw mrs"></i>Starred</a></li>
+            <li><a href="#"><i class="fa fa-info-circle fa-fw mrs"></i>Important</a></li>*@
+                    <li><a href="#"><i class="fa fa-plane fa-fw mrs"></i>Tin đã gửi</a></li>
+                    <li><a href="#">@*<span class="badge badge-orange pull-right">3</span>*@<i class="fa fa-edit fa-fw mrs"></i>Tin nháp</a></li>
+                    <li><a href="#"><i class="fa fa-trash-o fa-fw mrs"></i>Tin đã xóa</a></li>
+                </ul>
+                <hr>
+                @*<ul style="background: #fff" class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#">Buddy Online</a></li>
+                        <li><a href="#"><i class="fa fa-circle text-yellow pull-right"></i>Home</a></li>
+                        <li><a href="#"><i class="fa fa-circle text-success pull-right"></i>Work</a></li>
+                        <li><a href="#"><i class="fa fa-circle text-red pull-right"></i>Family</a></li>
+                        <li><a href="#"><i class="fa fa-circle text-muted pull-right"></i>Other</a></li>
+                    </ul>*@
+            </div>
+            <div class="col-sm-9 col-md-10">
+                <div class="compose-mail">
+                    <div class="portlet box portlet-white" style="border-color: rgb(223, 223, 223);border-style: solid;">
+                        <div class="portlet-header">
+                            <div class="caption" style="font-weight: 600; font-size: x-large;">Accept applied job request</div>
+                            <div class="tools">
+                                <a href="#" class="btn btn-default btn-xs">
+                                    <i class="fa fa-mail-reply mln"></i>&nbsp;
+                                    Reply
+                                </a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Print"><i class="fa fa-print mln"></i></a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Trash"><i class="fa fa-trash-o mln"></i></a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="mail-content">
+                                <div class="mail-sender">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <img src="http://dddn.vcmedia.vn/P5inccccccccccccloy2lsBqhjffc/Image/2014/10/Truong-Gia-Binh-ea6b7.jpg" alt="" width="60px" class="img-circle mrm"><strong>Trương Gia Bình</strong> <span>[BinhTG@fpt.com.vn]</span>&nbsp;
+                                            to
+                                            &nbsp;<strong>me</strong>
+                                        </div>
+                                        <div class="col-md-4"><p class="date"> 4:15AM 04 April 2014</p></div>
+                                    </div>
+                                </div>
+                                <div class="mail-view">
+                                    <p>
+                                        Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. <a href="#">Mauris sed congue</a> orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis
+                                        porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci.
+                                    </p>
+                                    <blockquote>
+                                        <em>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                                            deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident<br>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                                        </em>
+                                    </blockquote>
+                                    <p>
+                                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam <a href="#">aliquam quaerat</a> voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
+                                        autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam <a href="#">
+                                            aliquam
+                                            quaerat
+                                        </a> voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                    </p>
+                                </div>
+                                <div class="mail-attachment">
+                                    <p><span><i class="fa fa-paperclip mrs"></i>3 attachments ---<a href="#" class="mrm mls">Download all attachments</a>|<a href="#" class="mlm">View all images</a></span></p>
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="thumb-attach"><img src="images/gallery/1.jpg"></a><a href="#" class="name">IMG_001.jpg</a><br><a href="#" class="link">
+                                                <small>Download</small>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="thumb-attach"><img src="images/gallery/2.jpg"></a><a href="#" class="name">IMG_002.jpg</a><br><a href="#" class="link">
+                                                <small>Download</small>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="thumb-attach"><img src="images/gallery/3.jpg"></a><a href="#" class="name">IMG_003.jpg</a><br><a href="#" class="link">
+                                                <small>Download</small>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <p>
+                                    <a href="#" class="btn btn-default btn-xs">
+                                        <i class="fa fa-mail-reply mln"></i>&nbsp;
+                                        Reply
+                                    </a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Print"><i class="fa fa-print mln"></i></a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Trash"><i class="fa fa-trash-o mln"></i></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,243 @@
+﻿ @{
+    ViewBag.Title = "ManageJob";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+@*<style>
+    .nav-pills li.active a {
+        background-color: #F8FFBA !important;
+    }
+    a {
+        color: #428bca !important;
+    }
+</style>*@
+<script>
+    $(document).ready(function () {
+        $('input[type="checkbox"][name="userAccessNeeded"]').on('ifChecked', function (event) {
+            $('input').iCheck('check');
+
+        });
+        $('input[type="checkbox"][name="userAccessNeeded"]').on('ifUnchecked', function (event) {
+            $('input').iCheck('uncheck');
+
+        });
+
+    });
+
+
+</script>
+
+<div class="page-content" style="padding: 20px 60px 795px 80px">
+    <div class="col-lg-12 panel panel-default">
+        <h2 style="font-weight:600;text-align:center">Quản lý việc làm</h2>
+        <br />
+        <div class="row">
+          
+        </div>
+        <div class="mtl mbl"></div>
+        <div class="row">
+            <div class="col-sm-3 col-md-3" style="width:23%">
+                <button type="button" data-target="#modal-wide-width" data-toggle="modal" class="btn btn-blue btn-sm btn-block" onclick="window.location.href='CreateJobPosting'"><i class="fa fa-pencil" style="margin-right:10px"></i>Đăng việc làm mới</button>
+                <div class="mtm mbm"></div>
+                <ul style="border-style: solid;background: #FFF;border-color: rgb(230, 232, 216);" class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#"><span class="badge pull-right">42</span>Tất cả việc làm</a></li>
+                    @*<li><a href="#"><i class="fa fa-star-o fa-fw mrs"></i>Starred</a></li>
+                <li><a href="#"><i class="fa fa-info-circle fa-fw mrs"></i>Important</a></li>*@ 
+                    <li><a href="#"><span class="badge badge-success pull-right">12</span><i class="fa fa-globe fa-fw mrs"></i>Đang hiển thị</a></li>
+                    <li><a href="#"><span class="badge badge-orange pull-right">10</span><i class="fa fa-warning fa-fw mrs"></i>Sắp hết hạn trong 7 ngày</a></li>
+                    <li><a href="#"><span class="badge badge-danger pull-right">10</span><i class="fa fa-bell fa-fw mrs"></i>Ngưng nhận hồ sơ</a></li>                 
+                    <li><a href="#"><span class="badge pull-right">10</span><i class="fa fa-lock fa-fw mrs"></i>Hết hạn đăng</a></li>
+                </ul>
+                <hr>
+                @*<ul style="background: #fff" class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#">Buddy Online</a></li>
+                <li><a href="#"><i class="fa fa-circle text-yellow pull-right"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-circle text-success pull-right"></i>Work</a></li>
+                <li><a href="#"><i class="fa fa-circle text-red pull-right"></i>Family</a></li>
+                <li><a href="#"><i class="fa fa-circle text-muted pull-right"></i>Other</a></li>
+            </ul>*@
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <a href="#" class="btn btn-red btn-sm">
+                    <i class="fa fa-times"></i>&nbsp;
+                    Xóa tuyển dụng
+                </a>
+                <br />
+                <br />
+                <div class="table-container">
+
+                    <table class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                         <thead>                                                                          
+                            <tr>
+                                <th width="7%"><input type="checkbox" class="checkall" id="select-all" name="userAccessNeeded" /></th>
+                                <th width="6%">Mã số</th>                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                <th  width ="20%">Tiêu đề</th>                                                                                                                                
+                                <th width="10% ">Nơi làm việc </th >                         
+                                <th width="10%">Ngày cập nhật</th>
+                                 <th width="7%">Tình trạng</th>                                                                                                                    
+                                <th width="39%">Thao tác</th>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>1</td>
+                                <td>20 Android Dev - Làm Dự Án Automative & Smart Tv !</td>                              
+                                <td>Da Nang</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td><span class="label label-sm label-success">Đang hiển thị    </span></td>
+                                <td>
+                                    <button type="button" class="btn btn-yellow btn-xs" onclick="window.location.href = '/Home/JobInformation'">
+                                        <i class="fa fa fa-search"></i>&nbsp;
+                                        Xem
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-blue btn-xs">
+                                        <i class="fa fa-edit"></i>&nbsp;
+                                        Cập nhật
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>2</td>
+                                <td>600 Kỹ Sư CNTT Tham Gia Chương Trình 10k Brse.</td>                             
+                                <td>Da Nang</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td><span class="label label-sm label-danger">Hết hạn</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-green btn-xs">
+                                        <i class="fa fa-cloud-upload"></i>&nbsp;
+                                        Đăng tuyển
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-yellow btn-xs">
+                                        <i class="fa fa fa-search"></i>&nbsp;
+                                        Xem
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-blue btn-xs">
+                                        <i class="fa fa-edit"></i>&nbsp;
+                                        Cập nhật
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>3</td>
+                                <td>600 Kỹ Sư CNTT Tham Gia Chương Trình 10k Brse.</td>                              
+                                <td>Da Nang</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td><span class="label label-sm label-danger">Hết hạn</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-green btn-xs">
+                                        <i class="fa fa-cloud-upload"></i>&nbsp;
+                                        Đăng tuyển
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-yellow btn-xs">
+                                        <i class="fa fa fa-search"></i>&nbsp;
+                                        Xem
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-blue btn-xs">
+                                        <i class="fa fa-edit"></i>&nbsp;
+                                        Cập nhật
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>4</td>
+                                <td>600 Kỹ Sư CNTT Tham Gia Chương Trình 10k Brse.</td>                                
+                                <td>Da Nang</td>
+                                <td>
+                                    18-05-2015
+                                </td>
+
+                                <td><span class="label label-sm label-success">Đang hiển thị</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-yellow btn-xs">
+                                        <i class="fa fa fa-search"></i>&nbsp;
+                                        Xem
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-blue btn-xs">
+                                        <i class="fa fa-edit"></i>&nbsp;
+                                        Cập nhật
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="pagination-panel" style="width:150%">
+                                Page
+                                &nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-left"></i></a>&nbsp;<input type="text" maxlenght="5" value="1" class="pagination-panel-input form-control input-mini input-inline input-sm text-center">&nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-right"></i></a>&nbsp;
+                                of 6 | View
+                                &nbsp;<select class="form-control input-xsmall input-sm input-inline">
+                                    <option value="20" selected="selected">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="150">150</option>
+                                    <option value="-1">All</option>
+                                </select>&nbsp;
+                                records | Found total 58 records
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <div class="pagination-panel">
+                                <ul class="pagination pagination-sm man">
+                                    <li><a href="#">«</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+   

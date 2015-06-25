@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
     <!--Loading bootstrap css-->
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
@@ -20,54 +20,89 @@
     <link type="text/css" rel="stylesheet" href="~/Content/vendors/iCheck/skins/all.css">
     <link type="text/css" rel="stylesheet" href="~/Content/vendors/jquery-news-ticker/jquery.news-ticker.css">
     <!--Loading style-->
-    <link type="text/css" rel="stylesheet" href="~/Content/css/themes/style1/pink-violet.css" id="theme-change" class="style-change color-change">
+    <link type="text/css" rel="stylesheet" href="~/Content/css/themes/style1/green-grey.css" id="theme-change" class="style-change color-change">
     <link type="text/css" rel="stylesheet" href="~/Content/css/style-responsive.css">
 
+    <script src="~/Content/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <!--loading bootstrap js-->
+    <script src="~/Content/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+    <script src="~/Content/js/html5shiv.js"></script>
+    <script src="~/Content/js/respond.min.js"></script>
+    <script src="~/Content/vendors/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/Content/vendors/slimScroll/jquery.slimscroll.js"></script>
+    <script src="~/Content/vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="~/Content/vendors/iCheck/icheck.min.js"></script>
+    <script src="~/Content/vendors/iCheck/custom.min.js"></script>
+    <script src="~/Content/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
+    <script src="~/Content/js/jquery.menu.js"></script>
+    <script src="~/Content/vendors/jquery-pace/pace.min.js"></script>
+    <script src="~/Content/vendors/holder/holder.js"></script>
+    <!--LOADING SCRIPTS FOR PAGE-->
+
+    <!--CORE JAVASCRIPT-->
+    <script src="~/Content/js/main.js"></script>
+
+
 </head>
-<body>
-    <div>
-        <!--BEGIN THEME SETTING-->
-        <div id="theme-setting">
-            <a href="#" data-toggle="dropdown" class="btn-theme-setting"><i class="fa fa-cog"></i></a>
-            <div class="content-theme-setting">
-                <h4 class="mtn">Theme Styles</h4><select id="list-style" class="form-control">
-                    <option value="style1">Flat Squared style</option>
-                    <option value="style2">Flat Rounded style</option>
-                </select><br /><h4 class="mtn">Theme Colors</h4>
-                <ul id="list-color" class="list-unstyled list-inline">
-                    <li data-color="green-dark" data-hover="tooltip" title="Green - Dark" class="green-dark"></li>
-                    <li data-color="red-dark" data-hover="tooltip" title="Red - Dark" class="red-dark"></li>
-                    <li data-color="pink-dark" data-hover="tooltip" title="Pink - Dark" class="pink-dark"></li>
-                    <li data-color="blue-dark" data-hover="tooltip" title="Blue - Dark" class="blue-dark"></li>
-                    <li data-color="yellow-dark" data-hover="tooltip" title="Yellow - Dark" class="yellow-dark"></li>
-                    <li data-color="green-grey" data-hover="tooltip" title="Green - Grey" class="green-grey"></li>
-                    <li data-color="red-grey" data-hover="tooltip" title="Red - Grey" class="red-grey"></li>
-                    <li data-color="pink-grey" data-hover="tooltip" title="Pink - Grey" class="pink-grey"></li>
-                    <li data-color="blue-grey" data-hover="tooltip" title="Blue - Grey" class="blue-grey"></li>
-                    <li data-color="yellow-grey" data-hover="tooltip" title="Yellow - Grey" class="yellow-grey"></li>
-                    <li data-color="yellow-green" data-hover="tooltip" title="Yellow - Green" class="yellow-green"></li>
-                    <li data-color="orange-grey" data-hover="tooltip" title="Orange - Grey" class="orange-grey"></li>
-                    <li data-color="pink-blue" data-hover="tooltip" title="Pink - Blue" class="pink-blue"></li>
-                    <li data-color="pink-violet" data-hover="tooltip" title="Pink - Violet" class="pink-violet active"></li>
-                    <li data-color="orange-violet" data-hover="tooltip" title="Orange - Violet" class="orange-violet"></li>
-                    <li data-color="pink-green" data-hover="tooltip" title="Pink - Green" class="pink-green"></li>
-                    <li data-color="pink-brown" data-hover="tooltip" title="Pink - Brown" class="pink-brown"></li>
-                    <li data-color="orange-blue" data-hover="tooltip" title="Orange - Blue" class="orange-blue"></li>
-                    <li data-color="yellow-blue" data-hover="tooltip" title="Yellow - Blue" class="yellow-blue"></li>
-                    <li data-color="green-blue" data-hover="tooltip" title="Green - Blue" class="green-blue"></li>
-                </ul>
+<div id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+    <div class="page-form">
+        <form action="index.html" class="form">
+            <div class="header-content"><h1 style=" font-family: sans-serif;">Đăng nhập</h1></div>
+            <div class="body-content">
+                <p>Đăng nhập với tài khoản:</p>
+
+                <div class="row mbm text-center">
+                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-twitter btn-block"><i class="fa fa-twitter fa-fw"></i>Twitter</a></div>
+                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-facebook btn-block"><i class="fa fa-facebook fa-fw"></i>Facebook</a></div>
+                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-google-plus btn-block"><i class="fa fa-google-plus fa-fw"></i>Google Plus</a></div>
+                </div>
+                <div class="form-group">
+                    <div class="input-icon right"><i class="fa fa-user"></i><input type="text" placeholder="Username" name="username" class="form-control"></div>
+                </div>
+                <div class="form-group">
+                    <div class="input-icon right"><i class="fa fa-key"></i><input type="password" placeholder="Password" name="password" class="form-control"></div>
+                </div>
+                <div class="form-group pull-left">
+                    <div class="checkbox-list">
+                        <label>
+                            <input type="checkbox">&nbsp;
+                            Ghi nhớ tôi
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-success">
+                        Đăng nhập
+                        &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+                <div class="forget-password">
+                    <h4>Quên mật khẩu?</h4>
+
+                    <p>Nhấn <a href='#' class='btn-forgot-pwd'>vào đây</a> để lấy lại password.</p>
+                </div>
+                <hr>
+                <p>Chưa có tài khoản? <a id="btn-register" href="@Url.Action("RegisterAccount","Home")">Đăng ký ngay</a></p>
             </div>
-        </div>
-        <!--END THEME SETTING--><!--BEGIN BACK TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a><!--END BACK TO TOP--><!--BEGIN TOPBAR-->
+        </form>
+    </div>
+</div>
+<body class="horizontal-menu-page fixed-topbar">
+    <div>
+        <!--BEGIN TOPBAR-->
         <div id="header-topbar-option-demo" class="page-header-topbar">
             <nav id="topbar" role="navigation" style="margin-bottom: 0;" class="navbar navbar-default navbar-static-top">
                 <div class="navbar-header">
                     <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                    <a id="logo" href="index.html" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text">µAdmin</span></a>
+                    <a id="logo" href="index.html" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text">JSS</span></a>
                 </div>
                 <div class="topbar-main">
                     <a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
-                    <ul class="nav navbar-nav    ">
+                    <ul class="nav navbar-nav horizontal-menu  ">
                         <li class="active"><a href="index.html">Dashboard</a></li>
                         <li>
                             <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle">
@@ -197,17 +232,9 @@
                             </ul>
                         </li>
                     </ul>
-                    <form id="topbar-search" action="" method="" class="hidden-sm hidden-xs">
-                        <div class="input-icon right"><a href="#"><i class="fa fa-search"></i></a><input type="text" placeholder="Search here..." class="form-control" /></div>
-                    </form>
-                    <div class="news-update-box hidden-xs">
-                        <span class="text-uppercase mrm pull-left">News:</span>
-                        <ul id="news-update" class="ticker list-unstyled">
-                            <li>Welcome to μAdmin - Responsive Multi-Style Admin Template</li>
-                            <li>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque.</li>
-                        </ul>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-right">
+                    @if (1 > 2)
+                    {
+                        <ul class="nav navbar-top-links navbar-right">
                         <li class="dropdown">
                             <a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-bell fa-fw"></i><span class="badge badge-green">3</span></a>
                             <ul class="dropdown-menu dropdown-alerts">
@@ -305,6 +332,12 @@
                         </li>
                         <li id="topbar-chat" class="hidden-xs"><a href="javascript:void(0)" class="btn-chat"><i class="fa fa-comments"></i><span class="badge badge-info">3</span></a></li>
                     </ul>
+                    }
+                    else
+                    {
+                        @Html.Partial("_LoginPartial")
+                    }
+                    
                 </div>
             </nav>
             <!--BEGIN MODAL CONFIG PORTLET-->
@@ -332,166 +365,22 @@
         </div>
         <!--END TOPBAR-->
         <div id="wrapper">
-            <!--BEGIN CHAT FORM-->
-            <div id="chat-form" class="fixed">
-                <div class="chat-inner">
-                    <h2 class="chat-header">
-                        <a href="javascript:;" class="chat-form-close pull-right"><i class="glyphicon glyphicon-remove"></i></a><i class="fa fa-user"></i>&nbsp;
-                        Chat
-                        &nbsp;<span class="badge badge-info">3</span>
-                    </h2>
-                    <div id="group-1" class="chat-group">
-                        <strong>Favorites</strong><a href="#">
-                            <span class="user-status is-online"></span>
-                            <small>Verna Morton</small>
-                            <span class="badge badge-info">2</span>
-                        </a><a href="#">
-                            <span class="user-status is-online"></span>
-                            <small>Delores Blake</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-busy"></span>
-                            <small>Nathaniel Morris</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-idle"></span>
-                            <small>Boyd Bridges</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-offline"></span>
-                            <small>Meredith Houston</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a>
-                    </div>
-                    <div id="group-2" class="chat-group">
-                        <strong>Office</strong><a href="#">
-                            <span class="user-status is-busy"></span>
-                            <small>Ann Scott</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-offline"></span>
-                            <small>Sherman Stokes</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-offline"></span>
-                            <small>Florence Pierce</small>
-                            <span class="badge badge-info">1</span>
-                        </a>
-                    </div>
-                    <div id="group-3" class="chat-group">
-                        <strong>Friends</strong><a href="#">
-                            <span class="user-status is-online"></span>
-                            <small>Willard Mckenzie</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-busy"></span>
-                            <small>Jenny Frazier</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-offline"></span>
-                            <small>Chris Stewart</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a><a href="#">
-                            <span class="user-status is-offline"></span>
-                            <small>Olivia Green</small>
-                            <span class="badge badge-info is-hidden">0</span>
-                        </a>
-                    </div>
-                </div>
-                <div id="chat-box" style="top:400px">
-                    <div class="chat-box-header">
-                        <a href="#" class="chat-box-close pull-right"><i class="glyphicon glyphicon-remove"></i></a><span class="user-status is-online"></span><span class="display-name">Willard Mckenzie</span>
-                        <small>Online</small>
-                    </div>
-                    <ul class="chat-box-body">
-                        <li>
-                            <p><span class="user">Willard Mckenzie</span><span class="time">09:33</span></p>
-                            <p>Hi, George Richards!</p>
-                        </li>
-                        <li class="odd">
-                            <p><span class="user">George Richards</span><span class="time">09:33</span></p>
-                            <p>Hi, Willard Mckenzie!</p>
-                        </li>
-                    </ul>
-                    <div class="chat-textarea"><textarea placeholder="Type your message" class="form-control"></textarea></div>
-                </div>
-            </div>
-            <!--END CHAT FORM--><!--BEGIN PAGE WRAPPER-->
+            <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
-                <!--BEGIN TITLE & BREADCRUMB PAGE-->
-                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-                    <div class="page-header pull-left">
-                        <div class="page-title">Dashboard</div>
-                    </div>
-                    <ol class="breadcrumb page-breadcrumb pull-right">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="index.html">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="hidden"><a href="#">Dashboard</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Dashboard</li>
-                    </ol>
-                    <div class="clearfix"></div>
-                </div>
-                <!--END TITLE & BREADCRUMB PAGE--><!--BEGIN CONTENT-->
-             
-                    @RenderBody()
+                <!--BEGIN CONTENT-->
                 
-                <br>
-                <br>
-                <br>
-                    <!--END CONTENT--><!--BEGIN FOOTER-->
-                    <div id="footer">
-                        <div class="copyright">2014 © &mu;Admin - Responsive Multi-Style Admin Template</div>
-                    </div>
-                    <!--END FOOTER-->
+                    @RenderBody()
+               
+                <!--END CONTENT--><!--BEGIN FOOTER-->
+                <div id="footer">
+                    <div class="copyright">2015 © &mu;TaiHD</div>
                 </div>
+                <!--END FOOTER-->
+            </div>
             <!--END PAGE WRAPPER-->
         </div>
     </div>
 
-    <script src="~/Content/js/jquery-1.10.2.min.js"></script>
-    <script src="~/Content/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="~/Content/js/jquery-ui.js"></script>
-    <!--loading bootstrap js-->
-    <script src="~/Content/vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Content/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-    <script src="~/Content/js/html5shiv.js"></script>
-    <script src="~/Content/js/respond.min.js"></script>
-    <script src="~/Content/vendors/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/Content/vendors/slimScroll/jquery.slimscroll.js"></script>
-    <script src="~/Content/vendors/jquery-cookie/jquery.cookie.js"></script>
-    <script src="~/Content/vendors/iCheck/icheck.min.js"></script>
-    <script src="~/Content/vendors/iCheck/custom.min.js"></script>
-    <script src="~/Content/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="~/Content/js/jquery.menu.js"></script>
-    <script src="~/Content/vendors/jquery-pace/pace.min.js"></script>
-    <script src="~/Content/vendors/holder/holder.js"></script>
-    <!--LOADING SCRIPTS FOR PAGE-->
-    <script src="~/Content/vendors/flot-chart/jquery.flot.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.categories.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.pie.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.tooltip.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.resize.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.fillbetween.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.stack.js"></script>
-    <script src="~/Content/vendors/flot-chart/jquery.flot.spline.js"></script>
-    <script src="~/Content/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="~/Content/vendors/calendar/zabuto_calendar.min.js"></script>
-
-    <script src="~/Content/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="~/Content/vendors/moment/moment.js"></script>
-    <script src="~/Content/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/Content/vendors/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-    <script src="~/Content/vendors/bootstrap-clockface/js/clockface.js"></script>
-    <script src="~/Content/vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-    <script src="~/Content/vendors/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    <script src="~/Content/vendors/jquery-maskedinput/jquery-maskedinput.js"></script>
-    <script src="~/Content/js/form-components.js"></script>
-
-    <script src="~/Content/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-    <script src="~/Content/js/email-compose-mail.js"></script>
-
-    <script src="~/Content/js/index.js"></script>
-    <!--CORE JAVASCRIPT-->
-    <script src="~/Content/js/main.js"></script>
+   
 </body>
 </html>

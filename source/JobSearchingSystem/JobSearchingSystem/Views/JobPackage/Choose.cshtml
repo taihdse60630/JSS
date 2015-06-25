@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "BuyJobPackage";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+<script src="~/Content/js/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.formbuilder div').on('click', function () {
+            $('.formbuilder div').removeClass('active');
+            $(this).children("div:first").addClass('active');
+        });
+    });
+</script>
+
+<div id="page-pricing" class="row">
+    <div class="col-md-12">
+      
+        <div class="container">
+            <div class="row row-merge formbuilder">
+                <div class="col-md-3 col-sm-6">
+                    <div class="pricing-widget active">
+                        <div class="pricing-head">Basic</div>
+                        <div class="pricing-body">
+                            <div class="pricing-cost">
+                                <strong style="display: block">$19</strong>
+                                <small>một lần đăng tuyển</small>
+                            </div>
+                            <ul class="pricing-list text-center">
+                              
+                                <li>Đăng tuyển trên web tuyển dụng số #1 tại Việt Nam</li>   <br />  <br />                         
+                                <li><strong>30</strong> ngày đăng tuyển dụng </li>
+                                <li>Gia Tăng Tô Đậm & Đỏ </li>
+                                <li>Ưu Tiên Ngành Nghề<strong>10</strong></li>
+                                <li>Việc Làm Trên Trang Chủ</li>  
+                                <li class="text-center"><a href="@Url.Action("Invoice")" class="btn btn-default btn-success">Buy Now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="pricing-widget">
+                        <div class="pricing-head">Professional</div>
+                        <div class="pricing-body">
+                            <div class="pricing-cost">
+                                <strong style="display: block"><span>$</span>39</strong>
+                                <small>một lần đăng tuyển</small>
+                            </div>
+                            <ul class="pricing-list text-center">   
+                                <li><strong>Gia Tăng Tô Đậm & Đỏ</strong> trong thời gian đăng tuyển giúp thông tin đăng tuyển dễ dàng thu hút sự chú ý của ứng viên</li><br />                              
+                                <li><strong>30</strong> ngày đăng tuyển dụng </li>
+                                <li>Gia Tăng Tô Đậm & Đỏ </li>
+                                <li>Ưu Tiên Ngành Nghề<strong>10</strong></li>
+                                <li>Việc Làm Trên Trang Chủ</li>                           
+                                <li class="text-center"><a href="@Url.Action("Invoice")" class="btn btn-default btn-success">Buy Now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="pricing-widget">
+                        <div class="pricing-head">Business</div>
+                        <div class="pricing-body">
+                            <div class="pricing-cost">
+                                <strong style="display: block">$59</strong>
+                                <small>một lần đăng tuyển</small>
+                            </div>
+                            <ul class="pricing-list text-center">                               
+                                <li><strong> Ưu Tiên Ngành Nghề và Gia Tăng Tô Đậm & Đỏ </strong> giúp tạo sự khác biệt khi hiển thị tại đầu trang kết quả tìm kiếm</li><br />  
+                                <li><strong>30</strong> ngày đăng tuyển dụng </li>
+                                <li>Gia Tăng Tô Đậm & Đỏ </li>
+                                <li>Ưu Tiên Ngành Nghề<strong>10</strong></li>
+                                <li>Việc Làm Trên Trang Chủ</li>  
+                                <li class="text-center"><a href="@Url.Action("Invoice")" class="btn btn-default btn-success">Buy Now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="pricing-widget">
+                        <div class="pricing-head">Unlimited</div>
+                        <div class="pricing-body">
+                            <div class="pricing-cost">
+                                <strong style="display: block">$79</strong>
+                                <small>một lần đăng tuyển</small>
+                            </div>
+                            <ul class="pricing-list text-center">
+                                <li><strong>  Việc Làm Trên Trang Chủ, Ưu Tiên Ngành Nghề và Gia Tăng Tô Đậm & Đỏ </strong> giúp đăng tuyển luôn ở vị trí hàng đầu, tối ưu cơ hội tuyển dụng nhân tài.</li>                               
+                                <li><strong>30</strong> ngày đăng tuyển dụng </li>
+                                <li>Gia Tăng Tô Đậm & Đỏ </li>
+                                <li>Ưu Tiên Ngành Nghề<strong>10</strong></li>
+                                <li>Việc Làm Trên Trang Chủ</li>  
+                                <li class="text-center"><a href="@Url.Action("Invoice")" class="btn btn-default btn-success">Buy Now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>

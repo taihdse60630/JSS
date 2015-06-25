@@ -1,0 +1,399 @@
+﻿
+@{
+    ViewBag.Title = "CreateJobPosting";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+  <!--LOADING SCRIPTS FOR PAGE-->
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-colorpicker/css/colorpicker.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-datepicker/css/datepicker.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-daterangepicker/daterangepicker-bs3.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-clockface/css/clockface.css">
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-switch/css/bootstrap-switch.css">
+
+<script src="~/Content/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="~/Content/vendors/moment/moment.js"></script>
+<script src="~/Content/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Content/vendors/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script src="~/Content/vendors/bootstrap-clockface/js/clockface.js"></script>
+<script src="~/Content/vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="~/Content/vendors/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="~/Content/vendors/jquery-maskedinput/jquery-maskedinput.js"></script>
+<script src="~/Content/js/form-components.js"></script>
+
+<link rel="stylesheet" href="~/Content/css/multiple-select.css" />
+
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+
+<script src="~/Content/js/jquery.multiple.select.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+    $j(function () {
+        $j('#demo3').change(function () {
+            console.log($(this).val());
+        }).multipleSelect({
+            placeholder: "Vui lòng chọn ...",
+            width: '100%'
+        });
+        $j('#demo4').change(function () {
+            console.log($(this).val());
+        }).multipleSelect({
+            placeholder: "Vui lòng chọn ...",
+            width: '100%'
+        });
+        $j('#demo5').change(function () {
+            console.log($(this).val());
+        }).multipleSelect({
+            placeholder: "Vui lòng chọn ...",
+            width: '100%'
+        });
+    });
+</script>
+
+<!--LOADING SCRIPTS FOR PAGE-->
+
+
+<br />
+<div class="col-lg-12 panel panel-default">
+    <br />
+
+    <div id="tab-two-columns-horizontal" class="tab-pane fade active in">
+        <div class="row">
+            <div class="col-lg-12" style="margin-bottom: 100px">
+                <div class="panel panel-grey">
+                    <div class="panel-heading">Thông tin đăng tuyển</div>
+                    <div class="panel-body pan">
+                        <form action="#" id="language" class="form-horizontal">
+                            <div class="form-body pal">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-md-3 control-label">Chức danh<span class="require">*</span></label>
+                                            <div class="col-md-9"><input id="inputName" type="text" placeholder="" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="selLastCompany" class="col-md-3 control-label">Vị trí<span class="require">*</span></label>
+
+                                            <div class="col-md-9">
+                                                <select id="current-job-level" class="form-control" name="currentJobLevel" data-placeholder="Ví dụ: Nhân viên" tabindex="-1" title="Cấp bậc hiện tại">
+                                                    <option value="29">Trung học</option>
+                                                    <option value="24">Trung cấp</option>
+                                                    <option value="71">Cao đẳng</option>
+                                                    <option value="2">Cử nhân</option>
+                                                    <option value="3">Kỹ sư</option>
+                                                    <option value="4">Sau đại học</option>
+                                                    <option value="5">Kế toán viên công chứng</option>
+                                                    <option value="6">Thạc sĩ</option>
+                                                    <option value="7">Thạc sĩ quản trị kinh doanh</option>
+                                                    <option value="8">Tiến sĩ luật</option>
+                                                    <option value="9">Dược sĩ</option>
+                                                    <option value="10">Bác sĩ y khoa</option>
+                                                    <option value="11">Khác</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="width: 70%;">
+                                        <div class="form-group">
+                                            <label for="inputFirstName" class="col-md-3 control-label" style=" width: 18%; ">Mức lương  </label>
+
+                                            <div class="col-md-9">
+                                                <div class="radio">
+                                                    <label class="" style="float:left">
+                                                        <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="selGender" value="Male" checked="checked" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>&nbsp;
+                                                        Thỏa thuận
+                                                    </label><label class="" style="float: left;">
+                                                        <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="selGender" value="Female" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>&nbsp;
+                                                        Từ
+                                                    </label>
+                                                    <div class="col-md-3" style="width: 19%"><input id="inputName" type="text" placeholder="" class="form-control"></div>
+                                                    <label style="float:left">Đến</label><div class="col-md-2" style="width: 19%"><input id="inputName" type="text" placeholder="" class="form-control"></div>
+                                                    <label style="float:left">(USD/tháng)</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-md-3 control-label">Nơi làm việc<span class="require">*</span></label>
+
+                                            <div class="col-md-9">
+
+
+                                                <select id="demo3" multiple="multiple">
+                                                    <option value="29">Hồ Chí Minh</option>
+                                                    <option value="24">Hà Nội</option>
+                                                    <option value="71">ĐBSCL</option>
+                                                    <option value="2">An Giang</option>
+                                                    <option value="3">Bà Rịa - Vũng Tàu</option>
+                                                    <option value="4">Bắc cạn</option>
+                                                    <option value="5">Bắc Giang</option>
+                                                    <option value="6">Bạc Liêu</option>
+                                                    <option value="7">Bắc Ninh</option>
+                                                    <option value="8">Bến Tre</option>
+                                                    <option value="9">Biên Hòa</option>
+                                                    <option value="10">Bình Định</option>
+                                                    <option value="11">Bình Dương</option>
+                                                    <option value="12">Bình Phước</option>
+                                                    <option value="13">Bình Thuận</option>
+                                                    <option value="14">Cà Mau</option>
+                                                    <option value="15">Cần Thơ</option>
+                                                    <option value="16">Cao Bằng</option>
+                                                    <option value="17">Đà Nẵng</option>
+                                                    <option value="18">Đắc Lắc</option>
+                                                    <option value="69">Điện Biên</option>
+                                                    <option value="19">Đồng Nai</option>
+                                                    <option value="20">Đồng Tháp</option>
+                                                    <option value="21">Gia Lai</option>
+                                                    <option value="22">Hà Giang</option>
+                                                    <option value="23">Hà Nam</option>
+                                                    <option value="25">Hà Tây</option>
+                                                    <option value="26">Hà Tĩnh</option>
+                                                    <option value="27">Hải Dương</option>
+                                                    <option value="28">Hải Phòng</option>
+                                                    <option value="30">Hòa Bình</option>
+                                                    <option value="31">Huế</option>
+                                                    <option value="32">Hưng Yên</option>
+                                                    <option value="33">Khánh Hòa</option>
+                                                    <option value="34">Kon Tum</option>
+                                                    <option value="35">Lai Châu</option>
+                                                    <option value="36">Lâm Đồng</option>
+                                                    <option value="37">Lạng Sơn</option>
+                                                    <option value="38">Lào Cai</option>
+                                                    <option value="39">Long An</option>
+                                                    <option value="40">Nam Định</option>
+                                                    <option value="41">Nghệ An</option>
+                                                    <option value="42">Ninh Bình</option>
+                                                    <option value="43">Ninh Thuận</option>
+                                                    <option value="44">Phú Thọ</option>
+                                                    <option value="45">Phú Yên</option>
+                                                    <option value="46">Quảng Bình</option>
+                                                    <option value="47">Quảng Nam</option>
+                                                    <option value="48">Quảng Ngãi</option>
+                                                    <option value="49">Quảng Ninh</option>
+                                                    <option value="50">Quảng Trị</option>
+                                                    <option value="51">Sóc Trăng</option>
+                                                    <option value="52">Sơn La</option>
+                                                    <option value="53">Tây Ninh</option>
+                                                    <option value="54">Thái Bình</option>
+                                                    <option value="55">Thái Nguyên</option>
+                                                    <option value="56">Thanh Hóa</option>
+                                                    <option value="57">Thừa Thiên-Huế</option>
+                                                    <option value="58">Tiền Giang</option>
+                                                    <option value="59">Trà Vinh</option>
+                                                    <option value="60">Tuyên Quang</option>
+                                                    <option value="61">Kiên Giang</option>
+                                                    <option value="62">Vĩnh Long</option>
+                                                    <option value="63">Vĩnh Phúc</option>
+                                                    <option value="65">Yên Bái</option>
+                                                    <option value="66">Khác</option>
+                                                    <option value="70">Quốc tế</option>
+                                                    <option value="72">Hậu Giang</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-md-3 control-label">Nghành nghề<span class="require">*</span></label>
+
+                                            <div class="col-md-9">
+
+
+                                                <select id="demo4" multiple="multiple">
+                                                    <option value="33">Bán hàng</option>
+                                                    <option value="34">Bán hàng kỹ thuật</option>
+                                                    <option value="32">Bán lẻ/Bán sỉ</option>
+                                                    <option value="24">Bảo hiểm</option>
+                                                    <option value="30">Bất động sản</option>
+                                                    <option value="47">Biên phiên dịch</option>
+                                                    <option value="56">Chứng khoán</option>
+                                                    <option value="66">Công nghệ cao</option>
+                                                    <option value="55">IT-Phần cứng/Mạng</option>
+                                                    <option value="57">Internet/Online Media</option>
+                                                    <option value="35">IT - Phần mềm</option>
+                                                    <option value="65">Cơ khí</option>
+                                                    <option value="28">Dầu khí</option>
+                                                    <option value="52">Dệt may/Da giày</option>
+                                                    <option value="11">Dịch vụ khách hàng</option>
+                                                    <option value="37">Hàng không/Du lịch/Khách sạn</option>
+                                                    <option value="6">Dược Phẩm/Công nghệ sinh học</option>
+                                                    <option value="64">Điện/Điện tử</option>
+                                                    <option value="12">Giáo dục/Đào tạo</option>
+                                                    <option value="2">Hành chánh/Thư ký</option>
+                                                    <option value="69">Hoạch định/Dự án</option>
+                                                    <option value="43">Hóa học/Hóa sinh</option>
+                                                    <option value="62">Hàng cao cấp</option>
+                                                    <option value="1">Kế toán</option>
+                                                    <option value="58">Kiểm toán</option>
+                                                    <option value="22">Y tế/Chăm sóc sức khỏe</option>
+                                                    <option value="53">Kho vận</option>
+                                                    <option value="5">Kiến trúc/Thiết kế nội thất </option>
+                                                    <option value="15">Mới tốt nghiệp</option>
+                                                    <option value="16">Môi trường/Xử lý chất thải</option>
+                                                    <option value="42">Ngân hàng</option>
+                                                    <option value="10">Mỹ thuật/Thiết kế</option>
+                                                    <option value="18">Người nước ngoài/Việt Kiều</option>
+                                                    <option value="23">Nhân sự</option>
+                                                    <option value="4">Nông nghiệp/Lâm nghiệp</option>
+                                                    <option value="25">Pháp lý</option>
+                                                    <option value="21">Phi chính phủ/Phi lợi nhuận</option>
+                                                    <option value="17">Cấp quản lý điều hành</option>
+                                                    <option value="70">QA/QC</option>
+                                                    <option value="3">Quảng cáo/Khuyến mãi/Đối ngoại</option>
+                                                    <option value="68">Sản phẩm công nghiệp</option>
+                                                    <option value="26">Sản Xuất</option>
+                                                    <option value="51">Thời vụ/Hợp đồng ngắn hạn</option>
+                                                    <option value="59">Tài chính/Đầu tư</option>
+                                                    <option value="63">Thời trang/Lifestyle</option>
+                                                    <option value="54">Thực phẩm &amp; Đồ uống</option>
+                                                    <option value="48">Truyền hình/Truyền thông/Báo chí</option>
+                                                    <option value="27">Marketing</option>
+                                                    <option value="8">Tư vấn</option>
+                                                    <option value="36">Vận chuyển/Giao nhận</option>
+                                                    <option value="49">Vật Tư/Cung vận</option>
+                                                    <option value="41">Viễn Thông</option>
+                                                    <option value="7">Xây dựng</option>
+                                                    <option value="19">Xuất nhập khẩu</option>
+                                                    <option value="67">Ô tô</option>
+                                                    <option value="71">Overseas Jobs</option>
+                                                    <option value="39">Khác</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label for="inputBirthday" class="col-md-3 control-label" style="width: 10%">Mô tả công việc<span class="require">*</span></label>
+
+                                            <div class="col-md-9" style="width: 90%"><textarea rows="4" cols="50" class="form-control" style="margin-left: 30px; width: 95%"></textarea></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label for="inputBirthday" class="col-md-3 control-label" style="width: 10%">Yêu cầu công việc<span class="require">*</span></label>
+
+                                            <div class="col-md-9" style="width: 90%"><textarea rows="4" cols="50" class="form-control" style="margin-left: 30px; width: 95%"></textarea></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputFirstName" class="col-md-3 control-label">Kỹ năng cần thiết<span class="require">*</span></label>
+
+                                            <div class="col-md-9">
+                                                <select id="demo5" multiple="multiple">
+                                                    <option value="33">Computer Skills – MS Word, Excel, Power Point.</option>
+                                                    <option value="34">Japanese ( N1 Or N2)</option>
+                                                    <option value="32">Communication and Presentation Skill Good</option>
+                                                    <option value="24">English Advanced Level General English</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputFirstName" class="col-md-3 control-label">Phúc lợi<span class="require">*</span></label>
+
+                                            <div class="col-md-9">
+                                                <input id="inputName" type="text" placeholder="" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 style="font-weight: 700; margin-left: 18px;">Lựa chọn loại hồ sơ ứng viên muốn nhận</h3>
+                            <br />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputAddress1" class="col-md-3 control-label"><input type="checkbox" /></label>
+
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-dark btn-square" style="font-size: small">Hồ sơ không tính được độ phù hợp</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputAddress1" class="col-md-4 control-label"><input type="checkbox" /></label>
+
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-red btn-square" style="font-size: small">Độ phù hợp thấp 0%-29%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputAddress1" class="col-md-3 control-label"><input type="checkbox" /></label>
+
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-orange btn-square" style="font-size: small">Độ phù hợp trung bình 30%-69%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputAddress1" class="col-md-3 control-label"><input type="checkbox" /></label>
+
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-success btn-square" style="font-size: small;width: 160%;">Độ phù hợp cao 70%-100%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-actions text-right pal">
+                        <button type="submit" class="btn btn-primary">Tạo tuyển dụng</button>
+                        &nbsp;
+                        <button type="button" class="btn btn-green">Hủy</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
