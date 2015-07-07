@@ -1,8 +1,9 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "FindJob";
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
+
+@model JobSearchingSystem.Models.JFindViewModel
 
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.1.1.min.css">
 <link rel="stylesheet" href="~/Content/css/multiple-select.css" />
@@ -43,7 +44,7 @@
     $(document).ready(function () {
         var numitems = $("#myList li").length;
 
-   
+
         $("ul#myList2").css("column-count", 2);
 
     });
@@ -280,6 +281,8 @@
             <div style="position: absolute; width: 1000px; height: 200px; top: 250px; left: 300px; padding: 5px;">
                 <div class="col-lg-9">
 
+                @using (Html.BeginForm("Find","Job"))
+                    {
                     <div class="col-lg-12">
                         <div class="panel panel-grey">
                             <div class="panel-heading">Tìm việc làm</div>
@@ -287,7 +290,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
+                                            <input id="searchString" name="searchString" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control" value="@Model.searchString">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -465,6 +468,7 @@
                         </div>
 
                     </div>
+                }
                 </div>
 
 
@@ -598,23 +602,66 @@
 
                     <div id="container" style="overflow-y:scroll;height:500px">
                         <ul class="list-group" id="myList" style="margin-left: 2%;">
-                            @for (int i = 0; i < 100; i++)
+
+                            @if (Model.jJobItem != null)
+                            {
+                                foreach (var item in Model.jJobItem)
+                                {
+
+                                    <li class="list-group-item">
+                                        <a target="_blank" href="http://www.vietnamworks.com/tuyen-gap-lap-trinh-vien-net-569885-jd" title="Job - Tuyển Gấp Lập Trình Viên .NET - CTC Communications">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <strong>@item.JobTitle</strong><br />
+                                                    <em><span><span>Da Nang, Ha Noi, Ho Chi Minh</span>|<span>Experienced (Non-Manager)</span></span></em><br />
+                                                    <span style="margin-right: 10px;"><i class="fa fa-fw fa-calendar"></i>Posted: 22/06/2015</span>
+                                                    <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br />
+                                                    <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-success" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">It- Phần Cứng - Mạng</em>
+                                                    <br />
+
+                                                    <div class="progress" style="width: 9.4%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;position:absolute">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-warning" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">SQL Server</em><br />
+
+                                                    <div class="progress" style="width: 10%; height: 5px; margin-top: 1.5%; float: left; margin-right: 2%;">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-danger" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">English; Japanese</em>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @*<strong>$@item.MinSalary.ToString().TrimEnd('0').TrimEnd(',')- $@item.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</strong><br />*@
+                                                    <a href="#"> <img class="salesLogoImage img-responsive" src="@item.LogoURL" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
+                                                </div>
+                                            </div>
+
+                                        </a>
+                                    </li>
+                                    <br />
+                                }
+                            }
+
+
+                            @*@for (int i = 0; i < 100; i++)
                             {
                                 <li class="list-group-item">
                                     <a target="_blank" href="http://www.vietnamworks.com/tuyen-gap-lap-trinh-vien-net-569885-jd" title="Job - Tuyển Gấp Lập Trình Viên .NET - CTC Communications">
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <strong>Tuyển Gấp Lập Trình Viên .NET</strong><br />
-                                                <em><span><span>Da Nang, Ha Noi, Ho Chi Minh</span>|<span>Experienced (Non-Manager)</span></span></em><br/>
+                                                <em><span><span>Da Nang, Ha Noi, Ho Chi Minh</span>|<span>Experienced (Non-Manager)</span></span></em><br />
                                                 <span style="margin-right: 10px;"><i class="fa fa-fw fa-calendar"></i>Posted: 22/06/2015</span>
-                                                <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br/>
+                                                <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br />
                                                 <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
                                                     <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-success" aria-valuenow="100" style="width: 75%;"></div>
-                                                </div><em style="font-size: x-small;">It- Phần Cứng - Mạng</em><br />
-                                                <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                </div><em style="font-size: x-small;">It- Phần Cứng - Mạng</em>
+                                                <br />
+
+                                                <div class="progress" style="width: 9.4%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;position:absolute">
                                                     <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-warning" aria-valuenow="100" style="width: 75%;"></div>
-                                                </div><em style="font-size: x-small;">SQL Server</em><br/>
-                                                <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                </div><em style="font-size: x-small;">SQL Server</em><br />
+
+                                                <div class="progress" style="width: 10%; height: 5px; margin-top: 1.5%; float: left; margin-right: 2%;">
                                                     <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-danger" aria-valuenow="100" style="width: 75%;"></div>
                                                 </div><em style="font-size: x-small;">English; Japanese</em>
                                             </div>
@@ -622,12 +669,12 @@
                                                 <strong>$300 - $500</strong><br />
                                                 <a href="#"> <img class="salesLogoImage img-responsive" src="~/Content/img/logo_21.jpg" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
                                             </div>
-                                            </div>
-                                               
+                                        </div>
+
                                     </a>
                                 </li>
                                 <br />
-                            }
+                            }*@
 
 
 
