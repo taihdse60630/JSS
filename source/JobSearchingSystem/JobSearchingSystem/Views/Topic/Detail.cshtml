@@ -1,4 +1,5 @@
-﻿
+﻿@model JobSearchingSystem.Models.TopicItem
+
 @{
     ViewBag.Title = "TopicItem";
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
@@ -7,103 +8,86 @@
 <div class="page-content" style="padding: 20px 100px 20px 200px">
     <div class="row">
         <div class="col-lg-12 blog-page">
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-9 col-sm-8 blog-articles">
-                            <h3 style="font-weight:600;font-size:xx-large;text-align:center">Cơ hội khám phá đất nước và doanh nghiệp Nhật</h3>
-                            <br />
+            @using (Html.BeginForm("Create", "Topic", FormMethod.Post))
+            {
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-9 col-sm-8 blog-articles">
+                                <h3 style="font-weight:600;font-size:xx-large;text-align:center">@Model.Title</h3>
+                                <br />
 
-                            <div class="blog-img"><img src="~/Content/img/blog.jpg" alt="" class="img-responsive" style="width: 60%;margin-left: 19%;"/></div>
-                            <div class="row mbm">
-                                <div class="col-md-6">
-                                    <ul class="list-inline blog-tags">
-                                        <li><i class="fa fa-tags fa-fw"></i><a href="#" class="label label-default">Design</a><a href="#" class="label label-default">Development</a><a href="#" class="label label-default">Html</a></li>
-                                    </ul>
+                                <div class="blog-img"><img src="~/Content/img/blog.jpg" alt="" class="img-responsive" style="width: 60%;margin-left: 19%;" /></div>
+                                <div class="row mbm">
+                                    <div class="col-md-6 text-right">
+                                        <ul class="list-inline blog-date">
+                                            <li><i class="fa fa-calendar fa-fw"></i><a href="#">@Model.CreatedDate</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    <ul class="list-inline blog-date">
-                                        <li><i class="fa fa-calendar fa-fw"></i><a href="#">May 10, 2013</a></li>
-                                        <li><i class="fa fa-comments fa-fw"></i><a href="#">41 Comments</a></li>
-                                    </ul>
+                                <div>
+                                    <p>
+                                        @Model.Topic_content
+                                    </p>
                                 </div>
-                            </div>
-                            <div>
-                                <p>
-                                    Nhằm giúp sinh viên đã và sắp tốt nghiệp định hướng công việc tại Nhật Bản và tại các doanh nghiệp Nhật Bản tại Việt Nam, Khối Liên kết Quốc tế – Đại học FPT sẽ phối hợp cùng công ty ITEC Vietnam tổ chức hội thảo Hướng nghiệp Nhật Bản.
+                                <hr class="mtxl mbl" />
+                                <h3>Comments</h3>
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <a href="#" class="pull-left"><img src="~/Content/img/TGB.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
 
-                                    Sự kiện diễn ra ngày 15/6/2015 tại Phòng B6 – B8 tòa nhà Detech, số 8 Tôn Thất Thuyết, Mỹ Đình.
-                                </p>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">Media heading<span class="pull-right">5 hours ago / <a href='#'>Reply</a></span></h4>
 
-                                <p>
-                                    Hội thảo sẽ mang đến cơ hội để sinh viên tìm hiểu về thế mạnh của các doanh nghiệp Nhật Bản, kỳ vọng của doanh nghiệp đối với nhân sự người nước ngoài, những điểm lưu ý khi tham dự phỏng vấn cũng như các hình thức hỗ trợ của ITEC Việt Nam với sinh viên ngành CNTT.
+                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                            <hr />
+                                            <div class="media">
+                                                <a href="#" class="pull-left"><img src="~/Content/img/ichinose.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
 
-                                    Không chỉ là cầu nối hướng nghiệp, chia sẻ kinh nghiệm xin việc hiệu quả tại các công ty của Nhật và giới thiệu văn hóa làm việc của Nhật Bản, Hội thảo còn mang lại nhiều cơ hội được ứng tuyển vào các công ty Nhật cho sinh viên FPT.
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nested media heading<span class="pull-right">8 hours ago / <a href='#'>Reply</a></span></h4>
 
-                                    Sinh viên quan tâm đăng ký tham gia chương trình tại đây.
+                                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                    <hr />
+                                                    <div class="media">
+                                                        <a href="#" class="pull-left"><img src="~/Content/img/TGB.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
 
-                                    ITEC-VN được thành lập ở Việt Nam với trên 30 năm kinh nghiệm đào tạo kỹ sư CNTT cùng rất nhiều tài liệu đào tạo chất lượng cao đã được phát triển và ứng dụng tại Nhật Bản.
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">Nested media heading<span class="pull-right">2 days ago / <a href='#'>Reply</a></span></h4>
 
-                                    Đây là đơn vị dành nhiều sự quan tâm đối với sinh viên của Khối Giáo dục FPT. Trước đây, tháng 3/2015 đại diện của ITEC Việt Nam cũng đã có chuyến thăm và làm việc với lãnh đạo Đại học FPT để bàn bạc và đề xuất nhiều cơ hội việc làm cho sinh viên FPT.
-                                </p>
-                            </div>
-                            <hr class="mtxl mbl" />
-                            <h3>Comments</h3>
-                            <ul class="media-list">
-                                <li class="media">
-                                    <a href="#" class="pull-left"><img src="~/Content/img/TGB.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
-
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Media heading<span class="pull-right">5 hours ago / <a href='#'>Reply</a></span></h4>
-
-                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                        <hr />
-                                        <div class="media">
-                                            <a href="#" class="pull-left"><img src="~/Content/img/ichinose.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
-
-                                            <div class="media-body">
-                                                <h4 class="media-heading">Nested media heading<span class="pull-right">8 hours ago / <a href='#'>Reply</a></span></h4>
-
-                                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                                <hr />
-                                                <div class="media">
-                                                    <a href="#" class="pull-left"><img src="~/Content/img/TGB.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
-
-                                                    <div class="media-body">
-                                                        <h4 class="media-heading">Nested media heading<span class="pull-right">2 days ago / <a href='#'>Reply</a></span></h4>
-
-                                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr />
-                                        <div class="media">
-                                            <a href="#" class="pull-left"><img src="~/Content/img/ichinose.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
+                                            <hr />
+                                            <div class="media">
+                                                <a href="#" class="pull-left"><img src="~/Content/img/ichinose.jpg" style="width: 64px; height: 64px;" class="media-object" /></a>
 
-                                            <div class="media-body">
-                                                <h4 class="media-heading">Nested media heading<span class="pull-right">May 14,2013 / <a href='#'>Reply</a></span></h4>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nested media heading<span class="pull-right">May 14,2013 / <a href='#'>Reply</a></span></h4>
 
-                                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <hr class="mtxl mbl" />
-                            <h3>Leave a Comment</h3>
+                                    </li>
+                                </ul>
+                                <hr class="mtxl mbl" />
+                                <h3>Leave a Comment</h3>
 
-                            <form action="">
-                                <div class="form-group"><label class="control-label">Name <span class='text-red'>*</span></label><input type="text" placeholder="Name" class="form-control" /></div>
-                                <div class="form-group"><label class="control-label">Email <span class='text-red'>*</span></label><input type="email" placeholder="Email address" class="form-control" /></div>
-                                <div class="form-group"><label class="control-label">Message <span class='text-red'>*</span></label><textarea placeholder="Enter message..." rows="5" class="form-control"></textarea></div>
-                                <button type="submit" class="btn btn-success">Post a comment</button>
-                            </form>
+                                <form action="">
+                                    <div class="form-group"><label class="control-label">Name <span class='text-red'>*</span></label><input type="text" placeholder="Name" class="form-control" /></div>
+                                    <div class="form-group"><label class="control-label">Email <span class='text-red'>*</span></label><input type="email" placeholder="Email address" class="form-control" /></div>
+                                    <div class="form-group"><label class="control-label">Message <span class='text-red'>*</span></label><textarea placeholder="Enter message..." rows="5" class="form-control"></textarea></div>
+                                    <button type="submit" class="btn btn-success">Post a comment</button>
+                                </form>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
