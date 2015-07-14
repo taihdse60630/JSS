@@ -23,5 +23,7 @@ namespace JobSearchingSystem.DAL
                     }
                    ).AsEnumerable();
         }
+
+        
     }
 }
