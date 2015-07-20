@@ -1,0 +1,132 @@
+﻿@model JobSearchingSystem.Models.ComSchoolLevelViewModel
+
+@{
+    ViewBag.Title = "Danh sách bằng cấp";
+    Layout = "~/Views/Shared/_LayoutFinal.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#CreateBtn").click(function () {
+            $("#CreateForm").modal("show");
+        });
+    });
+
+</script>
+
+@if (Model.schoolLevels != null)
+{
+    foreach (var item in Model.schoolLevels)
+    {
+        <div id="@item.SchoolLevel_ID" tabindex="-1" role="dialog" aria-labelledby="modal-stackable-label" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        <h4 id="modal-stackable-label" class="modal-title">Cập nhật bằng cấp</h4>
+                    </div>
+                    @using (Html.BeginForm("UpdateSchoolLevel", "CommonList", FormMethod.Post))
+                    {
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="@item.SchoolLevel_ID" />
+                            <p>Tên bằng cấp</p><input type="text" name="name" data-tabindex="1" value="@item.Name" class="form-control mbm" />
+                            <p>Hệ số cấp bậc</p><input type="text" name="levelNum" data-tabindex="1" value="@item.LevelNum" class="form-control mbm" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Trở lại</button>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+<div id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="modal-stackable-label" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                <h4 id="modal-stackable-label" class="modal-title">Tạo vị trí công việc mới</h4>
+            </div>
+            @using (Html.BeginForm("CreateSchoolLevel", "CommonList", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div class="input-icon right">Tên bằng cấp: <input type="text" id="name" value="@Model.name" name="name" class="form-control"></div>
+                    <div class="input-icon right">Hệ số cấp bậc: <input type="text" id="levelNum" value="@Model.levelNum" name="description" class="form-control"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Trở lại</button>
+                    <button type="submit" class="btn btn-success">
+                        Tạo mới
+                        &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<div class="page-content" style="padding: 20px 0px 20px 250px">
+    <div class="col-lg-9 panel panel-default">
+        <h3 style="font-weight:600;text-align:center">Danh sách bằng cấp</h3>
+        <button id="CreateBtn" type="button" class="btn btn-grey btn-sm">
+            <i class="fa fa-plus"></i>&nbsp;
+            Tạo mới
+        </button>&nbsp;
+        <br />
+        <br />
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                <thead>
+                    <tr>
+                        <th width="1%">No</th>
+                        <th width="10%">Tên bằng cấp</th>
+                        <th width="10%">Hệ số cấp bậc</th>
+                        <th width="5%">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int i = 1;}
+                    @if (Model.schoolLevels != null)
+                    {
+                        foreach (var item in Model.schoolLevels)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LevelNum)
+                                </td>
+                                <td>
+                                    <button type="button" data-target="#@item.SchoolLevel_ID" style="display:inline" data-toggle="modal" class="btn btn-blue btn-xs">
+                                        <i class="fa fa-edit"></i>&nbsp;
+                                        Cập Nhật
+                                    </button>
+                                    &nbsp;
+
+                                    @using (Html.BeginForm("DeleteSchoolLevel", "CommonList", FormMethod.Post, new { style = "display:inline" }))
+                                    {
+                                        <input type="hidden" name="id" value="#@item.SchoolLevel_ID" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-trash-o"></i>&nbsp;
+                                            Xóa
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
