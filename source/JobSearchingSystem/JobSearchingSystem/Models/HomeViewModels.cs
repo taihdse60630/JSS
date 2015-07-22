@@ -5,9 +5,19 @@ using System.Web;
 
 namespace JobSearchingSystem.Models
 {
+    
     public class HIndexViewModel
     {
-        public IEnumerable<Job> jobList { get; set; }
+        public IEnumerable<JJobItem> jobList { get; set; }
         public String searchString { get; set; }
+        public IEnumerable<City> jobCities { get; set; }
+        public IEnumerable<Category> jobCategories { get; set; }
+        public IEnumerable<SchoolLevel> schoolLevelList { get; set; }
+        public IEnumerable<int> searchJobCities { get; set; }
+        public IEnumerable<int> searchJobCategories { get; set; }
+
+        public int schoolLevel { get; set; }
+        public double minSalary { get; set; }
+
     }
 }
