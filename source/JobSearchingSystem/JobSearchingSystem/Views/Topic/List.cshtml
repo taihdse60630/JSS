@@ -25,7 +25,13 @@
                                             <div class="col-md-4 blog-img">
                                                 <img src="~/Content/img/blog.jpg" alt="" class="img-responsive" style="width: 80%;" />
                                                 <ul class="list-inline blog-date">
-                                                    <li><i class="fa fa-calendar fa-fw"></i><a href="#">@item.CreatedDate</a></li>
+                                                    <li><i class="fa fa-calendar fa-fw"></i>@item.CreatedDate</li>
+                                                    @if (item.UpdatedDate != null)
+                                                    {
+                                                        <li>
+                                                            <i class="fa fa-edit"></i>@item.UpdatedDate
+                                                        </li>
+                                                    }
                                                 </ul>
                                             </div>
                                             <div class="col-md-8 blog-article">
