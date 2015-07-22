@@ -48,7 +48,7 @@ namespace JobSearchingSystem.Controllers
             return RedirectToAction("CityList");
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult UpdateCity(string id, string name)
         {
            
