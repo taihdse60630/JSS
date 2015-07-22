@@ -236,5 +236,129 @@ namespace JobSearchingSystem.DAL
                 return 1;
             }
         }
+
+        //Change model information into Topic class
+        public Job Model_Topic(JobCreateModel model)
+        {
+            Job temp = new Job();
+            temp.RecruiterID = model.JobInfo.RecruiterID;
+            temp.JobTitle = model.JobInfo.JobTitle;
+            temp.Company = model.JobInfo.Company;
+            temp.Address = model.JobInfo.Address;
+            temp.MinSalary = model.JobInfo.MinSalary;
+            temp.MaxSalary = model.JobInfo.MaxSalary;
+            temp.JobDescription = model.JobInfo.JobDescription;
+            temp.JobLevel_ID = model.JobInfo.JobLevel_ID;
+            temp.MinSchoolLevel_ID = model.JobInfo.MinSchoolLevel_ID;
+            temp.JobView = model.JobInfo.JobView;
+            temp.StartedDate = DateTime.Now;
+            temp.EndedDate = DateTime.Now.AddDays(30);
+            temp.IsPublic = model.JobInfo.IsPublic;
+            return temp;
+        }
+
+        //Create new job
+        public bool CreateJob(JobCreateModel model)
+        {
+            try
+            {
+                this.JobRepository.Insert(Model_Topic(model));
+                this.Save();
+
+                Job temp = this.JobRepository.Get(job => job.RecruiterID == model.JobInfo.RecruiterID && job.JobTitle == model.JobInfo.JobTitle).Last();
+
+                //Add city
+                foreach (int index in model.CitySelectList)
+                {
+                    JobCity item = new JobCity();
+                    item.JobID = temp.JobID;
+                    item.CityID = index;
+                    this.JobCityRepository.Insert(item);
+                    this.Save();
+                }
+
+                //Add category
+                foreach (int index in model.CategorySelectList)
+                {
+                    JobCategory item = new JobCategory();
+                    item.JobID = temp.JobID;
+                    item.CategoryID = index;
+                    this.JobCategoryRepository.Insert(item);
+                    this.Save();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //Get list of job by recruiterID
+        public IEnumerable<JobItem> GetJobByRecruiterID(string recruiterID)
+        {
+            try
+            {
+                List<JobItem> jobList = new List<JobItem>();
+                foreach (Job job in this.JobRepository.Get(job => job.RecruiterID == recruiterID))
+                {
+                    if ((DateTime.Now.CompareTo(job.EndedDate) > 0) && (job.IsPublic == true))
+                    {
+                        job.IsPublic = false;
+                        this.JobRepository.Update(job);
+                        this.Save();
+                    }
+
+                    jobList.Add(new JobItem(job.JobID, job.JobTitle, job.StartedDate, job.EndedDate, job.IsPublic, job.AppliedJobs.Count()));
+                }
+                return jobList;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //Display a hidden job
+        public bool Display(int jobID)
+        {
+            try
+            {
+                Job temp = this.JobRepository.Get(job => job.JobID == jobID).SingleOrDefault();
+                if (temp == null) return false;
+                temp.IsPublic = true;
+
+                this.JobRepository.Update(temp);
+                this.Save();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //Hide a displayed job
+        public bool Hide(int jobID)
+        {
+            try
+            {
+                Job temp = this.JobRepository.Get(job => job.JobID == jobID).SingleOrDefault();
+                if (temp == null) return false;
+                temp.IsPublic = false;
+
+                this.JobRepository.Update(temp);
+                this.Save();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
     }
 }
