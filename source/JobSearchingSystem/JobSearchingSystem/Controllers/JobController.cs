@@ -18,9 +18,11 @@ namespace JobSearchingSystem.Controllers
             return View();
         }
 
+        //Displayed list of job created by recruiter
         public ActionResult OwnList()
         {
-            return View();
+            string recruiterID = "1";
+            return View(this.jobUnitOfWork.GetJobByRecruiterID(recruiterID));
         }
 
         public ActionResult AppliedJobList()
@@ -38,7 +40,22 @@ namespace JobSearchingSystem.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            JobCreateModel jobCreateModel = new JobCreateModel();
+            jobCreateModel.JobLevelList = jobUnitOfWork.JobLevelRepository.Get(filter: d => d.IsDeleted == false);
+            jobCreateModel.SchoolLevelList = jobUnitOfWork.SchoolLevelRepository.Get(filter: d => d.IsDeleted == false);
+            jobCreateModel.CityList = jobUnitOfWork.CityRepository.Get(filter: city => city.IsDeleted == false);
+            jobCreateModel.CategoryList = jobUnitOfWork.CategoryRepository.Get(category => category.IsDeleted == false);
+            return View(jobCreateModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(JobCreateModel model)
+        {
+            if (jobUnitOfWork.CreateJob(model))
+            {
+                return RedirectToAction("OwnList");
+            }
+            return View(model);
         }
 
         public ActionResult Find(JFindViewModel model)
@@ -74,11 +91,27 @@ namespace JobSearchingSystem.Controllers
                 JJobDetailViewModel jJobDetailViewModel = new JJobDetailViewModel();
                 jJobDetailViewModel.Job = jobUnitOfWork.GetJobDetail(jobID2);
                 return View(jJobDetailViewModel);           
-            }
+            }  
+        }
 
-          
-            
-            
+        //Display a hidden job
+        public ActionResult Display(int jobID)
+        {
+            if (jobUnitOfWork.Display(jobID))
+            {
+                return RedirectToAction("OwnList");
+            }
+            return RedirectToAction("OwnList");
+        }
+
+        //Hide a displayed job
+        public ActionResult Hide(int jobID)
+        {
+            if (jobUnitOfWork.Hide(jobID))
+            {
+                return RedirectToAction("OwnList");
+            }
+            return RedirectToAction("OwnList");
         }
 	}
 }
