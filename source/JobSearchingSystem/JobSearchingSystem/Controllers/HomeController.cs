@@ -16,7 +16,9 @@ namespace JobSearchingSystem.Controllers
         {
             HIndexViewModel hIndexViewModel = new HIndexViewModel();
             homeUnitOfWork.getAllJob(hIndexViewModel);
-
+            hIndexViewModel.jobCities = homeUnitOfWork.getAllCities();
+            hIndexViewModel.jobCategories = homeUnitOfWork.getAllCategories();
+            hIndexViewModel.schoolLevelList = homeUnitOfWork.getAllSchoolLevel();
             return View(hIndexViewModel);
         }
 
@@ -37,8 +39,11 @@ namespace JobSearchingSystem.Controllers
         public ActionResult Find(HIndexViewModel model)
         {
             JFindViewModel jFindViewModel = new JFindViewModel();
-            jFindViewModel.searchString = model.searchString;
-
+            jFindViewModel.searchString = model.searchString;        
+            jFindViewModel.minSalary = model.minSalary;           
+            jFindViewModel.schoolLevel = model.schoolLevel;
+            TempData["searchJobCities"] = model.searchJobCities;
+            TempData["searchJobCategories"] = model.searchJobCategories;
             return RedirectToAction("Find", "Job", jFindViewModel);
         }
     }
