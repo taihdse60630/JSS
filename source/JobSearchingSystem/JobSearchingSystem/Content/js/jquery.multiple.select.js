@@ -70,12 +70,12 @@
                     '</div>'
                 );
             }
-            html.push('<ul>');
+            html.push('<ul class="'+name+'">');
             if (this.options.selectAll && !this.options.single) {
                 html.push(
                     '<li class="ms-select-all">',
                     '<label>',
-                    '<input type="checkbox" ' + this.selectAllName + ' /> ',
+                    '<input type="checkbox" class="hakun" ' + this.selectAllName + ' /> ',
                     this.options.selectAllDelimiter[0] + this.options.selectAllText + this.options.selectAllDelimiter[1],
                     '</label>',
                     '</li>'
