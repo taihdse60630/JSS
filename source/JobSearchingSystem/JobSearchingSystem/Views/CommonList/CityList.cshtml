@@ -31,13 +31,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                        <h4 id="modal-stackable-label" class="modal-title">Cập nhật nhóm ngành nghề</h4>
+                        <h4 id="modal-stackable-label" class="modal-title">Cập nhật thành phố</h4>
                     </div>
                     @using (Html.BeginForm("UpdateCity", "CommonList", FormMethod.Post))
                     {
                         <div class="modal-body">
                             <input type="hidden" name="id" value="@item.CityID" />
-                            <p>Tên thành phố</p><input type="text" name="name" data-tabindex="1" value="@item.Name" class="form-control mbm" />
+                            <p>Tên thành phố<span class="require">*</span></p>
+                            @Html.TextBoxFor(m => m.name, new { @class = "form-control mbm", Value = item.Name})
+                            @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Trở lại</button>
@@ -58,10 +60,10 @@
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                 <h4 id="modal-stackable-label" class="modal-title">Tạo thành phố mới</h4>
             </div>
-                @using (Html.BeginForm("CreateCity", "CommonList", FormMethod.Post, new { id = "createcityform" }))
+                @using (Html.BeginForm("CreateCity", "CommonList", FormMethod.Post))
                 {
                     <div class="modal-body">
-                        @Html.LabelFor(m => m.name, "Tên thành phố:", new { @class = "control-label" })
+                        <p>Tên thành phố<span class="require">*</span></p>
                         @Html.TextBoxFor(m => m.name, new { @class = "form-control"})
                         @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
                     </div>

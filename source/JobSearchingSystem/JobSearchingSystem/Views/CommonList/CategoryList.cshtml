@@ -37,8 +37,12 @@
                     {
                         <div class="modal-body">
                             <input type="hidden" name="id" value="@item.CategoryID" />
-                            <p>Tên nhóm nghành nghề</p><input type="text" name="name" data-tabindex="1" value="@item.Name" class="form-control mbm" />
-                            <p>Mô tả</p><input type="text" name="description" data-tabindex="1" value="@item.Description" class="form-control mbm" />
+                            <p>Tên nhóm ngành nghề<span class="require">*</span> </p>
+                            @Html.TextBoxFor(m => m.name, new { @class = "form-control mbm", Value = item.Name })
+                            @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
+                            <p>Mô tả: </p>
+                            @Html.TextBoxFor(m => m.description, new { @class = "form-control mbm", Value = item.Description })
+                            @Html.ValidationMessageFor(m => m.description, "", new { @class = "ErrorMessage" })
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Trở lại</button>
@@ -62,11 +66,14 @@
             @using (Html.BeginForm("CreateCategory", "CommonList", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <div class="input-icon right">Tên nhóm ngành nghề: 
-                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", id = "name" })
+                    <div class="input-icon right">Tên nhóm ngành nghề<span class="require">*</span> 
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
                     </div>
-                    <div class="input-icon right">Mô tả: <input type="text" id="description" value="@Model.description" name="description" class="form-control"></div>
+                    <div class="input-icon right">Mô tả: 
+                        @Html.TextBoxFor(m => m.description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.description, "", new { @class = "ErrorMessage" })
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -98,9 +105,9 @@
                 <thead>
                     <tr>
                         <th width="1%">No</th>
-                        <th width="10%">Tên nhóm ngành nghề</th>
-                        <th width="10%">Mô tả</th>
-                        <th width="5%">Hành động</th>
+                        <th width="15%">Tên nhóm ngành nghề</th>
+                        <th width="20%">Mô tả</th>
+                        <th width="10%">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>

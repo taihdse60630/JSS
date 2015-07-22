@@ -5,11 +5,18 @@
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
 
+<style>
+    .ErrorMessage {
+        color: red;
+    }
+</style>
+
 <script>
     $(document).ready(function () {
         $("#CreateBtn").click(function () {
             $("#CreateForm").modal("show");
         });
+        $(".field-validation-error").hide();
     });
 
 </script>
@@ -29,8 +36,12 @@
                     {
                         <div class="modal-body">
                             <input type="hidden" name="id" value="@item.SchoolLevel_ID" />
-                            <p>Tên bằng cấp</p><input type="text" name="name" data-tabindex="1" value="@item.Name" class="form-control mbm" />
-                            <p>Hệ số cấp bậc</p><input type="text" name="levelNum" data-tabindex="1" value="@item.LevelNum" class="form-control mbm" />
+                            <p>Tên bằng cấp<span class="require">*</span></p>
+                            @Html.TextBoxFor(m => m.name, new { @class = "form-control mbm", Value = item.Name })
+                            @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
+                            <p>Hệ số cấp bậc<span class="require">*</span></p>
+                            @Html.TextBoxFor(m => m.levelNum, new { @class = "form-control mbm", Value = item.LevelNum, data_val_number = "Nội dung nhập vào phải là số nguyên" })
+                            @Html.ValidationMessageFor(m => m.levelNum, "", new { @class = "ErrorMessage" })
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Trở lại</button>
@@ -54,8 +65,15 @@
             @using (Html.BeginForm("CreateSchoolLevel", "CommonList", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <div class="input-icon right">Tên bằng cấp: <input type="text" id="name" value="@Model.name" name="name" class="form-control"></div>
-                    <div class="input-icon right">Hệ số cấp bậc: <input type="text" id="levelNum" value="@Model.levelNum" name="description" class="form-control"></div>
+                    <div class="input-icon right">Tên bằng cấp<span class="require">*</span> 
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
+                    </div>
+                    <div class="input-icon right">
+                        Hệ số cấp bậc<span class="require">*</span>
+                        @Html.TextBoxFor(m => m.levelNum, new { @class = "form-control", Value = "", data_val_number = "Nội dung nhập vào phải là số nguyên" })
+                        @Html.ValidationMessageFor(m => m.levelNum, "", new { @class = "ErrorMessage" })
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -130,3 +148,5 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/jqueryval")
