@@ -11,87 +11,103 @@
     }
 </style>
 
-<div class="page-content">
-    <div class="row">
-        <div class="panel panel-green">
-            <div class="panel-heading">Thông tin chi tiết công ty</div>
-            <div class="panel-body pan">
-                @using (Html.BeginForm("Update", "CompanyInfo", FormMethod.Post))
-                {
-                    <div class="form-body pal">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="company" class="control-label">Công ty</label>
-                                    @Html.TextBoxFor(m => m.company, new { @class = "form-control", id = "company" })
-                                    @Html.ValidationMessageFor(m => m.company, "", new { @class = "ErrorMessage" })
+<div class="page-content" style="padding: 20px 60px 50px 150px">
+    <br />
+    <div class="col-lg-12 panel panel-default">
+        <br />
+        <div id="tab-two-columns-horizontal" class="tab-pane fade active in">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-grey">
+                        <div class="panel-heading">Thông tin chi tiết công ty</div>
+                        <div class="panel-body pan">
+                            <div class="form-body pal">
+                                @using (Html.BeginForm("Update", "CompanyInfo", FormMethod.Post))
+                                {
+                                <div class="form-body pal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="company" class="control-label">Tên công ty<span class="require">*</span></label>
+                                                @Html.TextBoxFor(m => m.company, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.company, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="address" class="control-label">Địa chỉ</label>
+                                                @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.address, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="district" class="control-label">Quận</label>
+                                                @Html.TextBoxFor(m => m.district, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.district, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="cityId" class="control-label">Thành phố<span class="require">*</span></label>
+                                                <select id="cityId" name="cityId" class="form-control" data-val-required="Thông tin này bắt buộc">
+                                                    <option value=""></option>
+                                                    @if (Model.cities != null)
+                                                    {
+                                                        foreach (var item in Model.cities)
+                                                        {
+                                                            if (Model.city == item.Name)
+                                                            {
+                                                                <option value="@item.CityID" selected>@item.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.CityID">@item.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                @Html.ValidationMessageFor(m => m.cityId, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="phoneNumber" class="control-label">Số điện thoại</label>
+                                                @Html.TextBoxFor(m => m.phoneNumber, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="description" class="control-label">Mô tả</label>
+                                                @Html.TextAreaFor(m => m.description, new { @class = "form-control", row = 5 })
+                                                @Html.ValidationMessageFor(m => m.description, "", new { @class = "ErrorMessage" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="logoURL" class="control-label">Logo url</label>
+                                                @Html.TextBoxFor(m => m.logoURL, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(m => m.logoURL, "", new { @class = "ErrorMessage", row = "6" })
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address" class="control-label">Địa chỉ</label>
-                                    <input id="address" name="address" type="text" value="@Model.address" class="form-control" />
+                                <div class="form-actions text-right pal">
+                                    <input id="recuiterId" name="recuiterId" type="hidden" value="@Model.recuiterId" class="form-control" />
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="district" class="control-label">Quận</label>
-                                    <input id="district" name="district" type="text" value="@Model.district" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cityId" class="control-label">Thành phố</label>
-                                    <select id="cityId" name="cityId" class="form-control">
-                                        <option></option>
-                                        @if (Model.cities != null)
-                                        {
-                                            foreach (var item in Model.cities)
-                                            {
-                                                if (Model.city == item.Name)
-                                                {
-                                                    <option value="@item.CityID" selected>@item.Name</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.CityID">@item.Name</option>
-                                                }
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phoneNumber" class="control-label">Số điện thoại</label>
-                                    <input id="phoneNumber" name="phoneNumber" type="text" value="@Model.phoneNumber" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="description" class="control-label">Mô tả</label>
-                                    <textarea id="description" name="description" rows="5" class="form-control">@Model.description</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="logoURL" class="control-label">Logo url</label>
-                                    <input id="logoURL" name="logoURL" type="text" value="@Model.logoURL" class="form-control" />
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
-                    <div class="form-actions text-right pal">
-                        <input id="recuiterId" name="recuiterId" type="hidden" value="@Model.recuiterId" class="form-control" />
-                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                    </div>
-                }
+                </div>
             </div>
         </div>
     </div>
