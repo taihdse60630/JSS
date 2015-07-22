@@ -56,5 +56,15 @@ namespace JobSearchingSystem.Models
         public IEnumerable<SchoolLevel> schoolLevels { get; set; }
     }
 
-
+    public class ComLevelViewModel
+    {
+        public string message { get; set; }
+        [Required(ErrorMessage = "Thông tin này bắt buộc")]
+        [StringLength(30, ErrorMessage = "Nội dung nhập vào không vượt quá 30 kí tự.")]
+        public string name { get; set; }
+        [Required(ErrorMessage = "Thông tin này bắt buộc")]
+        [Range(0, int.MaxValue, ErrorMessage = "Nội dung nhập vào phải là số nguyên")]
+        public int levelNum { get; set; }
+        public IEnumerable<Level> levels { get; set; }
+    }
 }
