@@ -24,7 +24,6 @@ namespace JobSearchingSystem.DAL
         private GenericRepository<CompanyInfo> companyInfoRepository;
         private GenericRepository<CompanyInfoCity> companyInfoCityRepository;
         private GenericRepository<Contact> contactRepository;
-        private GenericRepository<ContactCity> contactCityRepository;
         private GenericRepository<DesiredBenefit> desiredBenefitRepository;
         private GenericRepository<EducationHistory> educationHistoryRepository;
         private GenericRepository<EmploymentHistory> employmentHistoryRepository;
@@ -224,18 +223,6 @@ namespace JobSearchingSystem.DAL
                     this.contactRepository = new GenericRepository<Contact>(context);
                 }
                 return contactRepository;
-            }
-        }
-
-        public GenericRepository<ContactCity> ContactCityRepository
-        {
-            get
-            {
-                if (this.contactCityRepository == null)
-                {
-                    this.contactCityRepository = new GenericRepository<ContactCity>(context);
-                }
-                return contactCityRepository;
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.title - My ASP.NET Application</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,59 +40,206 @@
     <script src="~/Content/js/jquery.menu.js"></script>
     <script src="~/Content/vendors/jquery-pace/pace.min.js"></script>
     <script src="~/Content/vendors/holder/holder.js"></script>
+
+    <!--loading validation-->
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <style>
+        .ErrorMessage {
+            color: red;
+        }
+    </style>
+
     <!--LOADING SCRIPTS FOR PAGE-->
+    <script>
+        $(document).ready(function () {
+            if ($("#message").val().length >= 1) {
+                $("#modal-message").modal("show");
+            }
+
+            $('input[type="checkbox"][id="RememberMeCheckBox"]').on('ifChecked', function (event) {
+                $('input[type="hidden"][name="RememberMe"]').val("true");
+            });
+            $('input[type="checkbox"][id="RememberMeCheckBox"]').on('ifUnchecked', function (event) {
+                $('input[type="hidden"][name="RememberMe"]').val("false");
+            });
+        });
+    </script>
 
     <!--CORE JAVASCRIPT-->
     <script src="~/Content/js/main.js"></script>
 
-
 </head>
-<div id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
-    <div class="page-form">
-        <form action="index.html" class="form">
-            <div class="header-content"><h1 style=" font-family: sans-serif;">Đăng nhập</h1></div>
-            <div class="body-content">
-                <p>Đăng nhập với tài khoản:</p>
 
-                <div class="row mbm text-center">
-                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-twitter btn-block"><i class="fa fa-twitter fa-fw"></i>Twitter</a></div>
-                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-facebook btn-block"><i class="fa fa-facebook fa-fw"></i>Facebook</a></div>
-                    <div class="col-md-4"><a href="#" class="btn btn-sm btn-google-plus btn-block"><i class="fa fa-google-plus fa-fw"></i>Google Plus</a></div>
-                </div>
-                <div class="form-group">
-                    <div class="input-icon right"><i class="fa fa-user"></i><input type="text" placeholder="Username" name="username" class="form-control"></div>
-                </div>
-                <div class="form-group">
-                    <div class="input-icon right"><i class="fa fa-key"></i><input type="password" placeholder="Password" name="password" class="form-control"></div>
-                </div>
-                <div class="form-group pull-left">
-                    <div class="checkbox-list">
-                        <label>
-                            <input type="checkbox">&nbsp;
-                            Ghi nhớ tôi
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <button type="submit" class="btn btn-success">
-                        Đăng nhập
-                        &nbsp;<i class="fa fa-chevron-circle-right"></i>
-                    </button>
-                </div>
-                <div class="clearfix"></div>
-                <div class="forget-password">
-                    <h4>Quên mật khẩu?</h4>
-
-                    <p>Nhấn <a href='#' class='btn-forgot-pwd'>vào đây</a> để lấy lại password.</p>
-                </div>
-                <hr>
-                <p>Chưa có tài khoản? <a id="btn-register" href="@Url.Action("RegisterAccount","Home")">Đăng ký ngay</a></p>
-            </div>
-        </form>
-    </div>
-</div>
 <body class="horizontal-menu-page fixed-topbar">
-    <div>
+
+    <input id="message" type="hidden" value="@ViewBag.message" />
+
+    <!--MESSAGE MODAL-->
+    <div id="modal-message" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+        <div class="page-form">
+            <div class="header-content"><h1 style=" font-family: sans-serif;">Thông báo</h1></div>
+            <div class="body-content">
+                <p>@ViewBag.message</p>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Login", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    {
+        <!--LOGIN MODAL-->
+        <div id="modal-default-login" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+            <div class="page-form">
+                <form action="~/Account/Login" method="post" class="form" role="form">
+                    <input type="hidden" name="returnUrl" value="Home/Index" />
+                    <div class="header-content"><h1 style=" font-family: sans-serif;">Đăng nhập</h1></div>
+                    <div class="body-content">
+                        <!--
+                        <p>Đăng nhập với tài khoản:</p>
+
+                        <div class="row mbm text-center">
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-twitter btn-block"><i class="fa fa-twitter fa-fw"></i>Twitter</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-facebook btn-block"><i class="fa fa-facebook fa-fw"></i>Facebook</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-google-plus btn-block"><i class="fa fa-google-plus fa-fw"></i>Google Plus</a></div>
+                        </div>
+                        -->
+                        <div class="form-group">
+                            <div class="input-icon right"><i class="fa fa-user"></i><input type="text" data-val="true" data-val-required="Ô Username trống." placeholder="Username" name="UserName" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-required="Ô Password trống." placeholder="Mật khẩu" name="Password" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group pull-left">
+                            <div class="checkbox-list">
+                                <label id="remembermelabel">
+                                    <input type="hidden" id="inputRememberMe" name="RememberMe" />
+                                    <input type="checkbox" id="RememberMeCheckBox" />&nbsp;
+                                    Ghi nhớ tôi
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-right">
+                            <button type="submit" value="Log in" class="btn btn-success">
+                                Đăng nhập
+                                &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="forget-password">
+                            <h4>Quên mật khẩu?</h4>
+
+                            <p>Nhấn <a href='#' class='btn-forgot-pwd'>vào đây</a> để lấy lại password.</p>
+                        </div>
+                        <hr>
+                        <p>Chưa có tài khoản? <a data-target="#modal-default-register" data-dismiss="modal" data-toggle="modal">Đăng ký ngay</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("Register", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    {
+        <!--REGISTER MODAL-->
+        <div id="modal-default-register" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+            <div class="page-form">
+                <form action="~/Account/Register" method="post" class="form" role="form">
+                    <input type="hidden" name="returnUrl" value="Home/Index" />
+                    <div class="header-content"><h1 style=" font-family: sans-serif;">Đăng ký</h1></div>
+                    <div class="body-content">
+                        <!--
+                        <p>Đăng nhập với tài khoản:</p>
+
+                        <div class="row mbm text-center">
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-twitter btn-block"><i class="fa fa-twitter fa-fw"></i>Twitter</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-facebook btn-block"><i class="fa fa-facebook fa-fw"></i>Facebook</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-google-plus btn-block"><i class="fa fa-google-plus fa-fw"></i>Google Plus</a></div>
+                        </div>
+                        -->
+                        <div class="form-group">
+                            <label>Username</label>
+                            <div class="input-icon right"><i class="fa fa-user"></i><input type="text" data-val="true" data-val-required="Ô Username trống." placeholder="Username" name="UserName" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu</label>
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-length="Mật khẩu phải có ít nhất 6 kí tự." data-val-length-max="100" data-val-length-min="6" data-val-required="Mật khẩu không được trống." placeholder="Mật khẩu" name="Password" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu xác nhận</label>
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-equalto="'Mật khẩu xác nhận' và 'Mật khẩu' không trùng khớp." data-val-equalto-other="*.Password" placeholder="Mật khẩu xác nhận" name="ConfirmPassword" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="text" data-val="true" data-val-email="Email không đúng định dạng." data-val-length="Độ dài Email không được vượt quá 150." data-val-length-max="150" data-val-required="Email không được trống." placeholder="vd: abc@gmail.com" name="Email" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Bạn là:</label>
+                            <select id="selRoleName" class="form-control" name="RoleName">
+                                <option value="Jobseeker">Người tìm việc</option>
+                                <option value="Recruiter">Nhà tuyển dụng</option>
+                            </select>
+                        </div>
+                        <div class="form-group pull-right">
+                            <button type="submit" value="Register" class="btn btn-success">
+                                Đăng ký
+                                &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    @using (Html.BeginForm("ChangePassword", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    {
+        <!--CHANGE PASSWORD MODAL-->
+        <div id="modal-default-changepassword" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+            <div class="page-form">
+                <form action="~/Account/ChangePassword" method="post" class="form" role="form">
+                    <input type="hidden" name="returnUrl" value="Home/Index" />
+                    <div class="header-content"><h1 style=" font-family: sans-serif;">Đổi mật khẩu</h1></div>
+                    <div class="body-content">
+                        <!--
+                        <p>Đăng nhập với tài khoản:</p>
+
+                        <div class="row mbm text-center">
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-twitter btn-block"><i class="fa fa-twitter fa-fw"></i>Twitter</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-facebook btn-block"><i class="fa fa-facebook fa-fw"></i>Facebook</a></div>
+                            <div class="col-md-4"><a href="#" class="btn btn-sm btn-google-plus btn-block"><i class="fa fa-google-plus fa-fw"></i>Google Plus</a></div>
+                        </div>
+                        -->
+                        <div class="form-group">
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-required="Mật khẩu cũ trống." placeholder="Mật khẩu cũ" name="OldPassword" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="OldPassword" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-length="Mật khẩu phải có ít nhất 6 kí tự." data-val-length-max="100" data-val-length-min="6" data-val-required="Mật khẩu không được trống." placeholder="Mật khẩu" name="NewPassword" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="NewPassword" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-icon right"><i class="fa fa-key"></i><input type="password" data-val="true" data-val-equalto="'Mật khẩu xác nhận' và 'Mật khẩu' không trùng khớp." data-val-equalto-other="*.NewPassword" placeholder="Mật khẩu xác nhận" name="ConfirmPassword" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group pull-right">
+                            <button type="submit" value="Change Password" class="btn btn-success">
+                                Thay đổi
+                                &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
         <!--BEGIN TOPBAR-->
         <div id="header-topbar-option-demo" class="page-header-topbar">
             <nav id="topbar" role="navigation" style="margin-bottom: 0;" class="navbar navbar-default navbar-static-top">
@@ -232,7 +379,7 @@
                             </ul>
                         </li>
                     </ul>
-                    @if (1 > 2)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <ul class="nav navbar-top-links navbar-right">
                         <li class="dropdown">
@@ -319,15 +466,14 @@
                             </ul>
                         </li>
                         <li class="dropdown topbar-user">
-                            <a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/48.jpg" alt="" class="img-responsive img-circle" />&nbsp;<span class="hidden-xs">John Doe</span>&nbsp;<span class="caret"></span></a>
+                            <a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-user"></i>&nbsp;<span class="hidden-xs">@User.Identity.Name</span>&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu dropdown-user pull-right">
-                                <li><a href="extra-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="page-calendar.html"><i class="fa fa-calendar"></i>My Calendar</a></li>
-                                <li><a href="email-inbox.html"><i class="fa fa-envelope"></i>My Inbox<span class="badge badge-danger">3</span></a></li>
-                                <li><a href="#"><i class="fa fa-tasks"></i>My Tasks<span class="badge badge-success">7</span></a></li>
+                                <li><a href="@Url.Action("List", "Profile")"><i class="fa fa-user"></i>Hồ sơ</a></li>
+                                <li><a href="email-inbox.html"><i class="fa fa-envelope"></i>Hộp thư<span class="badge badge-danger">3</span></a></li>
                                 <li class="divider"></li>
-                                <li><a href="extra-lock-screen.html"><i class="fa fa-lock"></i>Lock Screen</a></li>
-                                <li><a href="extra-signin.html"><i class="fa fa-key"></i>Log Out</a></li>
+                                <li><a data-target="#modal-default-changepassword" data-toggle="modal"><i class="fa fa-pencil"></i>Đổi mật khẩu</a></li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "LogOffForm" })) { }
+                                <li><a onclick="document.getElementById('LogOffForm').submit();"><i class="fa fa-key"></i>Log Out</a></li>
                             </ul>
                         </li>
                         <li id="topbar-chat" class="hidden-xs"><a href="javascript:void(0)" class="btn-chat"><i class="fa fa-comments"></i><span class="badge badge-info">3</span></a></li>
@@ -335,7 +481,18 @@
                     }
                     else
                     {
-                        @Html.Partial("_LoginPartial")
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li class="dropdown" style="margin-top: 8px;">
+                                <div class="col-md-4">
+                                    <button type="button" data-target="#modal-default-login" data-toggle="modal" class="btn btn-red">Đăng nhập</button>
+                                </div>
+                            </li>
+                            <li class="dropdown">
+                                <div class="col-md-4">
+                                    <button type="button" data-target="#modal-default-register" data-toggle="modal" class="btn btn-blue">Đăng ký</button>
+                                </div>
+                            </li>
+                        </ul>
                     }
                     
                 </div>
@@ -379,8 +536,6 @@
             </div>
             <!--END PAGE WRAPPER-->
         </div>
-    </div>
 
-   
 </body>
 </html>
