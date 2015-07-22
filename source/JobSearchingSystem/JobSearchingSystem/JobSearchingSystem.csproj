@@ -202,9 +202,6 @@
     <Compile Include="Contact.cs">
       <DependentUpon>JSSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ContactCity.cs">
-      <DependentUpon>JSSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertiseController.cs" />
     <Compile Include="Controllers\ApplicantController.cs" />
@@ -221,7 +218,13 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>JSSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\CommonListUnitOfWork.cs" />
+    <Compile Include="DAL\CompanyInfoUnitOfWork.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\HomeUnitOfWork.cs" />
+    <Compile Include="DAL\JobUnitOfWork.cs" />
+    <Compile Include="DAL\ProfileUnitOfWork.cs" />
+    <Compile Include="DAL\TopicUnitOfWork.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DesiredBenefit.cs">
       <DependentUpon>JSSModel.tt</DependentUpon>
@@ -302,7 +305,13 @@
       <DependentUpon>JSSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CommonListViewModels.cs" />
+    <Compile Include="Models\CompanyInfoViewModels.cs" />
+    <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JobViewModels.cs" />
+    <Compile Include="Models\ProfileViewModels.cs" />
+    <Compile Include="Models\TopicViewModels.cs" />
     <Compile Include="OwnSkill.cs">
       <DependentUpon>JSSModel.tt</DependentUpon>
     </Compile>
@@ -2705,6 +2714,7 @@
     <Content Include="Content\vendors\moment\readme.md" />
     <Content Include="Content\vendors\slimScroll\README.md" />
     <Content Include="Content\vendors\slimScroll\slimScroll.jquery.json" />
+    <Content Include="ClassDiagram5.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2742,13 +2752,13 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Profile\Create.cshtml" />
+    <Content Include="Views\Profile\Update.cshtml" />
     <Content Include="Views\Topic\Create.cshtml" />
     <Content Include="Views\Job\Find.cshtml" />
     <Content Include="Views\Job\Detail.cshtml" />
-    <Content Include="Views\Message\List.cshtml" />
+    <Content Include="Views\Message\Inbox.cshtml" />
     <Content Include="Views\Profile\List.cshtml" />
-    <Content Include="Views\Job\AppliedJobList.cshtml" />
+    <Content Include="Views\Job\AppliedList.cshtml" />
     <Content Include="Views\Account\RegisterAccount.cshtml" />
     <Content Include="Views\Topic\List.cshtml" />
     <Content Include="Views\Topic\Detail.cshtml" />
@@ -2767,8 +2777,17 @@
     <Content Include="Views\Shared\_LayoutStatistic.cshtml" />
     <Content Include="Views\Advertise\Index.cshtml" />
     <Content Include="Views\CommonList\Index.cshtml" />
-    <Content Include="Views\CompanyInfo\Index.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\CommonList\CityList.cshtml" />
+    <Content Include="Views\CommonList\CategoryList.cshtml" />
+    <Content Include="Views\CommonList\JobLevelList.cshtml" />
+    <Content Include="Views\CommonList\LanguageList.cshtml" />
+    <Content Include="Views\CommonList\SchoolLevelList.cshtml" />
+    <Content Include="Views\CompanyInfo\Update.cshtml" />
+    <Content Include="Views\CommonList\LevelList.cshtml" />
+    <Content Include="Views\Job\AppliedJobList.cshtml" />
+    <Content Include="Views\Profile\Create.cshtml" />
+    <Content Include="Views\Message\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
