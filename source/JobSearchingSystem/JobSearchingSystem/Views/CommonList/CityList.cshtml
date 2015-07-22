@@ -36,7 +36,7 @@
                     @using (Html.BeginForm("UpdateCity", "CommonList", FormMethod.Post))
                     {
                         <div class="modal-body">
-                            <input type="hidden" name="id" value="@item.CityID" />
+                            <input type="hidden" name="id" id="id" value="@item.CityID" />
                             <p>Tên thành phố<span class="require">*</span></p>
                             @Html.TextBoxFor(m => m.name, new { @class = "form-control mbm", Value = item.Name})
                             @Html.ValidationMessageFor(m => m.name, "", new { @class = "ErrorMessage" })
@@ -120,7 +120,7 @@
 
                                     @using (Html.BeginForm("DeleteCity", "CommonList", FormMethod.Post, new { style = "display:inline" }))
                                     {
-                                        <input type="hidden" name="id" value="#@item.CityID" />
+                                        <input type="hidden" name="id" value="@item.CityID" />
                                         <button type="submit" class="btn btn-danger btn-xs">
                                             <i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa
