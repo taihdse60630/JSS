@@ -40,7 +40,6 @@ namespace JobSearchingSystem
         public virtual DbSet<CompanyInfo> CompanyInfoes { get; set; }
         public virtual DbSet<CompanyInfoCity> CompanyInfoCities { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
-        public virtual DbSet<ContactCity> ContactCities { get; set; }
         public virtual DbSet<DesiredBenefit> DesiredBenefits { get; set; }
         public virtual DbSet<EducationHistory> EducationHistories { get; set; }
         public virtual DbSet<EmploymentHistory> EmploymentHistories { get; set; }

@@ -102,14 +102,77 @@
                 $('#EmploymentHistoryDiv').slideDown(300);
                 $('#EmploymentHistoryDiv').find('[data-val]').attr("data-val", "true");
                 $('#EmploymentHistoryStatus').val("true");
+                $('#ToggleEmploymentHistory').removeClass('btn-success').addClass('btn-danger');
+                $('#ToggleEmploymentHistory').html('Ẩn kinh nghiệm làm việc <i class="fa fa-minus"></i>');
+                $('[name="EducationHistoryID"]').val("-1");
             }
             else {
                 // Hide
                 $('#EmploymentHistoryDiv').slideUp(300);
                 $('#EmploymentHistoryDiv').find('[data-val]').attr("data-val", "false");
                 $('#EmploymentHistoryStatus').val("false");
+                $('#ToggleEmploymentHistory').removeClass('btn-danger').addClass('btn-success');
+                $('#ToggleEmploymentHistory').html('Thêm kinh nghiệm làm việc <i class="fa fa-plus"></i>');
+                $('[name="EducationHistoryID"]').val("-2");
             }
         });
+
+        $('#ToggleEducationHistory').click(function () {
+            var status = $('#EducationHistoryStatus').val();
+            if (status == "false") {
+                // Show
+                $('#EducationHistoryDiv').slideDown(300);
+                $('#EducationHistoryDiv').find('[data-val]').attr("data-val", "true");
+                $('#EducationHistoryStatus').val("true");
+                $('#ToggleEducationHistory').removeClass('btn-success').addClass('btn-danger');
+                $('#ToggleEducationHistory').html('Ẩn học vấn <i class="fa fa-minus"></i>');
+                $('[name="ReferencePersonID"]').val("-1");
+            }
+            else {
+                // Hide
+                $('#EducationHistoryDiv').slideUp(300);
+                $('#EducationHistoryDiv').find('[data-val]').attr("data-val", "false");
+                $('#EducationHistoryStatus').val("false");
+                $('#ToggleEducationHistory').removeClass('btn-danger').addClass('btn-success');
+                $('#ToggleEducationHistory').html('Thêm học vấn <i class="fa fa-plus"></i>');
+                $('[name="ReferencePersonID"]').val("-2");
+            }
+        });
+
+        $('#ToggleReferencePerson').click(function () {
+            var status = $('#ReferencePersonStatus').val();
+            if (status == "false") {
+                // Show
+                $('#ReferencePersonDiv').slideDown(300);
+                $('#ReferencePersonDiv').find('[data-val]').attr("data-val", "true");
+                $('#ReferencePersonStatus').val("true");
+                $('#ToggleReferencePerson').removeClass('btn-success').addClass('btn-danger');
+                $('#ToggleReferencePerson').html('Ẩn thông tin tham khảo <i class="fa fa-minus"></i>');
+                $('[name="EducationHistoryID"]').val("-1");
+            }
+            else {
+                // Hide
+                $('#ReferencePersonDiv').slideUp(300);
+                $('#ReferencePersonDiv').find('[data-val]').attr("data-val", "false");
+                $('#ReferencePersonStatus').val("false");
+                $('#ToggleReferencePerson').removeClass('btn-danger').addClass('btn-success');
+                $('#ToggleReferencePerson').html('Thêm thông tin tham khảo <i class="fa fa-plus"></i>');
+                $('[name="EducationHistoryID"]').val("-2");
+            }
+        });
+
+        if ($('[name="EmploymentHistoryID"]').val() == -1) {
+            $('#EmploymentHistoryDiv').slideUp();
+            $('#EmploymentHistoryDiv').find('[data-val]').attr("data-val", "false");
+        }
+        if ($('[name="EducationHistoryID"]').val() == -1) {
+            $('#EducationHistoryDiv').slideUp();
+            $('#EducationHistoryDiv').find('[data-val]').attr("data-val", "false");
+        }
+        if ($('[name="ReferencePersonID"]').val() == -1) {
+            $('#ReferencePersonDiv').slideUp();
+            $('#ReferencePersonDiv').find('[data-val]').attr("data-val", "false");
+        }
     });
 
 
@@ -366,6 +429,7 @@
                             <div class="form-body pal">
                                 @using (Html.BeginForm("UpdateCommonInfo", "Profile", FormMethod.Post))
                                 {
+                                    <input type="hidden" name="profileID" value="@Model.commonInfoItem.profile.ProfileID" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -768,11 +832,13 @@
         </div>
     </div>
 
-    <input type="hidden" id="EmploymentHistoryStatus" value="true" />
-    <button id="ToggleEmploymentHistory" class="btn btn-success" style="margin-bottom:20px">
-        Thêm kinh nghiệm làm việc
-        &nbsp;<i class="fa fa-plus"></i>
-    </button>
+    @if (Model.employmentHistory.EmploymentHistoryID == -1)
+    {
+        <input type="hidden" id="EmploymentHistoryStatus" value="false" />
+        <button id="ToggleEmploymentHistory" class="btn btn-success" style="margin-bottom:20px">
+            Thêm kinh nghiệm làm việc <i class="fa fa-plus"></i>
+        </button>
+    }
 
     <br />
     <!--Kinh nghiệm làm việc div-->
@@ -789,7 +855,6 @@
                                 @using (Html.BeginForm("UpdateEmploymentHistory", "Profile", FormMethod.Post))
                                 {
                                     <input type="hidden" name="EmploymentHistoryID" value="@Model.employmentHistory.EmploymentHistoryID" />
-                                    <input type="hidden" name="profileID" value="@Model.commonInfoItem.profile.ProfileID" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -822,8 +887,8 @@
                                                 <label for="inputPosition" class="col-md-3 control-label">Thời gian công tác <span class="require">*</span></label>
 
                                                 <div class="col-md-3">
-                                                    <input id="YearOfExperience" name="YearOfExperience" value="@Model.employmentHistory.YearOfExperience" type="text" data-val="true" data-val-number="Thời gian công tác phải nhập định dạng số." data-val-required="Thời gian công tác không được trống." placeholder="" class="form-control">
-                                                    <span class="field-validation-valid ErrorMessage" data-valmsg-for="YearOfExperience" data-valmsg-replace="true"></span>
+                                                    <input id="WorkingTime" name="WorkingTime" value="@Model.employmentHistory.WorkingTime" type="text" data-val="true" data-val-number="Thời gian công tác phải nhập định dạng số." data-val-required="Thời gian công tác không được trống." placeholder="" class="form-control">
+                                                    <span class="field-validation-valid ErrorMessage" data-valmsg-for="WorkingTime" data-valmsg-replace="true"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -847,10 +912,18 @@
             </div>
         </div>
     </div>
+    
+    @if (Model.educationHistory.EducationHistoryID == -1)
+    {
+        <input type="hidden" id="EducationHistoryStatus" value="false" />
+        <button id="ToggleEducationHistory" class="btn btn-success" style="margin-bottom:20px">
+            Thêm học vấn <i class="fa fa-plus"></i>
+        </button>
+    }
 
     <br />
     <!--Học vấn div-->
-    <div class="col-lg-12 panel panel-default">
+    <div id="EducationHistoryDiv" class="col-lg-12 panel panel-default">
         <br />
 
         <div id="tab-two-columns-horizontal" class="tab-pane fade active in">
@@ -863,7 +936,6 @@
                                 @using (Html.BeginForm("UpdateEducationHistory", "Profile", FormMethod.Post))
                                 {
                                     <input type="hidden" name="EducationHistoryID" value="@Model.educationHistory.EducationHistoryID" />
-                                    <input type="hidden" name="profileID" value="@Model.commonInfoItem.profile.ProfileID" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -942,9 +1014,17 @@
         </div>
     </div>
 
+    @if (Model.referencePerson.ReferencePersonID == -1)
+    {
+        <input type="hidden" id="ReferencePersonStatus" value="false" />
+        <button id="ToggleReferencePerson" class="btn btn-success" style="margin-bottom:20px">
+            Thêm thông tin tham khảo <i class="fa fa-plus"></i>
+        </button>
+    }
+
     <br />
     <!--Thông tin tham khảo div-->
-    <div class="col-lg-12 panel panel-default">
+    <div id="ReferencePersonDiv" class="col-lg-12 panel panel-default">
         <br />
 
         <div id="tab-two-columns-horizontal" class="tab-pane fade active in">
@@ -957,7 +1037,6 @@
                                 @using (Html.BeginForm("UpdateReferencePerson", "Profile", FormMethod.Post))
                                 {
                                     <input type="hidden" name="ReferencePersonID" value="@Model.referencePerson.ReferencePersonID" />
-                                    <input type="hidden" name="profileID" value="@Model.commonInfoItem.profile.ProfileID" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -965,8 +1044,8 @@
                                                 <label for="inputPosition" class="col-md-3 control-label">Họ tên <span class="require">*</span></label>
 
                                                 <div class="col-md-9">
-                                                    @Html.TextBoxFor(s => s.referencePersonForm.FullName, new { @class = "form-control", Value = Model.referencePerson.FullName, Name = "FullName" })
-                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.FullName, "", new { @class = "ErrorMessage", data_valmsg_for = "FullName" })
+                                                    @Html.TextBoxFor(s => s.referencePersonForm.ReferencePersonName, new { @class = "form-control", Value = Model.referencePerson.ReferencePersonName, Name = "ReferencePersonName" })
+                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.ReferencePersonName, "", new { @class = "ErrorMessage", data_valmsg_for = "ReferencePersonName" })
                                                 </div>
 
                                             </div>
@@ -977,8 +1056,8 @@
                                                 <label for="inputPosition" class="col-md-3 control-label">Chức danh <span class="require">*</span></label>
 
                                                 <div class="col-md-9">
-                                                    @Html.TextBoxFor(s => s.referencePersonForm.Position, new { @class = "form-control", Value = Model.referencePerson.Position, Name = "Position" })
-                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.Position, "", new { @class = "ErrorMessage", data_valmsg_for = "Position" })
+                                                    @Html.TextBoxFor(s => s.referencePersonForm.ReferencePersonPosition, new { @class = "form-control", Value = Model.referencePerson.ReferencePersonPosition, Name = "ReferencePersonPosition" })
+                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.ReferencePersonPosition, "", new { @class = "ErrorMessage", data_valmsg_for = "ReferencePersonPosition" })
                                                 </div>
 
                                             </div>
@@ -991,8 +1070,8 @@
                                                 <label for="inputPosition" class="col-md-3 control-label">Công ty <span class="require">*</span></label>
 
                                                 <div class="col-md-9">
-                                                    @Html.TextBoxFor(s => s.referencePersonForm.Company, new { @class = "form-control", Value = Model.referencePerson.Company, Name = "Company", style = "width:240%" })
-                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.Company, "", new { @class = "ErrorMessage", data_valmsg_for = "Company" })
+                                                    @Html.TextBoxFor(s => s.referencePersonForm.ReferencePersonCompany, new { @class = "form-control", Value = Model.referencePerson.ReferencePersonCompany, Name = "ReferencePersonCompany", style = "width:240%" })
+                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.ReferencePersonCompany, "", new { @class = "ErrorMessage", data_valmsg_for = "ReferencePersonCompany" })
                                                 </div>
 
                                             </div>
@@ -1016,8 +1095,8 @@
                                                 <label for="inputPhone" class="col-md-3 control-label">Điện thoại</label>
 
                                                 <div class="col-md-9">
-                                                    @Html.TextBoxFor(s => s.referencePersonForm.PhoneNumber, new { @class = "form-control", Value = Model.referencePerson.PhoneNumber, id = "inputPhone", Name = "PhoneNumber" })
-                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.PhoneNumber, "", new { @class = "ErrorMessage", data_valmsg_for = "PhoneNumber" })
+                                                    @Html.TextBoxFor(s => s.referencePersonForm.ReferencePersonPhoneNumber, new { @class = "form-control", Value = Model.referencePerson.ReferencePersonPhoneNumber, id = "inputPhone", Name = "ReferencePersonPhoneNumber" })
+                                                    @Html.ValidationMessageFor(s => s.referencePersonForm.ReferencePersonPhoneNumber, "", new { @class = "ErrorMessage", data_valmsg_for = "ReferencePersonPhoneNumber" })
                                                 </div>
                                             </div>
                                         </div>

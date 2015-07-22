@@ -23,6 +23,7 @@ namespace JobSearchingSystem
         }
     
         public string RecruiterID { get; set; }
+        public string Email { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

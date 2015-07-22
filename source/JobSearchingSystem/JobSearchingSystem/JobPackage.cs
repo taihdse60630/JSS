@@ -26,10 +26,10 @@ namespace JobSearchingSystem
         public bool IsHighlight { get; set; }
         public bool IsCategoryPriority { get; set; }
         public bool IsHomepagePosting { get; set; }
-        public Nullable<int> AutoUpNumber { get; set; }
         public Nullable<int> ViewMultiNumber { get; set; }
         public string MoreDescription { get; set; }
         public decimal Cost { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<PurchaseJobPackage> PurchaseJobPackages { get; set; }
     }

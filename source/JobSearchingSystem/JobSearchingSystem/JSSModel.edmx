@@ -28,9 +28,10 @@
           </Key>
           <Property Name="AdvertiseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AlertEmail">
           <Key>
@@ -104,8 +105,8 @@
             <PropertyRef Name="BenefitID" />
           </Key>
           <Property Name="BenefitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
@@ -113,7 +114,7 @@
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -153,23 +154,15 @@
           </Key>
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DateofBirth" Type="date" Nullable="false" />
           <Property Name="Gender" Type="bit" Nullable="false" />
           <Property Name="MaritalStatus" Type="bit" Nullable="false" />
           <Property Name="Nationality" Type="bit" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="150" />
-          <Property Name="District" Type="nvarchar" MaxLength="20" />
+          <Property Name="DateofBirth" Type="date" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="IsVisible" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ContactCity">
-          <Key>
-            <PropertyRef Name="JobSeekerID" />
-            <PropertyRef Name="CityID" />
-          </Key>
-          <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="District" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsVisible" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DesiredBenefit">
           <Key>
@@ -188,11 +181,7 @@
           <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="School" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SchoolLevel_ID" Type="int" Nullable="false" />
-          <Property Name="BeginMonth" Type="date" />
-          <Property Name="EndMonth" Type="date" />
           <Property Name="Achievement" Type="ntext" />
-          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
           <Property Name="ProfileID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -203,12 +192,8 @@
           <Property Name="EmploymentHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Company" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BeginMonth" Type="date" />
-          <Property Name="EndMonth" Type="date" />
-          <Property Name="IsCurrentJob" Type="bit" Nullable="false" />
+          <Property Name="WorkingTime" Type="int" Nullable="false" />
           <Property Name="Description" Type="ntext" />
-          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
           <Property Name="ProfileID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -251,6 +236,7 @@
           <Property Name="JobDescription" Type="ntext" Nullable="false" />
           <Property Name="JobLevel_ID" Type="int" Nullable="false" />
           <Property Name="MinSchoolLevel_ID" Type="int" Nullable="false" />
+          <Property Name="JobView" Type="bigint" Nullable="false" />
           <Property Name="StartedDate" Type="date" />
           <Property Name="EndedDate" Type="date" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
@@ -267,11 +253,11 @@
         </EntityType>
         <EntityType Name="JobCategory">
           <Key>
-            <PropertyRef Name="JobID" />
             <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="JobID" />
           </Key>
-          <Property Name="JobID" Type="int" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="JobID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="JobCity">
@@ -314,10 +300,10 @@
           <Property Name="IsHighlight" Type="bit" Nullable="false" />
           <Property Name="IsCategoryPriority" Type="bit" Nullable="false" />
           <Property Name="IsHomepagePosting" Type="bit" Nullable="false" />
-          <Property Name="AutoUpNumber" Type="int" />
           <Property Name="ViewMultiNumber" Type="int" />
           <Property Name="MoreDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Jobseeker">
           <Key>
@@ -350,7 +336,7 @@
             <PropertyRef Name="Level_ID" />
           </Key>
           <Property Name="Level_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LevelNum" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -396,6 +382,7 @@
             <PropertyRef Name="ProfileID" />
           </Key>
           <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="YearOfExperience" Type="int" Nullable="false" />
           <Property Name="HighestSchoolLevel_ID" Type="int" Nullable="false" />
           <Property Name="MostRecentCompany" Type="nvarchar" MaxLength="50" />
@@ -403,9 +390,11 @@
           <Property Name="CurrentJobLevel_ID" Type="int" />
           <Property Name="ExpectedPosition" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ExpectedJobLevel_ID" Type="int" Nullable="false" />
-          <Property Name="ExpectedMinSalary" Type="money" Nullable="false" />
-          <Property Name="ExpectedMaxSalary" Type="money" />
+          <Property Name="ExpectedSalary" Type="money" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
           <Property Name="Objectives" Type="ntext" Nullable="false" />
+          <Property Name="PercentStatus" Type="int" Nullable="false" />
           <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -434,6 +423,7 @@
           <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="IsApproved" Type="bit" Nullable="false" />
           <Property Name="ManagerID" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PurchaseJobPackage">
           <Key>
@@ -446,12 +436,14 @@
           <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="IsApproved" Type="bit" Nullable="false" />
           <Property Name="StaffID" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Recruiter">
           <Key>
             <PropertyRef Name="RecruiterID" />
           </Key>
           <Property Name="RecruiterID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ReferencePerson">
@@ -459,13 +451,11 @@
             <PropertyRef Name="ReferencePersonID" />
           </Key>
           <Property Name="ReferencePersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Company" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReferencePersonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReferencePersonPosition" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReferencePersonCompany" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
-          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
+          <Property Name="ReferencePersonPhoneNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="ProfileID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -475,6 +465,7 @@
           </Key>
           <Property Name="ReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Report_content" Type="ntext" Nullable="false" />
+          <Property Name="ReferenceLink" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="SenderID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IsSolved" Type="bit" Nullable="false" />
@@ -486,7 +477,7 @@
             <PropertyRef Name="SchoolLevel_ID" />
           </Key>
           <Property Name="SchoolLevel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LevelNum" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -520,7 +511,9 @@
             <PropertyRef Name="TopicID" />
           </Key>
           <Property Name="TopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="WriterID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="250" />
           <Property Name="Topic_content" Type="ntext" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -645,27 +638,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContactCity_City">
+        <Association Name="FK_Contact_City">
           <End Role="City" Type="Self.City" Multiplicity="1" />
-          <End Role="ContactCity" Type="Self.ContactCity" Multiplicity="*" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="City">
               <PropertyRef Name="CityID" />
             </Principal>
-            <Dependent Role="ContactCity">
+            <Dependent Role="Contact">
               <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ContactCity_Contact">
-          <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
-          <End Role="ContactCity" Type="Self.ContactCity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ContactCity">
-              <PropertyRef Name="JobSeekerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1366,7 +1347,6 @@
           <EntitySet Name="CompanyInfo" EntityType="Self.CompanyInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyInfoCity" EntityType="Self.CompanyInfoCity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ContactCity" EntityType="Self.ContactCity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DesiredBenefit" EntityType="Self.DesiredBenefit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationHistory" EntityType="Self.EducationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmploymentHistory" EntityType="Self.EmploymentHistory" Schema="dbo" store:Type="Tables" />
@@ -1437,13 +1417,9 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Contact" EntitySet="Contact" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContactCity_City" Association="Self.FK_ContactCity_City">
+          <AssociationSet Name="FK_Contact_City" Association="Self.FK_Contact_City">
             <End Role="City" EntitySet="City" />
-            <End Role="ContactCity" EntitySet="ContactCity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ContactCity_Contact" Association="Self.FK_ContactCity_Contact">
             <End Role="Contact" EntitySet="Contact" />
-            <End Role="ContactCity" EntitySet="ContactCity" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1690,7 +1666,6 @@
           <EntitySet Name="CompanyInfoes" EntityType="JSSModel.CompanyInfo" />
           <EntitySet Name="CompanyInfoCities" EntityType="JSSModel.CompanyInfoCity" />
           <EntitySet Name="Contacts" EntityType="JSSModel.Contact" />
-          <EntitySet Name="ContactCities" EntityType="JSSModel.ContactCity" />
           <EntitySet Name="DesiredBenefits" EntityType="JSSModel.DesiredBenefit" />
           <EntitySet Name="EducationHistories" EntityType="JSSModel.EducationHistory" />
           <EntitySet Name="EmploymentHistories" EntityType="JSSModel.EmploymentHistory" />
@@ -1817,9 +1792,9 @@
             <End Role="City" EntitySet="Cities" />
             <End Role="CompanyInfoCity" EntitySet="CompanyInfoCities" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContactCity_City" Association="JSSModel.FK_ContactCity_City">
+          <AssociationSet Name="FK_Contact_City" Association="JSSModel.FK_Contact_City">
             <End Role="City" EntitySet="Cities" />
-            <End Role="ContactCity" EntitySet="ContactCities" />
+            <End Role="Contact" EntitySet="Contacts" />
           </AssociationSet>
           <AssociationSet Name="FK_ExpectedCity_City" Association="JSSModel.FK_ExpectedCity_City">
             <End Role="City" EntitySet="Cities" />
@@ -1836,10 +1811,6 @@
           <AssociationSet Name="FK_CompanyInfoCity_CompanyInfo" Association="JSSModel.FK_CompanyInfoCity_CompanyInfo">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="CompanyInfoCity" EntitySet="CompanyInfoCities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ContactCity_Contact" Association="JSSModel.FK_ContactCity_Contact">
-            <End Role="Contact" EntitySet="Contacts" />
-            <End Role="ContactCity" EntitySet="ContactCities" />
           </AssociationSet>
           <AssociationSet Name="FK_DesiredBenefit_Jobseeker" Association="JSSModel.FK_DesiredBenefit_Jobseeker">
             <End Role="Jobseeker" EntitySet="Jobseekers" />
@@ -2014,9 +1985,10 @@
           </Key>
           <Property Name="AdvertiseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PurchaseAdvertises" Relationship="JSSModel.FK_PurchaseAdvertise_Advertise" FromRole="Advertise" ToRole="PurchaseAdvertise" />
         </EntityType>
         <EntityType Name="AlertEmail">
@@ -2104,8 +2076,8 @@
             <PropertyRef Name="BenefitID" />
           </Key>
           <Property Name="BenefitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DesiredBenefits" Relationship="JSSModel.FK_DesiredBenefit_Benefit" FromRole="Benefit" ToRole="DesiredBenefit" />
           <NavigationProperty Name="JobBenefits" Relationship="JSSModel.FK_JobBenefit_Benefit" FromRole="Benefit" ToRole="JobBenefit" />
@@ -2115,7 +2087,7 @@
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ExpectedCategories" Relationship="JSSModel.FK_ExpectedCategory_Category" FromRole="Category" ToRole="ExpectedCategory" />
@@ -2129,7 +2101,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CompanyInfoCities" Relationship="JSSModel.FK_CompanyInfoCity_City" FromRole="City" ToRole="CompanyInfoCity" />
-          <NavigationProperty Name="ContactCities" Relationship="JSSModel.FK_ContactCity_City" FromRole="City" ToRole="ContactCity" />
+          <NavigationProperty Name="Contacts" Relationship="JSSModel.FK_Contact_City" FromRole="City" ToRole="Contact" />
           <NavigationProperty Name="ExpectedCities" Relationship="JSSModel.FK_ExpectedCity_City" FromRole="City" ToRole="ExpectedCity" />
           <NavigationProperty Name="JobCities" Relationship="JSSModel.FK_JobCity_City" FromRole="City" ToRole="JobCity" />
         </EntityType>
@@ -2165,27 +2137,17 @@
           </Key>
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Gender" Type="Boolean" Nullable="false" />
           <Property Name="MaritalStatus" Type="Boolean" Nullable="false" />
           <Property Name="Nationality" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="JSSModel.FK_Contact_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
-          <NavigationProperty Name="ContactCities" Relationship="JSSModel.FK_ContactCity_Contact" FromRole="Contact" ToRole="ContactCity" />
-        </EntityType>
-        <EntityType Name="ContactCity">
-          <Key>
-            <PropertyRef Name="JobSeekerID" />
-            <PropertyRef Name="CityID" />
-          </Key>
-          <Property Name="JobSeekerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CityID" Type="Int32" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="City" Relationship="JSSModel.FK_ContactCity_City" FromRole="ContactCity" ToRole="City" />
-          <NavigationProperty Name="Contact" Relationship="JSSModel.FK_ContactCity_Contact" FromRole="ContactCity" ToRole="Contact" />
+          <NavigationProperty Name="City" Relationship="JSSModel.FK_Contact_City" FromRole="Contact" ToRole="City" />
         </EntityType>
         <EntityType Name="DesiredBenefit">
           <Key>
@@ -2206,11 +2168,7 @@
           <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SchoolLevel_ID" Type="Int32" Nullable="false" />
-          <Property Name="BeginMonth" Type="DateTime" Precision="0" />
-          <Property Name="EndMonth" Type="DateTime" Precision="0" />
           <Property Name="Achievement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProfileID" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="JSSModel.FK_EducationHistory_Profile" FromRole="EducationHistory" ToRole="Profile" />
@@ -2223,12 +2181,8 @@
           <Property Name="EmploymentHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BeginMonth" Type="DateTime" Precision="0" />
-          <Property Name="EndMonth" Type="DateTime" Precision="0" />
-          <Property Name="IsCurrentJob" Type="Boolean" Nullable="false" />
+          <Property Name="WorkingTime" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProfileID" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="JSSModel.FK_EmploymentHistory_Profile" FromRole="EmploymentHistory" ToRole="Profile" />
@@ -2276,6 +2230,7 @@
           <Property Name="JobDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="JobLevel_ID" Type="Int32" Nullable="false" />
           <Property Name="MinSchoolLevel_ID" Type="Int32" Nullable="false" />
+          <Property Name="JobView" Type="Int64" Nullable="false" />
           <Property Name="StartedDate" Type="DateTime" Precision="0" />
           <Property Name="EndedDate" Type="DateTime" Precision="0" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
@@ -2303,11 +2258,11 @@
         </EntityType>
         <EntityType Name="JobCategory">
           <Key>
-            <PropertyRef Name="JobID" />
             <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="JobID" />
           </Key>
-          <Property Name="JobID" Type="Int32" Nullable="false" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="JobID" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="JSSModel.FK_JobCategory_Category" FromRole="JobCategory" ToRole="Category" />
           <NavigationProperty Name="Job" Relationship="JSSModel.FK_JobCategory_Job" FromRole="JobCategory" ToRole="Job" />
@@ -2360,10 +2315,10 @@
           <Property Name="IsHighlight" Type="Boolean" Nullable="false" />
           <Property Name="IsCategoryPriority" Type="Boolean" Nullable="false" />
           <Property Name="IsHomepagePosting" Type="Boolean" Nullable="false" />
-          <Property Name="AutoUpNumber" Type="Int32" />
           <Property Name="ViewMultiNumber" Type="Int32" />
           <Property Name="MoreDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PurchaseJobPackages" Relationship="JSSModel.FK_PurchaseJobPackage_JobPackage" FromRole="JobPackage" ToRole="PurchaseJobPackage" />
         </EntityType>
         <EntityType Name="Jobseeker">
@@ -2406,7 +2361,7 @@
             <PropertyRef Name="Level_ID" />
           </Key>
           <Property Name="Level_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LevelNum" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="JobLanguages" Relationship="JSSModel.FK_JobLanguage_Level" FromRole="Level" ToRole="JobLanguage" />
@@ -2462,6 +2417,7 @@
             <PropertyRef Name="ProfileID" />
           </Key>
           <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="YearOfExperience" Type="Int32" Nullable="false" />
           <Property Name="HighestSchoolLevel_ID" Type="Int32" Nullable="false" />
           <Property Name="MostRecentCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2469,9 +2425,11 @@
           <Property Name="CurrentJobLevel_ID" Type="Int32" />
           <Property Name="ExpectedPosition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ExpectedJobLevel_ID" Type="Int32" Nullable="false" />
-          <Property Name="ExpectedMinSalary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ExpectedMaxSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ExpectedSalary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Objectives" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PercentStatus" Type="Int32" Nullable="false" />
           <Property Name="JobSeekerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -2515,6 +2473,7 @@
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
           <Property Name="ManagerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Advertise" Relationship="JSSModel.FK_PurchaseAdvertise_Advertise" FromRole="PurchaseAdvertise" ToRole="Advertise" />
           <NavigationProperty Name="Manager" Relationship="JSSModel.FK_PurchaseAdvertise_Manager" FromRole="PurchaseAdvertise" ToRole="Manager" />
           <NavigationProperty Name="Recruiter" Relationship="JSSModel.FK_PurchaseAdvertise_Recruiter" FromRole="PurchaseAdvertise" ToRole="Recruiter" />
@@ -2530,6 +2489,7 @@
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
           <Property Name="StaffID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="JobPackage" Relationship="JSSModel.FK_PurchaseJobPackage_JobPackage" FromRole="PurchaseJobPackage" ToRole="JobPackage" />
           <NavigationProperty Name="Recruiter" Relationship="JSSModel.FK_PurchaseJobPackage_Recruiter" FromRole="PurchaseJobPackage" ToRole="Recruiter" />
           <NavigationProperty Name="Staff" Relationship="JSSModel.FK_PurchaseJobPackage_Staff" FromRole="PurchaseJobPackage" ToRole="Staff" />
@@ -2539,6 +2499,7 @@
             <PropertyRef Name="RecruiterID" />
           </Key>
           <Property Name="RecruiterID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="JSSModel.FK_Recruiter_AspNetUsers" FromRole="Recruiter" ToRole="AspNetUser" />
           <NavigationProperty Name="CompanyInfo" Relationship="JSSModel.FK_CompanyInfo_Recruiter" FromRole="Recruiter" ToRole="CompanyInfo" />
@@ -2552,13 +2513,11 @@
             <PropertyRef Name="ReferencePersonID" />
           </Key>
           <Property Name="ReferencePersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferencePersonName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferencePersonPosition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferencePersonCompany" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReferencePersonPhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ProfileID" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="JSSModel.FK_ReferencePerson_Profile" FromRole="ReferencePerson" ToRole="Profile" />
@@ -2569,6 +2528,7 @@
           </Key>
           <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Report_content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SenderID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="IsSolved" Type="Boolean" Nullable="false" />
@@ -2582,7 +2542,7 @@
             <PropertyRef Name="SchoolLevel_ID" />
           </Key>
           <Property Name="SchoolLevel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LevelNum" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EducationHistories" Relationship="JSSModel.FK_EducationHistory_SchoolLevel" FromRole="SchoolLevel" ToRole="EducationHistory" />
@@ -2625,7 +2585,9 @@
             <PropertyRef Name="TopicID" />
           </Key>
           <Property Name="TopicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="WriterID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Topic_content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
@@ -2926,14 +2888,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContactCity_City">
+        <Association Name="FK_Contact_City">
           <End Type="JSSModel.City" Role="City" Multiplicity="1" />
-          <End Type="JSSModel.ContactCity" Role="ContactCity" Multiplicity="*" />
+          <End Type="JSSModel.Contact" Role="Contact" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="City">
               <PropertyRef Name="CityID" />
             </Principal>
-            <Dependent Role="ContactCity">
+            <Dependent Role="Contact">
               <PropertyRef Name="CityID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2983,18 +2945,6 @@
             </Principal>
             <Dependent Role="CompanyInfoCity">
               <PropertyRef Name="RecuiterID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ContactCity_Contact">
-          <End Type="JSSModel.Contact" Role="Contact" Multiplicity="1" />
-          <End Type="JSSModel.ContactCity" Role="ContactCity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ContactCity">
-              <PropertyRef Name="JobSeekerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3461,6 +3411,7 @@
           <EntitySetMapping Name="Advertises">
             <EntityTypeMapping TypeName="JSSModel.Advertise">
               <MappingFragment StoreEntitySet="Advertise">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -3587,24 +3538,16 @@
             <EntityTypeMapping TypeName="JSSModel.Contact">
               <MappingFragment StoreEntitySet="Contact">
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Nationality" ColumnName="Nationality" />
                 <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ContactCities">
-            <EntityTypeMapping TypeName="JSSModel.ContactCity">
-              <MappingFragment StoreEntitySet="ContactCity">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="JobSeekerID" ColumnName="JobSeekerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3622,11 +3565,7 @@
               <MappingFragment StoreEntitySet="EducationHistory">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
                 <ScalarProperty Name="Achievement" ColumnName="Achievement" />
-                <ScalarProperty Name="EndMonth" ColumnName="EndMonth" />
-                <ScalarProperty Name="BeginMonth" ColumnName="BeginMonth" />
                 <ScalarProperty Name="SchoolLevel_ID" ColumnName="SchoolLevel_ID" />
                 <ScalarProperty Name="School" ColumnName="School" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
@@ -3639,12 +3578,8 @@
               <MappingFragment StoreEntitySet="EmploymentHistory">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IsCurrentJob" ColumnName="IsCurrentJob" />
-                <ScalarProperty Name="EndMonth" ColumnName="EndMonth" />
-                <ScalarProperty Name="BeginMonth" ColumnName="BeginMonth" />
+                <ScalarProperty Name="WorkingTime" ColumnName="WorkingTime" />
                 <ScalarProperty Name="Company" ColumnName="Company" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="EmploymentHistoryID" ColumnName="EmploymentHistoryID" />
@@ -3683,6 +3618,7 @@
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="EndedDate" ColumnName="EndedDate" />
                 <ScalarProperty Name="StartedDate" ColumnName="StartedDate" />
+                <ScalarProperty Name="JobView" ColumnName="JobView" />
                 <ScalarProperty Name="MinSchoolLevel_ID" ColumnName="MinSchoolLevel_ID" />
                 <ScalarProperty Name="JobLevel_ID" ColumnName="JobLevel_ID" />
                 <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
@@ -3710,8 +3646,8 @@
             <EntityTypeMapping TypeName="JSSModel.JobCategory">
               <MappingFragment StoreEntitySet="JobCategory">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3748,10 +3684,10 @@
           <EntitySetMapping Name="JobPackages">
             <EntityTypeMapping TypeName="JSSModel.JobPackage">
               <MappingFragment StoreEntitySet="JobPackage">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="MoreDescription" ColumnName="MoreDescription" />
                 <ScalarProperty Name="ViewMultiNumber" ColumnName="ViewMultiNumber" />
-                <ScalarProperty Name="AutoUpNumber" ColumnName="AutoUpNumber" />
                 <ScalarProperty Name="IsHomepagePosting" ColumnName="IsHomepagePosting" />
                 <ScalarProperty Name="IsCategoryPriority" ColumnName="IsCategoryPriority" />
                 <ScalarProperty Name="IsHighlight" ColumnName="IsHighlight" />
@@ -3845,9 +3781,11 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="JobSeekerID" ColumnName="JobSeekerID" />
+                <ScalarProperty Name="PercentStatus" ColumnName="PercentStatus" />
                 <ScalarProperty Name="Objectives" ColumnName="Objectives" />
-                <ScalarProperty Name="ExpectedMaxSalary" ColumnName="ExpectedMaxSalary" />
-                <ScalarProperty Name="ExpectedMinSalary" ColumnName="ExpectedMinSalary" />
+                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="ExpectedSalary" ColumnName="ExpectedSalary" />
                 <ScalarProperty Name="ExpectedJobLevel_ID" ColumnName="ExpectedJobLevel_ID" />
                 <ScalarProperty Name="ExpectedPosition" ColumnName="ExpectedPosition" />
                 <ScalarProperty Name="CurrentJobLevel_ID" ColumnName="CurrentJobLevel_ID" />
@@ -3855,6 +3793,7 @@
                 <ScalarProperty Name="MostRecentCompany" ColumnName="MostRecentCompany" />
                 <ScalarProperty Name="HighestSchoolLevel_ID" ColumnName="HighestSchoolLevel_ID" />
                 <ScalarProperty Name="YearOfExperience" ColumnName="YearOfExperience" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3872,6 +3811,7 @@
           <EntitySetMapping Name="PurchaseAdvertises">
             <EntityTypeMapping TypeName="JSSModel.PurchaseAdvertise">
               <MappingFragment StoreEntitySet="PurchaseAdvertise">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
@@ -3888,6 +3828,7 @@
           <EntitySetMapping Name="PurchaseJobPackages">
             <EntityTypeMapping TypeName="JSSModel.PurchaseJobPackage">
               <MappingFragment StoreEntitySet="PurchaseJobPackage">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -3902,6 +3843,7 @@
             <EntityTypeMapping TypeName="JSSModel.Recruiter">
               <MappingFragment StoreEntitySet="Recruiter">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RecruiterID" ColumnName="RecruiterID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3911,13 +3853,11 @@
               <MappingFragment StoreEntitySet="ReferencePerson">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ReferencePersonPhoneNumber" ColumnName="ReferencePersonPhoneNumber" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="Company" ColumnName="Company" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ReferencePersonCompany" ColumnName="ReferencePersonCompany" />
+                <ScalarProperty Name="ReferencePersonPosition" ColumnName="ReferencePersonPosition" />
+                <ScalarProperty Name="ReferencePersonName" ColumnName="ReferencePersonName" />
                 <ScalarProperty Name="ReferencePersonID" ColumnName="ReferencePersonID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3930,6 +3870,7 @@
                 <ScalarProperty Name="IsSolved" ColumnName="IsSolved" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ReferenceLink" ColumnName="ReferenceLink" />
                 <ScalarProperty Name="Report_content" ColumnName="Report_content" />
                 <ScalarProperty Name="ReportID" ColumnName="ReportID" />
               </MappingFragment>
@@ -3982,7 +3923,9 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Topic_content" ColumnName="Topic_content" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="WriterID" ColumnName="WriterID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TopicID" ColumnName="TopicID" />
               </MappingFragment>
             </EntityTypeMapping>

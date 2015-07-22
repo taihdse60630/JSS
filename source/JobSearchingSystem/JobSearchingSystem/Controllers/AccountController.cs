@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using JobSearchingSystem.Models;
+using JobSearchingSystem.DAL;
 
 namespace JobSearchingSystem.Controllers
 {
@@ -29,75 +30,89 @@ namespace JobSearchingSystem.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
-        }
+        }*/
 
         //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login([Bind(Include = "UserName, Password, RememberMe")]LoginViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
+            var user = await UserManager.FindAsync(model.UserName, model.Password);
+            if (user != null)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
-                {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+                await SignInAsync(user, model.RememberMe);
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         public ActionResult Register()
         {
             return View();
-        }
+        }*/
 
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Include = "UserName, Password, ConfirmPassword, Email, RoleName")]RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var user = new ApplicationUser() { UserName = model.UserName };
+            var result = await UserManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var createdUser = await UserManager.FindAsync(model.UserName, model.Password);
+                var roleResult = await UserManager.AddToRoleAsync(createdUser.Id, model.RoleName);
+                UnitOfWork unitOfWork = new UnitOfWork();
+                if (model.RoleName == "Recruiter")
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    Recruiter recruiter = new Recruiter();
+                    recruiter.RecruiterID = createdUser.Id;
+                    recruiter.Email = model.Email;
+                    recruiter.IsDeleted = false;
+                    unitOfWork.RecruiterRepository.Insert(recruiter);
+                    unitOfWork.Save();
                 }
                 else
                 {
-                    AddErrors(result);
+                    Jobseeker jobseeker = new Jobseeker();
+                    jobseeker.JobSeekerID = createdUser.Id;
+                    jobseeker.Email = model.Email;
+                    jobseeker.IsDeleted = false;
+                    unitOfWork.JobseekerRepository.Insert(jobseeker);
+                    unitOfWork.Save();
                 }
+
+                await SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         //
         // POST: /Account/Disassociate
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
@@ -112,11 +127,12 @@ namespace JobSearchingSystem.Controllers
                 message = ManageMessageId.Error;
             }
             return RedirectToAction("Manage", new { Message = message });
-        }
+        }*/
 
         //
         // GET: /Account/Manage
-        public ActionResult Manage(ManageMessageId? message)
+
+        /*public ActionResult Manage()
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -127,30 +143,25 @@ namespace JobSearchingSystem.Controllers
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
-        }
+        }*/
 
         //
-        // POST: /Account/Manage
+        // POST: /Account/ChangePassword
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Manage(ManageUserViewModel model)
+        public async Task<ActionResult> ChangePassword([Bind(Include = "OldPassword, NewPassword, ConfirmPassword")]ManageUserViewModel model)
         {
             bool hasPassword = HasPassword();
             ViewBag.HasLocalPassword = hasPassword;
-            ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasPassword)
             {
-                if (ModelState.IsValid)
+                IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
                 {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AddErrors(result);
                 }
             }
             else
@@ -162,38 +173,35 @@ namespace JobSearchingSystem.Controllers
                     state.Errors.Clear();
                 }
 
-                if (ModelState.IsValid)
+                IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                if (result.Succeeded)
                 {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AddErrors(result);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
+        /*[HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
+        }*/
 
         //
         // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -216,21 +224,21 @@ namespace JobSearchingSystem.Controllers
                 ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
             }
-        }
+        }*/
 
         //
         // POST: /Account/LinkLogin
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
             return new ChallengeResult(provider, Url.Action("LinkLoginCallback", "Account"), User.Identity.GetUserId());
-        }
+        }*/
 
         //
         // GET: /Account/LinkLoginCallback
-        public async Task<ActionResult> LinkLoginCallback()
+        /*public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
@@ -243,11 +251,11 @@ namespace JobSearchingSystem.Controllers
                 return RedirectToAction("Manage");
             }
             return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
-        }
+        }*/
 
         //
         // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
+        /*[HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
@@ -281,33 +289,37 @@ namespace JobSearchingSystem.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
-        }
+        }*/
 
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
+        public ActionResult List()
         {
             return View();
         }
 
-        [ChildActionOnly]
+        //
+        // GET: /Account/ExternalLoginFailure
+        /*[AllowAnonymous]
+        public ActionResult ExternalLoginFailure()
+        {
+            return View();
+        }*/
+
+        /*[ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {
@@ -356,13 +368,13 @@ namespace JobSearchingSystem.Controllers
             return false;
         }
 
-        public enum ManageMessageId
+        /*public enum ManageMessageId
         {
             ChangePasswordSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
             Error
-        }
+        }*/
 
         private ActionResult RedirectToLocal(string returnUrl)
         {

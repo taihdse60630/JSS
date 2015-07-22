@@ -17,7 +17,7 @@ namespace JobSearchingSystem
         public City()
         {
             this.CompanyInfoCities = new HashSet<CompanyInfoCity>();
-            this.ContactCities = new HashSet<ContactCity>();
+            this.Contacts = new HashSet<Contact>();
             this.ExpectedCities = new HashSet<ExpectedCity>();
             this.JobCities = new HashSet<JobCity>();
         }
@@ -27,7 +27,7 @@ namespace JobSearchingSystem
         public bool IsDeleted { get; set; }
     
         public virtual ICollection<CompanyInfoCity> CompanyInfoCities { get; set; }
-        public virtual ICollection<ContactCity> ContactCities { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<ExpectedCity> ExpectedCities { get; set; }
         public virtual ICollection<JobCity> JobCities { get; set; }
     }

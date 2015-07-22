@@ -15,13 +15,11 @@ namespace JobSearchingSystem
     public partial class ReferencePerson
     {
         public int ReferencePersonID { get; set; }
-        public string FullName { get; set; }
-        public string Position { get; set; }
-        public string Company { get; set; }
+        public string ReferencePersonName { get; set; }
+        public string ReferencePersonPosition { get; set; }
+        public string ReferencePersonCompany { get; set; }
         public string EmailAddress { get; set; }
-        public string PhoneNumber { get; set; }
-        public System.DateTime CreatedTime { get; set; }
-        public System.DateTime UpdatedTime { get; set; }
+        public string ReferencePersonPhoneNumber { get; set; }
         public int ProfileID { get; set; }
         public bool IsDeleted { get; set; }
     

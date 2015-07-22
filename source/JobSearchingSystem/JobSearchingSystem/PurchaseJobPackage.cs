@@ -21,6 +21,7 @@ namespace JobSearchingSystem
         public System.DateTime EndDate { get; set; }
         public bool IsApproved { get; set; }
         public string StaffID { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual JobPackage JobPackage { get; set; }
         public virtual Recruiter Recruiter { get; set; }

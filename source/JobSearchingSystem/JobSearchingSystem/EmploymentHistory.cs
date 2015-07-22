@@ -17,12 +17,8 @@ namespace JobSearchingSystem
         public int EmploymentHistoryID { get; set; }
         public string Position { get; set; }
         public string Company { get; set; }
-        public Nullable<System.DateTime> BeginMonth { get; set; }
-        public Nullable<System.DateTime> EndMonth { get; set; }
-        public bool IsCurrentJob { get; set; }
+        public int WorkingTime { get; set; }
         public string Description { get; set; }
-        public System.DateTime CreatedTime { get; set; }
-        public System.DateTime UpdatedTime { get; set; }
         public int ProfileID { get; set; }
         public bool IsDeleted { get; set; }
     

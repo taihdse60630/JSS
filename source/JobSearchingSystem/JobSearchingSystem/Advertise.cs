@@ -24,6 +24,7 @@ namespace JobSearchingSystem
         public string Description { get; set; }
         public string Position { get; set; }
         public decimal Cost { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<PurchaseAdvertise> PurchaseAdvertises { get; set; }
     }

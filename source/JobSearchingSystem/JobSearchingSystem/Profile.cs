@@ -27,6 +27,7 @@ namespace JobSearchingSystem
         }
     
         public int ProfileID { get; set; }
+        public string Name { get; set; }
         public int YearOfExperience { get; set; }
         public int HighestSchoolLevel_ID { get; set; }
         public string MostRecentCompany { get; set; }
@@ -34,9 +35,11 @@ namespace JobSearchingSystem
         public Nullable<int> CurrentJobLevel_ID { get; set; }
         public string ExpectedPosition { get; set; }
         public int ExpectedJobLevel_ID { get; set; }
-        public decimal ExpectedMinSalary { get; set; }
-        public Nullable<decimal> ExpectedMaxSalary { get; set; }
+        public decimal ExpectedSalary { get; set; }
+        public System.DateTime CreatedTime { get; set; }
+        public System.DateTime UpdatedTime { get; set; }
         public string Objectives { get; set; }
+        public int PercentStatus { get; set; }
         public string JobSeekerID { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }

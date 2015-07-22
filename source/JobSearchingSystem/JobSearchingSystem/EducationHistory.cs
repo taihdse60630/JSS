@@ -18,11 +18,7 @@ namespace JobSearchingSystem
         public string Subject { get; set; }
         public string School { get; set; }
         public int SchoolLevel_ID { get; set; }
-        public Nullable<System.DateTime> BeginMonth { get; set; }
-        public Nullable<System.DateTime> EndMonth { get; set; }
         public string Achievement { get; set; }
-        public System.DateTime CreatedTime { get; set; }
-        public System.DateTime UpdatedTime { get; set; }
         public int ProfileID { get; set; }
         public bool IsDeleted { get; set; }
     

@@ -24,6 +24,7 @@ namespace JobSearchingSystem
         public bool IsVisible { get; set; }
         public bool IsApproved { get; set; }
         public string ManagerID { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual Advertise Advertise { get; set; }
         public virtual Manager Manager { get; set; }

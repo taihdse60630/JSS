@@ -16,6 +16,7 @@ namespace JobSearchingSystem
     {
         public int ReportID { get; set; }
         public string Report_content { get; set; }
+        public string ReferenceLink { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string SenderID { get; set; }
         public bool IsSolved { get; set; }

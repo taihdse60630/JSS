@@ -14,23 +14,19 @@ namespace JobSearchingSystem
     
     public partial class Contact
     {
-        public Contact()
-        {
-            this.ContactCities = new HashSet<ContactCity>();
-        }
-    
         public string UserID { get; set; }
         public string FullName { get; set; }
-        public System.DateTime DateofBirth { get; set; }
         public bool Gender { get; set; }
         public bool MaritalStatus { get; set; }
         public bool Nationality { get; set; }
         public string Address { get; set; }
-        public string District { get; set; }
+        public System.DateTime DateofBirth { get; set; }
         public string PhoneNumber { get; set; }
+        public int CityID { get; set; }
+        public string District { get; set; }
         public bool IsVisible { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<ContactCity> ContactCities { get; set; }
+        public virtual City City { get; set; }
     }
 }

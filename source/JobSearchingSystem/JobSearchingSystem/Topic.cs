@@ -15,7 +15,9 @@ namespace JobSearchingSystem
     public partial class Topic
     {
         public int TopicID { get; set; }
+        public string Title { get; set; }
         public string WriterID { get; set; }
+        public string ImageUrl { get; set; }
         public string Topic_content { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }

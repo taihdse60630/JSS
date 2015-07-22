@@ -14,8 +14,8 @@ namespace JobSearchingSystem
     
     public partial class JobCategory
     {
-        public int JobID { get; set; }
         public int CategoryID { get; set; }
+        public int JobID { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual Category Category { get; set; }

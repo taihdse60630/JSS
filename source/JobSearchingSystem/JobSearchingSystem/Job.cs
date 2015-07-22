@@ -34,6 +34,7 @@ namespace JobSearchingSystem
         public string JobDescription { get; set; }
         public int JobLevel_ID { get; set; }
         public int MinSchoolLevel_ID { get; set; }
+        public long JobView { get; set; }
         public Nullable<System.DateTime> StartedDate { get; set; }
         public Nullable<System.DateTime> EndedDate { get; set; }
         public bool IsPublic { get; set; }
