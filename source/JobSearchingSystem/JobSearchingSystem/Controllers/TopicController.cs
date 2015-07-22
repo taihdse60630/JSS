@@ -65,7 +65,66 @@ namespace JobSearchingSystem.Controllers
                 return View(item);
             }
             else
+            { 
                 return List();
+            }
         }
+
+        //Display own list.
+        public ActionResult OwnList()
+        {
+            string userID = "f1be6249-eddf-4e78-9c13-9c3a0268f227"; //Code for getting user ID is putting here.
+            TopListViewModel model = new TopListViewModel(topicUnitOfWork.GetByUserID(userID));
+            return View(model);
+        }
+
+        //Delete topic
+        [HttpPost]
+        public ActionResult Delete(int topicID)
+        {
+            if (topicUnitOfWork.Delete(topicID) == true)
+            {
+                return RedirectToAction("OwnList");
+            }
+            else
+            {
+                return RedirectToAction("OwnList");
+            }     
+        }
+
+        //List all topics waiting for approve
+        public ActionResult PendingList()
+        {
+            return View(topicUnitOfWork.GetPendingList());
+        }
+
+        //Approve topic
+        [HttpPost]
+        public ActionResult Approve(int topicID)
+        {
+            if (topicUnitOfWork.Approve(topicID) == true)
+            {
+                return RedirectToAction("PendingList");
+            }
+            else
+            {
+                return RedirectToAction("PendingList");
+            }   
+        }
+
+        //Disapprove topic
+        [HttpPost]
+        public ActionResult Disapprove(int topicID)
+        {
+            if (topicUnitOfWork.Disapprove(topicID) == true)
+            {
+                return RedirectToAction("PendingList");
+            }
+            else
+            {
+                return RedirectToAction("PendingList");
+            }   
+        }
+
 	}
 }
