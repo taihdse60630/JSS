@@ -7,15 +7,6 @@ namespace JobSearchingSystem.DAL
 {
     public class CommonListUnitOfWork : UnitOfWork
     {
-        public IEnumerable<City> GetCityList()
-        {
-            bool isDeleted = false;
-            var cityList = (from c in this.CityRepository.Get()
-                            where c.IsDeleted == isDeleted
-                            select c).AsEnumerable();
-            return cityList;
-        }
-
         public bool CreateCity(string name)
         {
             if (!String.IsNullOrEmpty(name)){
@@ -257,6 +248,7 @@ namespace JobSearchingSystem.DAL
                 else if (jobLevel.IsDeleted == true)
                 {
                     jobLevel.IsDeleted = false;
+                    jobLevel.LevelNum = levelNum;
                     this.JobLevelRepository.Update(jobLevel);
                     this.Save();
 
@@ -329,6 +321,7 @@ namespace JobSearchingSystem.DAL
                 else if (schoolLevel.IsDeleted == true)
                 {
                     schoolLevel.IsDeleted = false;
+                    schoolLevel.LevelNum = levelNum;
                     this.SchoolLevelRepository.Update(schoolLevel);
                     this.Save();
 
@@ -372,5 +365,80 @@ namespace JobSearchingSystem.DAL
             }
             return false;
         }
-    }
+
+        public IEnumerable<Level> GetLevelList()
+        {
+            bool isDeleted = false;
+            var LevelList = (from c in this.LevelRepository.Get()
+                                   where c.IsDeleted == isDeleted
+                                   select c).AsEnumerable();
+            return LevelList;
+        }
+
+        public bool CreateLevel(string name, int levelNum)
+        {
+            if (!String.IsNullOrEmpty(name))
+            {
+                Level level = this.LevelRepository.Get(s => s.Name == name).FirstOrDefault();
+
+                if (level == null)
+                {
+                    Level newLevel = new Level();
+                    newLevel.Name = name;
+                    newLevel.LevelNum = levelNum;
+                    newLevel.IsDeleted = false;
+                    this.LevelRepository.Insert(newLevel);
+                    this.Save();
+                    return true;
+                }
+                else if (level.IsDeleted == true)
+                {
+                    level.IsDeleted = false;
+                    level.LevelNum = levelNum;
+                    this.LevelRepository.Update(level);
+                    this.Save();
+
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public bool UpdateLevel(string name, int levelNum, int id)
+        {
+            if (!String.IsNullOrEmpty(name))
+            {
+                Level Level = this.LevelRepository.Get(s => s.Level_ID == id).FirstOrDefault();
+
+                if (Level != null)
+                {
+                    Level.Name = name;
+                    Level.LevelNum = levelNum;
+                    this.LevelRepository.Update(Level);
+                    this.Save();
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public bool DeleteLevel(int id)
+        {
+
+            Level Level = this.LevelRepository.Get(s => s.Level_ID == id).FirstOrDefault();
+
+            if (Level != null)
+            {
+                Level.IsDeleted = true;
+                this.LevelRepository.Update(Level);
+                this.Save();
+                return true;
+            }
+            return false;
+        }
+
+    }      
+
 }
