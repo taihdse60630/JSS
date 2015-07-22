@@ -2,6 +2,8 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
+
+@model JobSearchingSystem.Models.JJobDetailViewModel
 <style>
     /* unvisited link */
     a:link {
@@ -35,6 +37,56 @@
         $(this).animate({ height: "4em" }, 500);
     });
 </script>
+
+<script src="~/Content/vendors/bootstrap/js/bootstrap.min.js"></script>
+<script>
+
+    function SendReport() {
+        var userList;
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/Report/SendReport",
+            data: "{'reportContent':'" + document.getElementById('reportContent').value + "','refrenceLink' :'" + document.getElementById('refrenceLink').value + "'}",
+            dataType: "json",
+            success: function (data) {
+                if (data) {
+                    alert("Đã gửi report thành công");
+                    $("#modal-report").modal("hide");
+                    $(".modal-backdrop").remove();
+                } else {
+                    alert("Gửi report thất bại")
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    }
+</script>
+
+
+
+
+<div id="modal-report" tabindex="-1" role="dialog" aria-labelledby="modal-header-primary-label" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-primary">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                <h4 id="modal-header-primary-label" class="modal-title">Report</h4>
+            </div>
+            <div class="modal-body"><textarea id="reportContent" name="reportContent" rows="4" cols="80"></textarea></div>
+            <input id="refrenceLink" type="hidden" value="/Job/Detail/?jobID = @Model.Job.JobID" />
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Đóng</button>
+                <button type="button" onclick="SendReport()" class="btn btn-primary">Gửi report </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="modal-custom-dialog" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -169,22 +221,23 @@
             </div>
 </div>
 
-<div class="page-content" style="padding: 20px 0px 20px 250px">
+<div class="page-content" style="padding: 20px 0px 100px 200px">
 
 
 
-    <div class="col-lg-9 panel panel-default">
+    <div class="col-lg-9 panel panel-default" style="margin-right: 10%;">
         <br>
 
         <div class="media">
             <a href="#" class="pull-left"><img alt="avatar" class="media-object" src="http://images.vietnamworks.com/pictureofcompany/49/10197315.jpg" style="width: 100px; height: 64px;"></a>
 
             <div class="media-body col-md-8">
-                <h3 class="media-heading text-blue" style="font-weight:700">20 Android Dev - Làm Dự Án Automative &amp; Smart Tv !</h3>
-                <h4><strong>FPT Software Hochiminh Ltd.</strong></h4>
-                <div>Lot T2, D1 Street, Hi-Tech Park, Dist.9, HCMC, Vietnam</div>
-                <div style="float:left"><i class="fa fa-building-o"></i> Nơi làm việc: <div class="text-yellow" style="float:right"> Hồ Chí Minh</div></div>
-                <br><div style="float:left"><i class="fa fa-usd"></i> Mức lương: <span class="badge badge-orange">$300 - $600</span></div>
+                <h3 class="media-heading text-blue" style="font-weight:700">@Model.Job.JobTitle</h3>
+                <h4><strong>@Model.Job.Company</strong></h4>
+                <div>@Model.Job.Address</div>
+                <div style="float:left"><i class="fa fa-building-o"></i> Nơi làm việc:  <div class="text-yellow" style="float:right"> @foreach (var item in Model.Job.JobCities)
+                { <span>@item.Name,</span> }</div></div>
+                <br><div style="float:left"><i class="fa fa-usd"></i> Mức lương: <span class="badge badge-orange">$@Model.Job.MinSalary.ToString().TrimEnd('0').TrimEnd(',') - $@Model.Job.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</span></div>
                 <div class="pull-right">
                     <div class="pull-left small padding-15" style="padding-right:15px">8 Applications</div>
                     <div class="pull-left small padding-15" style="padding-right:15px">1289 Views</div>
@@ -205,7 +258,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6" style="width:60%">
 
             <div class="panel panel-default">
                 <br />
@@ -221,11 +274,18 @@
                 <br />
                 <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-book" style="font-size: 25px;color: rgb(29, 119, 109);"></i> Những kĩ năng cần có</h4>
                 <div class="note note-success" style="margin-left: 10px;">
+                    @if (Model.Job.JobSkills != null)
+                    {
+                        foreach (var item in Model.Job.JobSkills)
+                        {
+                            <button type="button" class="btn btn-green btn-outlined btn-square">@item.SkillTag<i class="fa fa-tags" style="margin-left:5px"></i></button>
+                        }
+                    }
 
-                    <button type="button" class="btn btn-green btn-outlined btn-square">Software Develop<i class="fa fa-tags" style="margin-left:5px"></i></button>
-                    <button type="button" class="btn btn-green btn-outlined btn-square">Android<i class="fa fa-tags" style="margin-left:5px"></i></button>
+                    @*<button type="button" class="btn btn-green btn-outlined btn-square">Software Develop<i class="fa fa-tags" style="margin-left:5px"></i></button>
+                    <button type="button" class="btn btn-green btn-outlined btn-square">Android<i class="fa fa-tags" style="margin-left:5px"></i></button>*@
 
-                    @*<div class="push-top-sm job-tag-add-skill1">
+                        @*<div class="push-top-sm job-tag-add-skill1">
                             <span class="tag-xs active view-only" title="Android">
                                 <span class="tag-name">Android</span>
                                 <label>
@@ -242,67 +302,52 @@
                             </span> <br class="visible-xs visible-sm">
                         </div>*@
 
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <br />
+                    <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-briefcase" style="font-size: 25px;color: rgb(161, 43, 0);"></i> Mô tả công việc</h4>
+                    <p id="jobDescription22" style="margin-left: 10px;">
+                        @if (Model.Job.JobDescription != null)
+                        {
+                            @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Job.JobDescription));
+                        }
+                        else
+                        {
+                            <div style="margin-left: 40px; font-style: italic;">Chưa cập nhật</div>
+                        }
+
+                    </p>
+                </div>
+                <div class="panel panel-default">
+                    <br />
+                    <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-rocket" style="font-size: 25px; color: rgb(244, 153, 97); margin-right: 10px; "></i>Chuyên môn của bạn</h4>
+                    <p style="margin-left: 10px;">
+                        - Kinh nghiệm lập trình android 2 năm trở lên. <br>
+                        - Có kinh nghiệm làm về UI/UX. <br>
+                        - Có kinh nghiệm làm về mô hình clientserver, sử dụng web API <br>
+                        - Có kinh nghiệm về playback player và video streaming
+
+                    </p>
+                </div>
+                <div class="panel panel-default">
+                    <br />
+                    <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-group" style="font-size: 25px; color: rgb(199, 157, 48); margin-right: 10px; "></i>Về Công Ty Chúng Tôi</h4>
+                    <div id="companyDescription22" style="margin-left: 10px;">
+                        @if (Model.Job.CompanyDescription != null)
+                        {
+                            @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Job.CompanyDescription));
+                        }
+                        else
+                        {
+                            <div style="margin-left: 40px; font-style: italic;">Chưa cập nhật</div>
+                        }
+
+                    </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <br />
-                <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-briefcase" style="font-size: 25px;color: rgb(161, 43, 0);"></i> Mô tả công việc</h4>
-                <p style="margin-left: 10px;">
-                    Tuyển Android Dev, trở thành chuyên viên quốc tế trong dự án Automotive &amp; Smart TV hấp dẫn nhất!<br>
-                    <br>
-                    Nếu các bạn đã từng điều khiển một chiếc xe hơi đắt tiền, bạn sẽ thấy 1 thiết bị thường có tên là Car-Navigator. Nó làm tất cả các việc từ đơn giản như play music, video, FM, kết nối đàm thoại hay dẫn đường, đến các công việc phức tạp như điều khiển các bộ phận cảm ứng, hay vi xử lý của chiệc xe đó. <br>
-                    <br>
-                    Dự án này sẽ thực hiện toàn bộ tầng giao diện của các chức năng của thiết bị này, trên nền tảng Android. Dự án bao gồm nhiều chuyên môn như bản đồ, dẫn đường, tìm địa điểm, thông tin cảnh báo, voice search… Dự án làm trên Android tuy nhiên developer sẽ được tiếp cận với một thế giới còn thú vị và phổ biến hơn cả Android - đó chính công nghệ Automotive.<br>
-                    <br>
-                    Mô tả công việc:<br>
-                    - Tham gia vào dự án phát triển vào dự án lớn của Nhật làm về Video On Demand với mục đích tạo ra sản phẩm cạnh tranh với Netflix <br>
-                    - Tham gia vào dự án tìm hiểu requirement và làm design, coding, UT <br>
-                    - Tham gia thiết kế UI/UX và design màn hình theo yêu cầu của Khách hàng<br>
-                    <br>
-                    Why You'll Love Working Here?<br>
-                    - Mức lương cạnh tranh <br>
-                    - Cơ hội làm việc với các khách hàng lớn trên thế giới, công nghệ tiên tiến, phát triển bản thân… <br>
-                    - Môi trường làm việc cởi mở, dân chủ, đặc trưng văn hóa FPT <br>
-                    - Được đào tạo bài bản về công nghệ, quy trình… trước khi vào làm chính thức <br>
-                    - Được đóng BHXH, BHYT, BHTN theo quy định của nhà nước <br>
-                    - Được hưởng bảo hiểm FPT Care và chế độ nghỉ mát theo quy định của công ty <br>
-                    - Nhiều hoạt động dành cho thanh niên như CLB Vovinam, Movie, Bóng đá, Bơi lội, Cờ
-                </p>
-            </div>
-            <div class="panel panel-default">
-                <br />
-                <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-rocket" style="font-size: 25px; color: rgb(244, 153, 97); margin-right: 10px; "></i>Chuyên môn của bạn</h4>
-                <p style="margin-left: 10px;">
-                    - Kinh nghiệm lập trình android 2 năm trở lên. <br>
-                    - Có kinh nghiệm làm về UI/UX. <br>
-                    - Có kinh nghiệm làm về mô hình clientserver, sử dụng web API <br>
-                    - Có kinh nghiệm về playback player và video streaming
-
-                </p>
-            </div>
-            <div class="panel panel-default">
-                <br />
-                <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-group" style="font-size: 25px; color: rgb(199, 157, 48); margin-right: 10px; "></i>Về Công Ty Chúng Tôi</h4>
-                <p style="margin-left: 10px;">
-                    Ranking in top 100 Global Outsourcing and Top 10 Leaders in South East Asia, FPT Software is a GlobalSoftware company built from the intelligence of Vietnamese people. <br>
-                    Presenting in America, Japan, Europe, Asia Pacific and Australia, FPT Software consistently offers you with unlimited global careers. <br>
-                    We are now forming the biggest team ever of ~300 IT professionals in US to cooperate with the coolest American company. <br>
-                    In this most desirable opportunity, you are given the chance to extend your career with the world’s latest technology projects and experience the living and working environment of your dream job in America. <br>
-                    Join our US team, to conquer some of the most exciting engineering projects worldwide to turn your dreams into reality.<br>
-                    &nbsp;<br>
-                    Testimonial:<br>
-                    &nbsp;<br>
-                    Hồ Xuân Tuấn Anh - Project Manager: “Tôi quyết định đầu quân cho FPT Software dù đang có một công việc tốt ở IBM Việt Nam, vì nhìn thấy cơ hội phát triển nghề nghiệp rộng mở trong công nghệ hot nhất hiện nay - mobility, với khách hàng đứng đầu thế giới trong lĩnh vực viễn thông. Hơn nữa tôi thấy mình có cơ hội định cư làm việc dài hạn tại Mỹ” . <br>
-                    &nbsp;<br>
-                    Hoàng Anh Minh – R&amp;D Solution Architect: “Tôi chọn FPT Software để phát triển sự nghiệp R&amp;D với công nghệ mới: computer vision, voice control, natural language processing, recommendation... Công việc có nhiều thách thức thú vị, đặc biệt khi gặp những vấn đề mới, phải tự tìm hiểu và chủ động đề xuất các giải pháp cho khách hàng. Ngoài ra, tôi yêu thích những trải nghiệm sống và làm việc tại nhiều quốc gia”.<br>
-                    &nbsp;<br>
-                    Nguyễn Hải Duy – Senior Java Developer: “Qua&nbsp;nhiều dự án “Full life cycle” với khách hàng Mỹ, tôi đã được học nhiều, từ công nghệ mới, đa dạng, đến phong cách làm việc rõ ràng, chủ động của người Mỹ. Tôi thích du lịch và nước Mỹ mang đến cho tôi cơ hội được khám phá văn hóa, con người, phong cảnh, cho tôi trải nghiệm lên rừng, lội suối lẫn vượt sa mạc đầy thách thức”.
-
-                </p>
-            </div>
-        </div>
-
-        <div class="col-lg-3">
+      
+        <div class="col-md-3" style="width:30%">
             <div class="panel panel-default">
                 <br />
                 <h4 style="margin-left: 10px;font-weight: 600;">Bạn có thể</h4>
@@ -310,6 +355,7 @@
                     <li class="list-group-item"><i class="fa fa-star"></i><a href="#" style="color: #428bca;">Lưu việc làm này</a></li>
                     <li class="list-group-item"><i class="fa fa-envelope"></i><a href="#" style="color: #428bca;">Gửi email việc làm tương tự</a></li>
                     <li class="list-group-item"><i class="fa fa-mail-forward"></i><a href="#" style="color: #428bca;">Giới thiệu bạn bè</a></li>
+                    <li class="list-group-item"><button type="button" data-target="#modal-report" data-toggle="modal" class="btn btn-green">Report</button></li>
                     <li class="list-group-item">
                         <i class="glyphicon glyphicon-bullhorn" style="margin-right: 2px;"></i>Chia sẻ
                         <a title="Share on Facebook" href="#"><i class="fa fa-lg fa-facebook-square"></i></a>
@@ -327,19 +373,24 @@
                     <div class="push-top-xs"></div>
                     <div class="list-group">
                         <h5 style="font-weight: 600">Cấp Bậc</h5>
-                        <a href="http://www.vietnamworks.com/moi-tot-nghiep-thuc-tap-sinh-l1-vn" title="Mới tốt nghiệp/Thực tập sinh jobs">Mới tốt nghiệp/Thực tập sinh</a>
+                        <a href="#" title="@Model.Job.JobLevelName">@Model.Job.JobLevelName</a>
                     </div>
 
                     <div class="list-group push-top-xs">
                         <h5 style="font-weight: 600">Ngành Nghề</h5>
-                        <a href="http://www.vietnamworks.com/cong-nghe-cao-jobs-i66-vn" title="Jobs in Công nghệ cao">Công nghệ cao</a><br><a href="http://www.vietnamworks.com/it-phan-cung-mang-jobs-i55-vn" title="Jobs in IT-Phần cứng/Mạng">IT-Phần cứng/Mạng</a><br><a href="http://www.vietnamworks.com/it-phan-mem-jobs-i35-vn" title="Jobs in IT - Phần mềm">IT - Phần mềm</a><br>
+                        @foreach (var item in Model.Job.JobCategory)
+                        {
+                            <a href="#" title="@item.Name">@item.Name</a><br>
+                        }
+
                     </div>
                     <div class="list-group push-top-xs">
                         <h5 style="font-weight: 600">Ngôn Ngữ Trình Bày Hồ Sơ</h5>
                         Tiếng Anh
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
     </div>
+ 

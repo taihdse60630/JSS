@@ -5,44 +5,103 @@
 
 @model JobSearchingSystem.Models.HIndexViewModel
 
-<link rel="stylesheet" href="~/Content/css/multiple-select.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.1.1.min.css">
+<link rel="stylesheet" href="~/Content/css/jquery.multiselect.css" />
 <style>
     .transparent {
         background: #7f7f7f;
         background: rgba(0,0,0,0.5);
     }
 </style>
+<script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="~/Content/js/ui-progressbars.js"></script>
 
-<script src="~/Content/js/jquery.min.js"></script>
-<script src="~/Content/js/jquery.multiple.select.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery-ui.min.js"></script>
+<script src="~/Content/js/jquery.multiselect.js"></script>
 <script>
-    var $j = jQuery.noConflict();
-    $j(function () {
-        $j('#demo3').change(function () {
-            console.log($(this).val());
-        }).multipleSelect({
-            placeholder: "Địa điểm...",
-            width: '100%'
+    $(document).ready(function () {
+        $("#jobCities").multiselect({
+            header: "Bạn chỉ có thể chọn tối đa 3 địa điểm",
+
+            selectedList: 3,
+            noneSelectedText: "Địa điểm"
         });
-        $j('#demo4').change(function () {
-            console.log($(this).val());
-        }).multipleSelect({
-            placeholder: "Vui lòng chọn ...",
-            width: '100%'
+        $('#jobCities').change(function () {
+
+            if ($("#jobCities").multiselect("getChecked").length > 2) {
+                $("#jobCities").multiselect("widget").find(":checkbox:not(:checked)").attr('disabled', 'disabled');
+            }
+            else {
+                $("#jobCities").multiselect("widget").find(":checkbox:not(:checked)").attr('disabled', false);
+            }
+        })
+
+        $("#jobCategories").multiselect({
+            header: "Bạn chỉ có thể chọn tối đa 3 nghành nghề",
+
+            selectedList: 3,
+            noneSelectedText: "Nghành nghề"
         });
-        $j('#demo5').change(function () {
-            console.log($(this).val());
-        }).multipleSelect({
-            placeholder: "Vui lòng chọn ...",
-            width: '100%'
-        });
+        $('#jobCategories').change(function () {
+
+            if ($("#jobCategories").multiselect("getChecked").length > 2) {
+                $("#jobCategories").multiselect("widget").find(":checkbox:not(:checked)").attr('disabled', 'disabled');
+            }
+            else {
+                $("#jobCategories").multiselect("widget").find(":checkbox:not(:checked)").attr('disabled', false);
+            }
+        })
     });
+
 </script>
+
+
+
+@*<script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.multiple.select.js"></script>
+    <script>
+        var $j = jQuery.noConflict();
+        $j(function () {
+            //var last_valid_selection = null;
+            $j('#demo3').change(function () {
+
+                if ($j(this).val().length > 2) {
+                    //alert('You can only choose 3!');
+                    //$('demo3').multiselect("widget").find(':checkbox').attr('disabled'‌​‌​,true);
+                    //$j("#demo3").multipleSelect("widget").find(":checkbox:not(:checked)").attr("‌​checked", "checked");
+                    //$(this).val(last_valid_selection);
+                    //$("input[type=checkbox]:not(:checked)").attr("disabled", "disabled")
+                    //$('input.multiLocation:not(:checked)').attr('disabled', 'disabled');
+                    $j("#demo3").multipleSelect("disable");
+                } else {
+                    $("input[type=checkbox]:not(:checked)").attr("disabled", false)
+                    //last_valid_selection = $(this).val();
+                }
+                console.log($(this).val());
+            }).multipleSelect({
+                placeholder: "Địa điểm...",
+                width: '100%'
+            });
+            $j('#demo4').change(function () {
+                console.log($(this).val());
+            }).multipleSelect({
+                placeholder: "Vui lòng chọn ...",
+                width: '100%'
+            });
+            $j('#demo5').change(function () {
+                console.log($(this).val());
+            }).multipleSelect({
+                placeholder: "Vui lòng chọn ...",
+                width: '100%'
+            });
+        });
+    </script>*@
 <script>
     $(document).ready(function () {
         var numitems = $("#myList li").length;
 
-        $("ul#myList").css("column-count", 2);
+
         $("ul#myList2").css("column-count", 2);
 
     });
@@ -131,7 +190,7 @@
 </script>
 
 <script>
-   
+
     jQuery(document).ready(function ($) {
         var options = {
             $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
@@ -170,7 +229,8 @@
         $(window).bind("resize", ScaleSlider);
         $(window).bind("orientationchange", ScaleSlider);
         //responsive code end
-    });
+    });
+
 </script>
 
 
@@ -190,96 +250,44 @@
     <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1300px;
             height: 500px; overflow: hidden;">
         @*<div>
-            <img u="image" src="~/Content/img/red.jpg" />
-            <div u="caption" t="NO" t3="RTT|2" r3="137.5%" du3="3000" d3="500" style="position: absolute; width: 445px; height: 300px; top: 100px; left: 600px;">
-                <img src="~/Content/img/c-phone.png" style="position: absolute; width: 445px; height: 300px; top: 0px; left: 0px;" />
-                <img u="caption" t="CLIP|LR" du="4000" t2="NO" src="~/Content/img/c-jssor-slider.png" style="position: absolute; width: 102px; height: 78px; top: 70px; left: 130px;" />
-                <img u="caption" t="ZMF|10" t2="NO" src="~/Content/img/c-text.png" style="position: absolute; width: 80px; height: 53px; top: 153px; left: 163px;" />
-                <img u="caption" t="RTT|10" t2="NO" src="~/Content/img//c-fruit.png" style="position: absolute; width: 140px; height: 90px; top: 60px; left: 220px;" />
-                <img u="caption" t="T" du="4000" t2="NO" src="~/Content/img/c-navigator.png" style="position: absolute; width: 200px; height: 155px; top: 57px; left: 121px;" />
-            </div>
-            <div u="caption" t="RTT|2" r="-75%" du="1600" d="2500" t2="NO" style="position: absolute; width: 470px; height: 220px; top: 120px; left: 650px;">
-                <img src="~/Content/img/c-phone-horizontal.png" style="position: absolute; width: 470px; height: 220px; top: 0px; left: 0px;" />
-                <img u="caption" t3="MCLIP|L" du3="2000" src="~/Content/img/c-slide-1.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-                <img u="caption" t="MCLIP|R" du="2000" t2="NO" src="~/Content/img/c-slide-3.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-                <img u="caption" t="RTTL|BR" x="500%" y="500%" du="1000" d="-3000" r="-30%" t3="L" x3="70%" du3="1600" src="~/Content/img/c-finger-pointing.png" style="position: absolute; width: 257px; height: 300px; top: 80px; left: 200px;" />
-                <img src="~/Content/img/c-navigator-horizontal.png" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-            </div>
-            <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
-                <div class="panel panel-white transparent">
-
-                    <div class="panel-body transparent">
-                        Leading Southeast Asian IT outsourcing provider<br />
-                        Rank #57 in 2014 Global Outsourcing 100<br />
-                        AWS Advanced Consulting Partner<br />
-                        Microsoft Gold Partner<br />
-                        SAP Gold Partner<br />
-                    </div>
+                <img u="image" src="~/Content/img/red.jpg" />
+                <div u="caption" t="NO" t3="RTT|2" r3="137.5%" du3="3000" d3="500" style="position: absolute; width: 445px; height: 300px; top: 100px; left: 600px;">
+                    <img src="~/Content/img/c-phone.png" style="position: absolute; width: 445px; height: 300px; top: 0px; left: 0px;" />
+                    <img u="caption" t="CLIP|LR" du="4000" t2="NO" src="~/Content/img/c-jssor-slider.png" style="position: absolute; width: 102px; height: 78px; top: 70px; left: 130px;" />
+                    <img u="caption" t="ZMF|10" t2="NO" src="~/Content/img/c-text.png" style="position: absolute; width: 80px; height: 53px; top: 153px; left: 163px;" />
+                    <img u="caption" t="RTT|10" t2="NO" src="~/Content/img//c-fruit.png" style="position: absolute; width: 140px; height: 90px; top: 60px; left: 220px;" />
+                    <img u="caption" t="T" du="4000" t2="NO" src="~/Content/img/c-navigator.png" style="position: absolute; width: 200px; height: 155px; top: 57px; left: 121px;" />
                 </div>
-            </div>
-            <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
-                    text-align: left; line-height: 36px; font-size: 30px;
-                        color: #FFFFFF;">
-                Build your slider with anything, includes image, content, text, html, photo, picture
-            </div>
-        </div>*@
-        @*<div>
-            <img u="image" src="~/Content/img/purple.jpg" />
-            <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
-                <div class="col-lg-9">
+                <div u="caption" t="RTT|2" r="-75%" du="1600" d="2500" t2="NO" style="position: absolute; width: 470px; height: 220px; top: 120px; left: 650px;">
+                    <img src="~/Content/img/c-phone-horizontal.png" style="position: absolute; width: 470px; height: 220px; top: 0px; left: 0px;" />
+                    <img u="caption" t3="MCLIP|L" du3="2000" src="~/Content/img/c-slide-1.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
+                    <img u="caption" t="MCLIP|R" du="2000" t2="NO" src="~/Content/img/c-slide-3.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
+                    <img u="caption" t="RTTL|BR" x="500%" y="500%" du="1000" d="-3000" r="-30%" t3="L" x3="70%" du3="1600" src="~/Content/img/c-finger-pointing.png" style="position: absolute; width: 257px; height: 300px; top: 80px; left: 200px;" />
+                    <img src="~/Content/img/c-navigator-horizontal.png" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
+                </div>
+                <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
+                    <div class="panel panel-white transparent">
 
-                <div class="col-lg-12">
-                    <div class="panel panel-grey">
-                        <div class="panel-heading">Tìm việc làm</div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input id="inputName" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input id="inputName" type="text" placeholder="Địa điểm" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input id="inputName" type="text" placeholder="Mức lương tối thiểu" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input id="inputName" type="text" placeholder="Cấp bậc" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input id="inputName" type="text" placeholder="Nghành nghề" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="panel-body transparent">
+                            Leading Southeast Asian IT outsourcing provider<br />
+                            Rank #57 in 2014 Global Outsourcing 100<br />
+                            AWS Advanced Consulting Partner<br />
+                            Microsoft Gold Partner<br />
+                            SAP Gold Partner<br />
                         </div>
                     </div>
-
                 </div>
-            </div>
-            </div>
-            <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
-                    text-align: left; line-height: 36px; font-size: 30px;
-                        color: #FFFFFF;">
-                Build your slider with anything, includes image, content, text, html, photo, picture
-            </div>
-        </div>*@
-        <div>
-            <img u="image" src="~/Content/img/all-job.png" />
-            <div style="position: absolute; width: 1000px; height: 200px; top: 250px; left: 300px; padding: 5px;">
-                <div class="col-lg-9">
+                <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
+                        text-align: left; line-height: 36px; font-size: 30px;
+                            color: #FFFFFF;">
+                    Build your slider with anything, includes image, content, text, html, photo, picture
+                </div>
+            </div>*@
+        @*<div>
+                <img u="image" src="~/Content/img/purple.jpg" />
+                <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
+                    <div class="col-lg-9">
 
-                    @using (Html.BeginForm("Find","Home"))
-                    { 
                     <div class="col-lg-12">
                         <div class="panel panel-grey">
                             <div class="panel-heading">Tìm việc làm</div>
@@ -287,83 +295,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                          
-                                            <input id="searchString" name="searchString" value="@Model.searchString" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
+                                            <input id="inputName" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <select id="demo3" multiple="multiple">
-                                                <option value="29">Hồ Chí Minh</option>
-                                                <option value="24">Hà Nội</option>
-                                                <option value="71">ĐBSCL</option>
-                                                <option value="2">An Giang</option>
-                                                <option value="3">Bà Rịa - Vũng Tàu</option>
-                                                <option value="4">Bắc cạn</option>
-                                                <option value="5">Bắc Giang</option>
-                                                <option value="6">Bạc Liêu</option>
-                                                <option value="7">Bắc Ninh</option>
-                                                <option value="8">Bến Tre</option>
-                                                <option value="9">Biên Hòa</option>
-                                                <option value="10">Bình Định</option>
-                                                <option value="11">Bình Dương</option>
-                                                <option value="12">Bình Phước</option>
-                                                <option value="13">Bình Thuận</option>
-                                                <option value="14">Cà Mau</option>
-                                                <option value="15">Cần Thơ</option>
-                                                <option value="16">Cao Bằng</option>
-                                                <option value="17">Đà Nẵng</option>
-                                                <option value="18">Đắc Lắc</option>
-                                                <option value="69">Điện Biên</option>
-                                                <option value="19">Đồng Nai</option>
-                                                <option value="20">Đồng Tháp</option>
-                                                <option value="21">Gia Lai</option>
-                                                <option value="22">Hà Giang</option>
-                                                <option value="23">Hà Nam</option>
-                                                <option value="25">Hà Tây</option>
-                                                <option value="26">Hà Tĩnh</option>
-                                                <option value="27">Hải Dương</option>
-                                                <option value="28">Hải Phòng</option>
-                                                <option value="30">Hòa Bình</option>
-                                                <option value="31">Huế</option>
-                                                <option value="32">Hưng Yên</option>
-                                                <option value="33">Khánh Hòa</option>
-                                                <option value="34">Kon Tum</option>
-                                                <option value="35">Lai Châu</option>
-                                                <option value="36">Lâm Đồng</option>
-                                                <option value="37">Lạng Sơn</option>
-                                                <option value="38">Lào Cai</option>
-                                                <option value="39">Long An</option>
-                                                <option value="40">Nam Định</option>
-                                                <option value="41">Nghệ An</option>
-                                                <option value="42">Ninh Bình</option>
-                                                <option value="43">Ninh Thuận</option>
-                                                <option value="44">Phú Thọ</option>
-                                                <option value="45">Phú Yên</option>
-                                                <option value="46">Quảng Bình</option>
-                                                <option value="47">Quảng Nam</option>
-                                                <option value="48">Quảng Ngãi</option>
-                                                <option value="49">Quảng Ninh</option>
-                                                <option value="50">Quảng Trị</option>
-                                                <option value="51">Sóc Trăng</option>
-                                                <option value="52">Sơn La</option>
-                                                <option value="53">Tây Ninh</option>
-                                                <option value="54">Thái Bình</option>
-                                                <option value="55">Thái Nguyên</option>
-                                                <option value="56">Thanh Hóa</option>
-                                                <option value="57">Thừa Thiên-Huế</option>
-                                                <option value="58">Tiền Giang</option>
-                                                <option value="59">Trà Vinh</option>
-                                                <option value="60">Tuyên Quang</option>
-                                                <option value="61">Kiên Giang</option>
-                                                <option value="62">Vĩnh Long</option>
-                                                <option value="63">Vĩnh Phúc</option>
-                                                <option value="65">Yên Bái</option>
-                                                <option value="66">Khác</option>
-                                                <option value="70">Quốc tế</option>
-                                                <option value="72">Hậu Giang</option>
-                                            </select>
-                                            @*<input id="inputName" type="text" placeholder="Địa điểm" class="form-control">*@
+                                            <input id="inputName" type="text" placeholder="Địa điểm" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -375,108 +312,120 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <select id="current-job-level" class="form-control" name="currentJobLevel" data-placeholder="Ví dụ: Nhân viên" tabindex="-1" title="Cấp bậc hiện tại">
-                                                <option value="29">Trung học</option>
-                                                <option value="24">Trung cấp</option>
-                                                <option value="71">Cao đẳng</option>
-                                                <option value="2">Cử nhân</option>
-                                                <option value="3">Kỹ sư</option>
-                                                <option value="4">Sau đại học</option>
-                                                <option value="5">Kế toán viên công chứng</option>
-                                                <option value="6">Thạc sĩ</option>
-                                                <option value="7">Thạc sĩ quản trị kinh doanh</option>
-                                                <option value="8">Tiến sĩ luật</option>
-                                                <option value="9">Dược sĩ</option>
-                                                <option value="10">Bác sĩ y khoa</option>
-                                                <option value="11">Khác</option>
-
-                                            </select>
+                                            <input id="inputName" type="text" placeholder="Cấp bậc" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-
-                                            <select id="demo4" multiple="multiple">
-                                                <option value="33">Bán hàng</option>
-                                                <option value="34">Bán hàng kỹ thuật</option>
-                                                <option value="32">Bán lẻ/Bán sỉ</option>
-                                                <option value="24">Bảo hiểm</option>
-                                                <option value="30">Bất động sản</option>
-                                                <option value="47">Biên phiên dịch</option>
-                                                <option value="56">Chứng khoán</option>
-                                                <option value="66">Công nghệ cao</option>
-                                                <option value="55">IT-Phần cứng/Mạng</option>
-                                                <option value="57">Internet/Online Media</option>
-                                                <option value="35">IT - Phần mềm</option>
-                                                <option value="65">Cơ khí</option>
-                                                <option value="28">Dầu khí</option>
-                                                <option value="52">Dệt may/Da giày</option>
-                                                <option value="11">Dịch vụ khách hàng</option>
-                                                <option value="37">Hàng không/Du lịch/Khách sạn</option>
-                                                <option value="6">Dược Phẩm/Công nghệ sinh học</option>
-                                                <option value="64">Điện/Điện tử</option>
-                                                <option value="12">Giáo dục/Đào tạo</option>
-                                                <option value="2">Hành chánh/Thư ký</option>
-                                                <option value="69">Hoạch định/Dự án</option>
-                                                <option value="43">Hóa học/Hóa sinh</option>
-                                                <option value="62">Hàng cao cấp</option>
-                                                <option value="1">Kế toán</option>
-                                                <option value="58">Kiểm toán</option>
-                                                <option value="22">Y tế/Chăm sóc sức khỏe</option>
-                                                <option value="53">Kho vận</option>
-                                                <option value="5">Kiến trúc/Thiết kế nội thất </option>
-                                                <option value="15">Mới tốt nghiệp</option>
-                                                <option value="16">Môi trường/Xử lý chất thải</option>
-                                                <option value="42">Ngân hàng</option>
-                                                <option value="10">Mỹ thuật/Thiết kế</option>
-                                                <option value="18">Người nước ngoài/Việt Kiều</option>
-                                                <option value="23">Nhân sự</option>
-                                                <option value="4">Nông nghiệp/Lâm nghiệp</option>
-                                                <option value="25">Pháp lý</option>
-                                                <option value="21">Phi chính phủ/Phi lợi nhuận</option>
-                                                <option value="17">Cấp quản lý điều hành</option>
-                                                <option value="70">QA/QC</option>
-                                                <option value="3">Quảng cáo/Khuyến mãi/Đối ngoại</option>
-                                                <option value="68">Sản phẩm công nghiệp</option>
-                                                <option value="26">Sản Xuất</option>
-                                                <option value="51">Thời vụ/Hợp đồng ngắn hạn</option>
-                                                <option value="59">Tài chính/Đầu tư</option>
-                                                <option value="63">Thời trang/Lifestyle</option>
-                                                <option value="54">Thực phẩm &amp; Đồ uống</option>
-                                                <option value="48">Truyền hình/Truyền thông/Báo chí</option>
-                                                <option value="27">Marketing</option>
-                                                <option value="8">Tư vấn</option>
-                                                <option value="36">Vận chuyển/Giao nhận</option>
-                                                <option value="49">Vật Tư/Cung vận</option>
-                                                <option value="41">Viễn Thông</option>
-                                                <option value="7">Xây dựng</option>
-                                                <option value="19">Xuất nhập khẩu</option>
-                                                <option value="67">Ô tô</option>
-                                                <option value="71">Overseas Jobs</option>
-                                                <option value="39">Khác</option>
-                                            </select>
+                                            <input id="inputName" type="text" placeholder="Nghành nghề" class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                                <div style="margin-left: 87%;">
-                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                </div>
                             </div>
-                         
                         </div>
 
                     </div>
+                </div>
+                </div>
+                <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
+                        text-align: left; line-height: 36px; font-size: 30px;
+                            color: #FFFFFF;">
+                    Build your slider with anything, includes image, content, text, html, photo, picture
+                </div>
+            </div>*@
+        <div>
+            <img u="image" src="~/Content/img/all-job.png" />
+            <div style="position: absolute; width: 1000px; height: 200px; top: 250px; left: 300px; padding: 5px;">
+                <div class="col-lg-9">
+
+                    @using (Html.BeginForm("Find", "Home"))
+                    {
+                        <div class="col-lg-12">
+                            <div class="panel panel-grey">
+                                <div class="panel-heading">Tìm việc làm</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input id="searchString" name="searchString" value="@Model.searchString" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select id="jobCities" name="searchJobCities" multiple="multiple">
+                                                    @if (Model.jobCities != null)
+                                                    {
+                                                        foreach (var item in Model.jobCities)
+                                                        {
+                                                            <option value="@item.CityID">@item.Name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                @*<input id="inputName" type="text" placeholder="Địa điểm" class="form-control">*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input id="minSalary" name="minSalary" type="text" placeholder="Mức lương tối thiểu" class="form-control" style="width:115%;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select id="schoolLevel" name="schoolLevel" class="form-control" name="currentJobLevel" data-placeholder="Ví dụ: Nhân viên" tabindex="-1" title="Cấp bậc hiện tại">
+                                                    @if (Model.schoolLevelList != null)
+                                                    {
+                                                        foreach (var item in Model.schoolLevelList)
+                                                        {
+                                                            if (item.LevelNum == Model.schoolLevel)
+                                                            {
+                                                                <option selected value="@item.LevelNum">@item.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.LevelNum">@item.Name</option>
+                                                            }
+                                                        }
+                                                    }
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+
+                                                <select id="jobCategories" name="searchJobCategories" multiple="multiple">
+                                                    @if (Model.jobCategories != null)
+                                                    {
+                                                        foreach (var item in Model.jobCategories)
+                                                        {
+                                                            <option value="@item.CategoryID">@item.Name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 87%;">
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     }
                 </div>
 
-                    
-                
+
+
 
 
 
 
             </div>
-          
+
         </div>
     </div>
 
@@ -589,9 +538,9 @@
 </div>
 <!-- Jssor Slider End -->
 
-<div class="page-content" style="padding: 20px 0px 300px 250px">
-    <div class="row">
-        <div class="col-lg-8">
+<div class="page-content" style="padding: 20px 0px 300px 180px">
+    <div class="row" style="margin-right: 8%;">
+        <div class="col-md-8" >
 
             <div class="panel panel-red">
 
@@ -600,22 +549,112 @@
 
                     <div id="container" style="overflow-y:scroll;height:500px">
                         <ul class="list-group" id="myList" style="margin-left: 2%;">
-                            @foreach(var item in Model.jobList)
+
+                            @if (Model.jobList != null)
                             {
-                                <li class="list-group-item">
-                                    <a target="_blank" href="http://www.vietnamworks.com/tuyen-gap-lap-trinh-vien-net-569885-jd" title="Job - Tuyển Gấp Lập Trình Viên .NET - CTC Communications">
-                                        <strong>@item.JobTitle</strong><br />
-                                        <em>@item.Company</em>
-                                    </a>
-                                </li>
-                                <br />
+                                foreach (var item in Model.jobList)
+                                {
+
+                                    <li class="list-group-item">
+                                        <a target="_blank" href="/Job/Detail/?jobID=@item.JobID" title="Job - Tuyển Gấp Lập Trình Viên .NET - CTC Communications">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <strong>@item.JobTitle</strong><br />
+                                                    <em>
+                                                        <span>
+                                                            <span>
+                                                                @if (item.JobCities != null)
+                                                                {
+                                                                    foreach (var item2 in item.JobCities)
+                                                                    { @item2.Name <span>,</span>}
+                                                                }
+                                                            </span>|<span>@item.JobLevelName</span>
+                                                        </span>
+                                                    </em><br />
+                                                    <span style="margin-right: 10px;">
+                                                        <i class="fa fa-fw fa-calendar"></i>Posted: @String.Format("{0:d}", item.PostedDate)
+                                                    </span>
+                                                    <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br />
+                                                    @{
+                                                                int i = 1;
+                                                                foreach (var item3 in item.JobSkills)
+                                                                {
+                                                                    if (i == 1)
+                                                                    {
+                                                                        <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                                            <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-success" aria-valuenow="100" style="width: 100%;"></div>
+                                                                        </div><em style="font-size: x-small;">@item3.SkillTag</em> <br />
+                                                                    }
+                                                                    if (i == 2)
+                                                                    {
+                                                                        <div class="progress" style="width: 9.4%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;position:absolute">
+                                                                            <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-warning" aria-valuenow="100" style="width: 100%;"></div>
+                                                                        </div><em style="font-size: x-small;">@item3.SkillTag</em><br />
+                                                                    }
+                                                                    if (i == 3)
+                                                                    {
+                                                                        <div class="progress" style="width: 10%; height: 5px; margin-top: 1.5%; float: left; margin-right: 2%;">
+                                                                            <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-danger" aria-valuenow="100" style="width: 100%;"></div>
+                                                                        </div><em style="font-size: x-small;">@item3.SkillTag</em>
+                                                                    }
+                                                                    i++;
+                                                                }
+                                                    }
+                                                    @*<div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-success" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">It- Phần Cứng - Mạng</em>
+                                                    <br />
+
+                                                    <div class="progress" style="width: 9.4%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;position:absolute">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-warning" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">SQL Server</em><br />
+
+                                                    <div class="progress" style="width: 10%; height: 5px; margin-top: 1.5%; float: left; margin-right: 2%;">
+                                                        <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-danger" aria-valuenow="100" style="width: 75%;"></div>
+                                                    </div><em style="font-size: x-small;">English; Japanese</em>*@
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <strong>$@item.MinSalary.ToString().TrimEnd('0').TrimEnd(',')- $@item.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</strong><br />
+                                                    <a href="#"> <img class="salesLogoImage img-responsive" src="@item.LogoURL" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
+                                                </div>
+                                            </div>
+
+                                        </a>
+                                    </li>
+                                    <br />
+                                }
                             }
+
+
                             @*@for (int i = 0; i < 100; i++)
                             {
                                 <li class="list-group-item">
                                     <a target="_blank" href="http://www.vietnamworks.com/tuyen-gap-lap-trinh-vien-net-569885-jd" title="Job - Tuyển Gấp Lập Trình Viên .NET - CTC Communications">
-                                        <strong>Tuyển Gấp Lập Trình Viên .NET</strong><br />
-                                        <em>CTC Communications</em>
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <strong>Tuyển Gấp Lập Trình Viên .NET</strong><br />
+                                                <em><span><span>Da Nang, Ha Noi, Ho Chi Minh</span>|<span>Experienced (Non-Manager)</span></span></em><br />
+                                                <span style="margin-right: 10px;"><i class="fa fa-fw fa-calendar"></i>Posted: 22/06/2015</span>
+                                                <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br />
+                                                <div class="progress" style="width: 10%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;">
+                                                    <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-success" aria-valuenow="100" style="width: 75%;"></div>
+                                                </div><em style="font-size: x-small;">It- Phần Cứng - Mạng</em>
+                                                <br />
+
+                                                <div class="progress" style="width: 9.4%;height: 5px;margin-top: 1.5%;float: left;margin-right: 2%;position:absolute">
+                                                    <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-warning" aria-valuenow="100" style="width: 75%;"></div>
+                                                </div><em style="font-size: x-small;">SQL Server</em><br />
+
+                                                <div class="progress" style="width: 10%; height: 5px; margin-top: 1.5%; float: left; margin-right: 2%;">
+                                                    <div role="progressbar" aria-valuetransitiongoal="100" class="progress-bar progress-bar-danger" aria-valuenow="100" style="width: 75%;"></div>
+                                                </div><em style="font-size: x-small;">English; Japanese</em>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong>$300 - $500</strong><br />
+                                                <a href="#"> <img class="salesLogoImage img-responsive" src="~/Content/img/logo_21.jpg" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
+                                            </div>
+                                        </div>
+
                                     </a>
                                 </li>
                                 <br />
@@ -633,12 +672,12 @@
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-md-4">
 
             <div class="panel panel-blue">
-                <div class="panel-heading">Nhà tuyển dụng hàng đầu</div>
+                <div class="panel-heading" style="font-size:small">Nhà tuyển dụng hàng đầu</div>
                 <div class="panel-body">
-                 
+
                     <ul class="list-group" id="myList2" style="margin-left: 2%;">
                         @for (int i = 0; i < 5; i++)
                         {
@@ -664,7 +703,7 @@
 
                     </ul>
                 </div>
-</div>
+            </div>
         </div>
 
         <div id="slider2_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
@@ -708,6 +747,4 @@
         <!-- Jssor Slider End -->
     </div>
 
-        </div>
-   
-
+</div>

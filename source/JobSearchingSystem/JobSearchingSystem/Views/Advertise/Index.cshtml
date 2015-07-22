@@ -3,6 +3,110 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
+@model JobSearchingSystem.Models.AdvertiseViewModels
 
-<h2>Index</h2>
 
+<div class="row mtl" style="margin-left: 25%;">
+    @foreach (var item in Model.advertiseList)
+    {
+
+        if ("Silver".Equals(item.Name))
+        {
+           
+        <div class="col-xs-12 col-sm-4 col-md-3">
+        <div class="panel panel-violet">
+            @*<div class="ribbon-wrapper">
+                <div class="ribbon-inner">Hot</div>
+            </div>*@
+            <div class="panel-heading"><h3 class="panel-title text-center">@item.Name</h3></div>
+            <div class="panel-body pan text-center">
+                <div class="the-price">
+                    <h1>$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
+                    @*<small>1 month FREE trial</small>*@
+                </div>
+                <table class="table mbn">
+                    <tbody>
+                        <tr>
+                            <td>@item.Description</td>
+                        </tr>                     
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-violet btn-block">Mua ngay</a></div>
+        </div>
+    </div>
+        }else if ("Gold".Equals(item.Name))
+        {
+              <div class="col-xs-12 col-sm-4 col-md-3">
+        <div class="panel panel-yellow">
+            <div class="panel-heading"><h3 class="panel-title text-center">@item.Name</h3></div>
+            <div class="panel-body pan text-center">
+                <div class="the-price">
+                    <h1>$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
+                    @*<small>1 month FREE trial</small>*@
+                </div>
+                <table class="table mbn">
+                    <tbody>
+                        <tr>
+                            <td>@item.Description</td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-yellow btn-block">Mua ngay</a></div>
+        </div>
+    </div>
+        }else if ("Diamond".Equals(item.Name))
+        {
+              <div class="col-xs-12 col-sm-4 col-md-3">
+        <div class="panel panel-blue">
+            <div class="panel-heading"><h3 class="panel-title text-center">@item.Name</h3></div>
+            <div class="panel-body pan text-center">
+                <div class="the-price">
+                    <h1>$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
+                    @*<small>1 month FREE trial</small>*@
+                </div>
+                <table class="table mbn">
+                    <tbody>
+                        <tr>
+                            <td>@item.Description</td>
+                        </tr>                      
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" class="btn btn-blue btn-block">Mua ngay</a></div>
+        </div>
+    </div>
+        }
+        else
+        {
+             <div class="col-xs-12 col-sm-4 col-md-3">
+                 <div class="panel panel-green">
+                     <div class="panel-heading"><h3 class="panel-title text-center">@item.Name</h3></div>
+                     <div class="panel-body pan text-center">
+                         <div class="the-price">
+                             <h1>$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
+                             @*<small>1 month FREE trial</small>*@
+                         </div>
+                         <table class="table mbn">
+                             <tbody>
+                                 <tr>
+                                     <td>@item.Description</td>
+                                 </tr>                                
+                             </tbody>
+                         </table>
+                     </div>
+                     <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-green btn-block">Mua ngay</a></div>
+                 </div>
+    </div>
+        }
+        
+        
+  
+  
+    }
+  
+
+
+</div>
+                    

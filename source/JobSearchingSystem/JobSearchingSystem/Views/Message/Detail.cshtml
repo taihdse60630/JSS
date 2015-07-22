@@ -3,10 +3,20 @@
     ViewBag.Title = "ViewMessage";
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
-
+@model JobSearchingSystem.Models.JMessageDetailViewModel
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 <script src="~/Content/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="~/Content/js/email-compose-mail.js"></script>
+
+@if (Model.message.Content != null)
+{
+    <script>
+    $(document).ready(function () { 
+        document.getElementById("message_content").innerHTML = window.unescape("@Model.message.Content")
+    });
+    </script>
+}
+
 <div id="modal-wide-width" tabindex="-1" role="dialog" aria-labelledby="modal-wide-width-label" aria-hidden="true" class="modal fade">
     <div class="modal-dialog modal-wide-width">
         <div class="modal-content">
@@ -81,7 +91,7 @@
             <div class="col-sm-3 col-md-2">
             </div>
             <div class="col-sm-9 col-md-10">  
-                <a href="@Url.Action("ManageMessage")" class="btn btn-info">
+                <a href="@Url.Action("List")" class="btn btn-info">
                     <i class="fa fa-arrow-circle-o-left"></i>&nbsp;
                     Quay lại hộp tin
                 </a>             
@@ -113,46 +123,31 @@
                 <div class="compose-mail">
                     <div class="portlet box portlet-white" style="border-color: rgb(223, 223, 223);border-style: solid;">
                         <div class="portlet-header">
-                            <div class="caption" style="font-weight: 600; font-size: x-large;">Accept applied job request</div>
-                            <div class="tools">
+                            @*<div class="caption" style="font-weight: 600; font-size: x-large;">Accept applied job request</div>*@
+                            @*<div class="tools">
                                 <a href="#" class="btn btn-default btn-xs">
                                     <i class="fa fa-mail-reply mln"></i>&nbsp;
                                     Reply
                                 </a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Print"><i class="fa fa-print mln"></i></a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Trash"><i class="fa fa-trash-o mln"></i></a>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="portlet-body">
-                            <div class="mail-content">
+                            <div class="mail-content" style="height:300px">
                                 <div class="mail-sender">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <img src="http://dddn.vcmedia.vn/P5inccccccccccccloy2lsBqhjffc/Image/2014/10/Truong-Gia-Binh-ea6b7.jpg" alt="" width="60px" class="img-circle mrm"><strong>Trương Gia Bình</strong> <span>[BinhTG@fpt.com.vn]</span>&nbsp;
+                                            <img src="http://dddn.vcmedia.vn/P5inccccccccccccloy2lsBqhjffc/Image/2014/10/Truong-Gia-Binh-ea6b7.jpg" alt="" width="60px" class="img-circle mrm"><strong>[@Model.message.SenderName]</strong>&nbsp;
                                             to
                                             &nbsp;<strong>me</strong>
                                         </div>
-                                        <div class="col-md-4"><p class="date"> 4:15AM 04 April 2014</p></div>
+                                        <div class="col-md-4"><p class="date"> @Model.message.SendTime</p></div>
                                     </div>
                                 </div>
                                 <div class="mail-view">
-                                    <p>
-                                        Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. <a href="#">Mauris sed congue</a> orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis
-                                        porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci.
-                                    </p>
-                                    <blockquote>
-                                        <em>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                                            deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident<br>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                                        </em>
-                                    </blockquote>
-                                    <p>
-                                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam <a href="#">aliquam quaerat</a> voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-                                        autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam <a href="#">
-                                            aliquam
-                                            quaerat
-                                        </a> voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
-                                    </p>
+                                 
+                                    <div id="message_content"></div>
                                 </div>
-                                <div class="mail-attachment">
+                                @*<div class="mail-attachment">
                                     <p><span><i class="fa fa-paperclip mrs"></i>3 attachments ---<a href="#" class="mrm mls">Download all attachments</a>|<a href="#" class="mlm">View all images</a></span></p>
                                     <ul>
                                         <li>
@@ -171,15 +166,15 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <p>
+                                </div>*@
+                                @*<div class="clearfix"></div>
+                                <hr>*@
+                                @*<p>
                                     <a href="#" class="btn btn-default btn-xs">
                                         <i class="fa fa-mail-reply mln"></i>&nbsp;
                                         Reply
                                     </a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Print"><i class="fa fa-print mln"></i></a>&nbsp;<a href="#" data-hover="tooltip" title="" class="btn btn-default btn-xs" data-original-title="Trash"><i class="fa fa-trash-o mln"></i></a>
-                                </p>
+                                </p>*@
                             </div>
                         </div>
                     </div>
