@@ -49,7 +49,7 @@ namespace JobSearchingSystem.Controllers
                 model.description = companyInfo.Description;
             }
             model.recuiterId = user.Id;
-            model.cities = cities;            
+            model.cities = cities;
 
             return View(model);
         }
@@ -59,18 +59,14 @@ namespace JobSearchingSystem.Controllers
                                     string address, string district, string cityId,
                                     string phoneNumber, string description, string logoURL)
         {
-            if (ModelState.IsValid)
+            if (!String.IsNullOrEmpty(company) && !String.IsNullOrEmpty(recuiterId) && !String.IsNullOrEmpty(cityId))
             {
-                if (!String.IsNullOrEmpty(company) && !String.IsNullOrEmpty(recuiterId) && !String.IsNullOrEmpty(cityId))
+                int cityIdNum = Int32.Parse(cityId);
+                bool result = companyInfoUnitOfWork.UpdateCompanyInfo(recuiterId, company, address, district, cityIdNum, phoneNumber, description, logoURL);
+                CoInUpdateViewModel model = new CoInUpdateViewModel();
+                if (result)
                 {
-                    int cityIdNum = Int32.Parse(cityId);
-
-                    bool result = companyInfoUnitOfWork.UpdateCompanyInfo(recuiterId, company, address, district, cityIdNum, phoneNumber, description, logoURL);
-                    CoInUpdateViewModel model = new CoInUpdateViewModel();
-                    if (result)
-                    {
-                        return RedirectToAction("Update");
-                    }
+                    return RedirectToAction("Update");
                 }
             }
             

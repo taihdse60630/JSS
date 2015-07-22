@@ -26,7 +26,7 @@ namespace JobSearchingSystem.Controllers
         public ActionResult CityList()
         {
             ComCityListViewModel model = new ComCityListViewModel();
-            model.cities = commonListUnitOfWork.GetCityList();
+            model.cities = commonListUnitOfWork.CityRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
             model.name = "";
 
             return View(model);
@@ -76,7 +76,7 @@ namespace JobSearchingSystem.Controllers
         public ActionResult CategoryList()
         {
             ComCategoryListViewModel model = new ComCategoryListViewModel();
-            model.categories = commonListUnitOfWork.GetCategoryList();
+            model.categories = commonListUnitOfWork.CategoryRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
             model.name = "";
 
             return View(model);
@@ -125,7 +125,7 @@ namespace JobSearchingSystem.Controllers
                         model.message = "Cập nhật nhóm ngành nghề thất bại.";
                     }
 
-                    return RedirectToAction("CategoryList", model);
+                    return RedirectToAction("CategoryList");
             }
             return RedirectToAction("CategoryList");
         }
@@ -145,21 +145,15 @@ namespace JobSearchingSystem.Controllers
                     model.message = "Xóa nhóm ngành nghề thất bại.";
                 }
 
-                return RedirectToAction("CategoryList", model);
+                return RedirectToAction("CategoryList");
            
         }
 
-        public ActionResult LanguageList(ComLanguageViewModel model)
+        public ActionResult LanguageList()
         {
-            if (model == null)
-            {
-                model = new ComLanguageViewModel();
-            }
-
-            if (model.languages == null)
-            {
-                model.languages = commonListUnitOfWork.GetLanguageList();
-            }
+            ComLanguageViewModel model = new ComLanguageViewModel();
+            model.languages = commonListUnitOfWork.LanguageRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
+            model.name = "";
 
             return View(model);
         }        
@@ -167,7 +161,7 @@ namespace JobSearchingSystem.Controllers
         [HttpPost]
         public ActionResult CreateLanguage(ComLanguageViewModel model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(model.name))
                 {
@@ -182,7 +176,7 @@ namespace JobSearchingSystem.Controllers
                         model.message = "Tạo ngôn ngữ thất bại.";
                     }
 
-                    return RedirectToAction("LanguageList", model);
+                    return RedirectToAction("LanguageList");
                 }
 
                 return RedirectToAction("LanguageList");
@@ -207,7 +201,7 @@ namespace JobSearchingSystem.Controllers
                     model.message = "Cập nhật ngôn ngữ thất bại.";
                 }
 
-                return RedirectToAction("LanguageList", model);
+                return RedirectToAction("LanguageList");
             }
             return RedirectToAction("LanguageList");
         }
@@ -227,21 +221,16 @@ namespace JobSearchingSystem.Controllers
                 model.message = "Xóa ngôn ngữ thất bại.";
             }
 
-            return RedirectToAction("LanguageList", model);
+            return RedirectToAction("LanguageList");
 
         }
 
-        public ActionResult JobLevelList(ComJobLevelViewModel model)
+        public ActionResult JobLevelList()
         {
-            if (model == null)
-            {
-                model = new ComJobLevelViewModel();
-            }
 
-            if (model.jobLevels == null)
-            {
-                model.jobLevels = commonListUnitOfWork.GetJobLevelList();
-            }
+            ComJobLevelViewModel model = new ComJobLevelViewModel();
+            model.jobLevels = commonListUnitOfWork.JobLevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable();
+            model.name = "";
 
             return View(model);
         }
@@ -264,7 +253,7 @@ namespace JobSearchingSystem.Controllers
                         model.message = "Tạo JobLevel thất bại.";
                     }
 
-                    return RedirectToAction("JobLevelList", model);
+                    return RedirectToAction("JobLevelList");
                 }
 
                 return RedirectToAction("JobLevelList");
@@ -289,7 +278,7 @@ namespace JobSearchingSystem.Controllers
                     model.message = "Cập nhật JobLevel thất bại.";
                 }
 
-                return RedirectToAction("JobLevelList", model);
+                return RedirectToAction("JobLevelList");
             }
             return RedirectToAction("JobLevelList");
         }
@@ -309,21 +298,16 @@ namespace JobSearchingSystem.Controllers
                 model.message = "Xóa JobLevel thất bại.";
             }
 
-            return RedirectToAction("JobLevelList", model);
+            return RedirectToAction("JobLevelList");
 
         }
 
-        public ActionResult SchoolLevelList(ComSchoolLevelViewModel model)
+        public ActionResult SchoolLevelList()
         {
-            if (model == null)
-            {
-                model = new ComSchoolLevelViewModel();
-            }
 
-            if (model.schoolLevels == null)
-            {
-                model.schoolLevels = commonListUnitOfWork.GetSchoolLevelList();
-            }
+            ComSchoolLevelViewModel model = new ComSchoolLevelViewModel();
+            model.schoolLevels = commonListUnitOfWork.SchoolLevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable(); ;
+            model.name = "";
 
             return View(model);
         }
@@ -346,7 +330,7 @@ namespace JobSearchingSystem.Controllers
                         model.message = "Tạo SchoolLevel thất bại.";
                     }
 
-                    return RedirectToAction("SchoolLevelList", model);
+                    return RedirectToAction("SchoolLevelList");
                 }
 
                 return RedirectToAction("SchoolLevelList");
@@ -371,7 +355,7 @@ namespace JobSearchingSystem.Controllers
                     model.message = "Cập nhật SchoolLevel thất bại.";
                 }
 
-                return RedirectToAction("SchoolLevelList", model);
+                return RedirectToAction("SchoolLevelList");
             }
             return RedirectToAction("SchoolLevelList");
         }
@@ -391,7 +375,84 @@ namespace JobSearchingSystem.Controllers
                 model.message = "Xóa SchoolLevel thất bại.";
             }
 
-            return RedirectToAction("SchoolLevelList", model);
+            return RedirectToAction("SchoolLevelList");
+
+        }
+
+        public ActionResult LevelList()
+        {
+
+            ComLevelViewModel model = new ComLevelViewModel();
+            model.levels = commonListUnitOfWork.LevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable(); ;
+            model.name = "";
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateLevel(ComLevelViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!String.IsNullOrEmpty(model.name))
+                {
+                    bool result = commonListUnitOfWork.CreateLevel(model.name, model.levelNum);
+
+                    if (result)
+                    {
+                        model.message = "Tạo Level thành công.";
+                    }
+                    else
+                    {
+                        model.message = "Tạo Level thất bại.";
+                    }
+
+                    return RedirectToAction("LevelList");
+                }
+
+                return RedirectToAction("LevelList");
+            }
+            return RedirectToAction("LevelList");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateLevel(int id, string name, int levelNum)
+        {
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                bool result = commonListUnitOfWork.UpdateLevel(name, levelNum, id);
+                ComLevelViewModel model = new ComLevelViewModel();
+                if (result)
+                {
+                    model.message = "Cập nhật Level thành công.";
+                }
+                else
+                {
+                    model.message = "Cập nhật Level thất bại.";
+                }
+
+                return RedirectToAction("LevelList");
+            }
+            return RedirectToAction("LevelList");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteLevel(int id)
+        {
+
+            bool result = commonListUnitOfWork.DeleteLevel(id);
+            ComLevelViewModel model = new ComLevelViewModel();
+            if (result)
+            {
+                model.message = "Xóa Level thành công.";
+            }
+            else
+            {
+                model.message = "Xóa Level thất bại.";
+            }
+
+            return RedirectToAction("LevelList");
 
         }
 
