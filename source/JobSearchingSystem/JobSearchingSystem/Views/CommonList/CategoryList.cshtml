@@ -5,19 +5,11 @@
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
 
-<style>
-    .ErrorMessage {
-        color: red;
-    }
-</style>
-
 <script>
     $(document).ready(function () {
         $("#CreateBtn").click(function () {
             $("#CreateForm").modal("show");
         });
-
-        $(".field-validation-error").hide();
     });
 
 </script>
@@ -133,7 +125,7 @@
                                     
                                     @using (Html.BeginForm("DeleteCategory", "CommonList", FormMethod.Post, new { style = "display:inline" }))
                                     {
-                                        <input type="hidden" name="id" value="#@item.CategoryID" />
+                                        <input type="hidden" name="id" value="@item.CategoryID" />
                                         <button type="submit" class="btn btn-danger btn-xs">
                                             <i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa
@@ -148,4 +140,3 @@
         </div>
     </div>
 </div>
-@Scripts.Render("~/bundles/jqueryval")

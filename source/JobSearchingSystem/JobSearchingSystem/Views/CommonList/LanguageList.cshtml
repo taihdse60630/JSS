@@ -120,7 +120,7 @@
 
                                     @using (Html.BeginForm("DeleteLanguage", "CommonList", FormMethod.Post, new { style = "display:inline" }))
                                     {
-                                        <input type="hidden" name="id" value="#@item.LanguageID" />
+                                        <input type="hidden" name="id" value="@item.LanguageID" />
                                         <button type="submit" class="btn btn-danger btn-xs">
                                             <i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa
