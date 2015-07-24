@@ -11,7 +11,6 @@ namespace JobSearchingSystem.Controllers
     {
         private ApplicantUnitOfWork applicantUnitOfWork = new ApplicantUnitOfWork();
 
-        // GET: /Applicant/
         public ActionResult Index()
         {
             return List();
