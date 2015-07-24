@@ -219,7 +219,8 @@
 <div class="page-content" style="padding: 20px 60px 50px 150px">
 
     <br />
-
+@using (Html.BeginForm("Update", "Profile", FormMethod.Post))
+{
     <!--Thông tin cá nhân div-->
     <div class="col-lg-12 panel panel-default">
         <br />
@@ -231,8 +232,6 @@
                         <div class="panel-heading">Thông tin cá nhân</div>
                         <div class="panel-body pan form-horizontal">
                             <div class="form-body pal">
-                                @using (Html.BeginForm("UpdateContact", "Profile", FormMethod.Post))
-                                {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -402,11 +401,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Button-->
-                                    <div class="text-right" style="margin-bottom: 35px">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -427,8 +421,6 @@
                         <div class="panel-heading">Thông tin chung</div>
                         <div class="panel-body pan form-horizontal">
                             <div class="form-body pal">
-                                @using (Html.BeginForm("UpdateCommonInfo", "Profile", FormMethod.Post))
-                                {
                                     <input type="hidden" name="profileID" value="@Model.commonInfoItem.profile.ProfileID" />
                                     <div class="row">
                                         <div class="col-md-6">
@@ -587,7 +579,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    /*<div class="row">
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-3">
@@ -603,7 +595,7 @@
 
                                             </div>
                                         </div>
-                                    </div>*/
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -820,10 +812,6 @@
                                             <span class="field-validation-valid ErrorMessage" data-valmsg-for="Objectives" data-valmsg-replace="true"></span>
                                         </div>
                                     </div>
-                                    <div class="text-right" style="margin-bottom: 35px">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -832,7 +820,7 @@
         </div>
     </div>
 
-    @if (Model.employmentHistory.EmploymentHistoryID == -1)
+    if (Model.employmentHistory.EmploymentHistoryID == -1)
     {
         <input type="hidden" id="EmploymentHistoryStatus" value="false" />
         <button id="ToggleEmploymentHistory" class="btn btn-success" style="margin-bottom:20px">
@@ -852,8 +840,6 @@
                         <div class="panel-heading">Kinh nghiệm làm việc</div>
                         <div class="panel-body pan form-horizontal">
                             <div class="form-body pal">
-                                @using (Html.BeginForm("UpdateEmploymentHistory", "Profile", FormMethod.Post))
-                                {
                                     <input type="hidden" name="EmploymentHistoryID" value="@Model.employmentHistory.EmploymentHistoryID" />
                                     <div class="row">
                                         <div class="col-md-6">
@@ -901,10 +887,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-right" style="margin-bottom: 35px">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -913,7 +895,7 @@
         </div>
     </div>
     
-    @if (Model.educationHistory.EducationHistoryID == -1)
+    if (Model.educationHistory.EducationHistoryID == -1)
     {
         <input type="hidden" id="EducationHistoryStatus" value="false" />
         <button id="ToggleEducationHistory" class="btn btn-success" style="margin-bottom:20px">
@@ -933,8 +915,6 @@
                         <div class="panel-heading">Học vấn</div>
                         <div class="panel-body pan form-horizontal">
                             <div class="form-body pal">
-                                @using (Html.BeginForm("UpdateEducationHistory", "Profile", FormMethod.Post))
-                                {
                                     <input type="hidden" name="EducationHistoryID" value="@Model.educationHistory.EducationHistoryID" />
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1002,10 +982,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-right" style="margin-bottom: 35px">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -1014,7 +990,7 @@
         </div>
     </div>
 
-    @if (Model.referencePerson.ReferencePersonID == -1)
+    if (Model.referencePerson.ReferencePersonID == -1)
     {
         <input type="hidden" id="ReferencePersonStatus" value="false" />
         <button id="ToggleReferencePerson" class="btn btn-success" style="margin-bottom:20px">
@@ -1034,8 +1010,6 @@
                         <div class="panel-heading">Thông tin tham khảo</div>
                         <div class="panel-body pan form-horizontal">
                             <div class="form-body pal">
-                                @using (Html.BeginForm("UpdateReferencePerson", "Profile", FormMethod.Post))
-                                {
                                     <input type="hidden" name="ReferencePersonID" value="@Model.referencePerson.ReferencePersonID" />
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1101,10 +1075,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-right" style="margin-bottom: 35px">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -1114,7 +1084,24 @@
     </div>
 
     <div class="col-lg-12 panel panel-default">
-        <br /><br /><br /><br /><br /><br /><br /><br />
+        <br />
+
+        <div id="tab-two-columns-horizontal" class="tab-pane fade active in">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel-body pan form-horizontal">
+                        <div class="form-body pal">
+                            <!--Button-->
+                            <div class="text-right" style="margin-bottom: 35px">
+                                <button type="submit" class="btn btn-success">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br /><br />
     </div>
+}
 </div>
 
