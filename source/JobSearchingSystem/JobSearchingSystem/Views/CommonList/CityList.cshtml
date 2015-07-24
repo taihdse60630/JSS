@@ -5,19 +5,11 @@
     Layout = "~/Views/Shared/_LayoutFinal.cshtml";
 }
 
-<style>
-    .ErrorMessage {
-        color: red;
-    }
-</style>
-
 <script>
     $(document).ready(function () {
         $("#CreateBtn").click(function () {
             $("#CreateForm").modal("show");
         });
-
-        $(".field-validation-error").hide();
     });
 
 </script>
@@ -135,4 +127,3 @@
         </div>
     </div>
 </div>
-@Scripts.Render("~/bundles/jqueryval")
