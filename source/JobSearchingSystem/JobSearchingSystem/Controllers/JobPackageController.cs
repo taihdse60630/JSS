@@ -28,7 +28,7 @@ namespace JobSearchingSystem.Controllers
             return View(model);
         }
 
-         [Authorize(Roles = "Recruiter")]
+        [Authorize(Roles = "Recruiter")]
         public ActionResult Invoice(string jobPackageID)
         {
             if (String.IsNullOrEmpty(jobPackageID))
@@ -90,6 +90,25 @@ namespace JobSearchingSystem.Controllers
                     listAccept.Add(Int32.Parse(item));
                 }
                 packageUnitOfWork.AccepMultitJobPackageRequest(listAccept);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("JobPackageRequestList");
+            }
+
+            return RedirectToAction("JobPackageRequestList");
+        }
+
+        public ActionResult DeleteMultiJobPackage(string[] purchaseJobPackageID)
+        {
+            try
+            {
+                List<int> listDelete = new List<int>();
+                foreach (var item in purchaseJobPackageID)
+                {
+                    listDelete.Add(Int32.Parse(item));
+                }
+                packageUnitOfWork.DeleteMultitJobPackageRequest(listDelete);
             }
             catch (Exception e)
             {

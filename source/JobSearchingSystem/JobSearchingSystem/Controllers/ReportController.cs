@@ -13,6 +13,7 @@ namespace JobSearchingSystem.Controllers
         private ReportUnitOfWork reportUnitOfWork = new ReportUnitOfWork();
         //
         // GET: /Report/
+        [Authorize(Roles = "Staff,Admin,Manager")]
         public ActionResult Index()
         {
             ReportViewModels model = new ReportViewModels();
@@ -21,6 +22,7 @@ namespace JobSearchingSystem.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Staff,Admin,Manager")]
         public ActionResult DeleteReport(int reportID)
         {
             reportUnitOfWork.DeleteReport(reportID);
@@ -28,7 +30,7 @@ namespace JobSearchingSystem.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize]
         public JsonResult SendReport(string reportContent, string refrenceLink)
         {
             string senderId = reportUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;

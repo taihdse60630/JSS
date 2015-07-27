@@ -19,6 +19,10 @@ namespace JobSearchingSystem.Controllers
             hIndexViewModel.jobCities = homeUnitOfWork.getAllCities();
             hIndexViewModel.jobCategories = homeUnitOfWork.getAllCategories();
             hIndexViewModel.schoolLevelList = homeUnitOfWork.getAllSchoolLevel();
+            hIndexViewModel.purchaseAdvertiseTypeA = homeUnitOfWork.getPurchaseAdvertise("A");
+            hIndexViewModel.purchaseAdvertiseTypeB = homeUnitOfWork.getPurchaseAdvertise("B");
+            hIndexViewModel.purchaseAdvertiseTypeC = homeUnitOfWork.getPurchaseAdvertise("C");
+
             return View(hIndexViewModel);
         }
 

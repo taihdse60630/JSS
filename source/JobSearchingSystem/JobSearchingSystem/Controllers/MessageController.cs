@@ -26,34 +26,53 @@ namespace JobSearchingSystem.Controllers
             MessageViewModel model = new MessageViewModel();
             string receiverID = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
             model.messageList = messageUnitOfWork.getAllMessage(receiverID);
+            model.typeOfMessage = "allMessage";
             return View(model);
         }
 
-        public ActionResult SentMessageList(string messageCategory)
+        public ActionResult SentMessageList()
+        {
+             MessageViewModel model = new MessageViewModel();
+              string receiverID = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+              model.messageList = messageUnitOfWork.getAllSentMessage(receiverID);
+              model.typeOfMessage = "sentMessage";
+             return View("List", model);
+        }
+
+        public ActionResult DeletedMessageList()
         {
             MessageViewModel model = new MessageViewModel();
-            string receiverID = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; 
-            if ("allMessage".Equals(messageCategory))
-            {
-                model.messageList = messageUnitOfWork.getAllMessage(receiverID);
-            }
-            if ("sentMessage".Equals(messageCategory))
-            {
-                model.messageList = messageUnitOfWork.getAllSentMessage(receiverID);
-                return PartialView("_MessageSentPartial", model);
-            }
-            if ("deletedMessage".Equals(messageCategory))
-            {
-                model.messageList = messageUnitOfWork.getAllDeleteMessage(receiverID);
-            }
+            string receiverID = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+            model.messageList = messageUnitOfWork.getAllDeleteMessage(receiverID);
+            model.typeOfMessage = "deletedMessage";
+            return View("List", model);
+        }
+
+        //public ActionResult SentMessageList(string messageCategory)
+        //{
+        //    MessageViewModel model = new MessageViewModel();
+        //    string receiverID = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; 
+        //    if ("allMessage".Equals(messageCategory))
+        //    {
+        //        model.messageList = messageUnitOfWork.getAllMessage(receiverID);
+        //    }
+        //    if ("sentMessage".Equals(messageCategory))
+        //    {
+        //        model.messageList = messageUnitOfWork.getAllSentMessage(receiverID);
+        //        return PartialView("_MessageSentPartial", model);
+        //    }
+        //    if ("deletedMessage".Equals(messageCategory))
+        //    {
+        //        model.messageList = messageUnitOfWork.getAllDeleteMessage(receiverID);
+        //    }
             
           
           
-            return PartialView("_MessagePartial", model);
-        }
+        //    return PartialView("_MessagePartial", model);
+        //}
 
 
-        public ActionResult DeleteMessage(string [] mark, string messageRole)
+        public ActionResult DeleteMessage(string [] mark, MessageViewModel model)
         {
             string userId = messageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; 
             //ArrayList list = new ArrayList();
@@ -68,7 +87,7 @@ namespace JobSearchingSystem.Controllers
                 list.Add(index);
             }
 
-            messageUnitOfWork.deleteMessage(userId, list, messageRole);
+            messageUnitOfWork.deleteMessage(userId, list, model.typeOfMessage);
             return RedirectToAction("List");
         }
 
