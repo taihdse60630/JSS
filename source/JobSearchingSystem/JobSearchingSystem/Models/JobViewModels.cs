@@ -62,6 +62,10 @@ namespace JobSearchingSystem.Models
     public class JJobDetailViewModel
     {
         public JJobItem Job { get; set; }
+        public IEnumerable<Profile> profileList { get; set; }
+        public Jobseeker jobSeeker { get; set; }
+        public int profileID { get; set; }
+        public int jobID { get; set; }
     }
 
     public class JAppliedJob
@@ -72,6 +76,8 @@ namespace JobSearchingSystem.Models
         public DateTime? AppliedDate { get; set; }
         public int JobID { get; set; }
         public string JobSeekerID { get; set; }
+        public int Status { get; set; }
+        
     }
 
     public class AppliedJobViewModel

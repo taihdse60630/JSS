@@ -18,10 +18,29 @@ namespace JobSearchingSystem.Models
         public bool isVisible { get; set; }
         public bool isApproved { get; set; }
         public string AdvertiseName { get; set; }
+        public string Position { get; set; }
+        public decimal Cost { get; set; }
     }
     public class AdvertiseViewModels
     {
         public IEnumerable<Advertise> advertiseList { get; set; }
         public int advertiseID { get; set; }
+    }
+
+    public class AdvertiseInvoiceViewModels
+    {
+        public Advertise purchaseAdvertise { get; set; }
+        public int advertiseID { get; set; }
+        public string logo { get; set; }
+    }
+
+    public class ImageModel
+    {
+        public string imageUrl { get; set; }
+        public ImageModel(string imageUrl)
+        {
+            this.imageUrl = imageUrl;
+        }
+     
     }
 }

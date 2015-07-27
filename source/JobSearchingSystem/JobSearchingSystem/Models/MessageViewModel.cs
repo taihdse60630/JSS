@@ -18,6 +18,7 @@ namespace JobSearchingSystem.Models
     public class MessageViewModel
     {
         public IEnumerable<JMesssage> messageList { get; set; }
+        public string typeOfMessage { get; set; }
     }
 
     public class JMessageDetailViewModel
