@@ -200,24 +200,29 @@ namespace JobSearchingSystem.DAL
             }
         }
 
-        public IEnumerable<JAppliedJob> getAppliedJobList()
+        public IEnumerable<JAppliedJob> getAppliedJobList(string userID)
         {
             return (from a in this.AppliedJobRepository.Get()
                     join b in this.JobRepository.Get() on a.JobID equals b.JobID
-                    where a.IsDeleted == false
+                    where a.IsDeleted == false && a.JobSeekerID == userID
                     select new JAppliedJob()
                     {
                         JobName = b.JobTitle,
                         CompanyName = b.Company,
                         AppliedDate = a.ApplyDate,
                         JobID = a.JobID,
-                        JobSeekerID = a.JobSeekerID
+                        JobSeekerID = a.JobSeekerID,
+                        Status = a.Status,
                         
                     }).AsEnumerable();
         }
 
         public int DeleteAppliedRequest(int jobId, string jobseekerId)
         {
+            var listBeforeDelete = (from a in this.AppliedJobRepository.Get()
+                        where a.JobID == jobId && a.JobSeekerID == jobseekerId && a.IsDeleted == true
+                        select a).ToArray();
+
 
             AppliedJob appliedJob = AppliedJobRepository.Get(filter: m => m.JobID == jobId && m.JobSeekerID == jobseekerId).FirstOrDefault();
             appliedJob.IsDeleted = true;
@@ -227,13 +232,42 @@ namespace JobSearchingSystem.DAL
             var list = (from a in this.AppliedJobRepository.Get()
                         where a.JobID == jobId && a.JobSeekerID == jobseekerId
                         select a).ToArray();
-            if (list.Length > 0)
+            return listBeforeDelete.Length - list.Length;
+        }
+
+        public IEnumerable<Profile> getJobSeekerProfile(string userID)
+        {
+            return ProfileRepository.Get(s => s.JobSeekerID == userID).AsEnumerable();
+        }
+
+        public bool AppliedJob(int jobID, int profileID, string userID)
+        {
+            int count = AppliedJobRepository.Get().ToArray().Length;
+            AppliedJob appliedJob = new AppliedJob();
+            appliedJob.JobID = jobID;
+            appliedJob.ProfileID = profileID;
+            appliedJob.JobSeekerID = userID;
+            appliedJob.ApplyDate = DateTime.Now;
+            appliedJob.Status = 0;
+            appliedJob.IsDeleted = false;
+
+            //try
+            //{
+                AppliedJobRepository.Insert(appliedJob);
+                Save();
+            //}
+            //catch (Exception e)
+            //{
+            //    return false;
+            //}
+       
+            if (count < AppliedJobRepository.Get().ToArray().Length)
             {
-                return 0;
+                return true;
             }
             else
             {
-                return 1;
+                return false;
             }
         }
 

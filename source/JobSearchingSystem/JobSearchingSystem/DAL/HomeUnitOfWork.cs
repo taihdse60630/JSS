@@ -91,5 +91,20 @@ namespace JobSearchingSystem.DAL
         {
             return SchoolLevelRepository.Get();
         }
+
+        internal IEnumerable<PurchaseAdvertise> getPurchaseAdvertise(string position)
+        {
+            return (from a in this.PurchaseAdvertiseRepository.Get() 
+                        join b in this.AdvertiseRepository.Get() on a.AdvertiseID equals b.AdvertiseID
+                        where a.IsApproved == true && a.IsVisible == true && a.IsDeleted == false 
+                              && a.EndDate >= DateTime.Now && b.Position == position
+                        select new PurchaseAdvertise()
+                        {
+                            PurchaseAdsID = a.PurchaseAdsID,
+                            LogoUrl = a.LogoUrl,
+                            LinkUrl = a.LinkUrl                            
+                        }
+                        ).AsEnumerable();
+        }
     }
 }

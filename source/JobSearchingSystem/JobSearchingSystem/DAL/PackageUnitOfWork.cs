@@ -42,6 +42,7 @@ namespace JobSearchingSystem.DAL
             IEnumerable<JPurchaseJobPackage> list = (from a in this.PurchaseJobPackageRepository.Get()
                                                      join b in this.AspNetUserRepository.Get() on a.RecruiterID equals b.Id
                                                      join c in this.JobPackageRepository.Get() on a.JobPackageID equals c.JobPackageID
+                                                     where a.IsDeleted == false
                                                      select new JPurchaseJobPackage
                                                      {
                                                          PurchaseJobPackageID = a.PurchaseJobPackageID,
@@ -63,7 +64,10 @@ namespace JobSearchingSystem.DAL
 
         public void DeleteJobPackageRequest(int purchaseJobPackageID)
         {
-            //PurchaseJobPackage purchaseJobPackage = PurchaseJobPackageRepository.GetByID(JobPackageID);
+            PurchaseJobPackage purchaseJobPackage = PurchaseJobPackageRepository.GetByID(purchaseJobPackageID);
+            purchaseJobPackage.IsDeleted = true;
+            PurchaseJobPackageRepository.Update(purchaseJobPackage);
+            Save();
        
         }
 
@@ -78,6 +82,19 @@ namespace JobSearchingSystem.DAL
                 Save();
             }
           
+        }
+
+        public void DeleteMultitJobPackageRequest(List<int> listDelete)
+        {
+
+            foreach (var item in listDelete)
+            {
+                int JobPackageID = item;
+                PurchaseJobPackage purchaseJobPackage = PurchaseJobPackageRepository.GetByID(JobPackageID);
+                purchaseJobPackage.IsDeleted = true;
+                PurchaseJobPackageRepository.Update(purchaseJobPackage);
+                Save();
+            }
         }
     }
 }
