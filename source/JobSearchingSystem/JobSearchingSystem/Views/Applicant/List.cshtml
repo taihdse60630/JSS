@@ -57,6 +57,7 @@
                         Bạn có chắc chấp nhận hồ sơ ứng tuyển này?
                     </p>
                     <input type="hidden" name="applicantID" id="ApproveApplicantID" value="" />
+                    <input type="hidden" name="jobID" value="@ViewBag.JobID" />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Đồng ý</button>
@@ -81,6 +82,7 @@
                         Bạn có chắc không muốn nhận hồ sơ này?
                     </p>
                     <input type="hidden" name="applicantID" id="DisapproveApplicantID" value="" />
+                    <input type="hidden" name="jobID" value="@ViewBag.JobID" />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Đồng ý</button>
