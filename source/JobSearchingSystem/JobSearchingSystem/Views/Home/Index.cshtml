@@ -137,7 +137,7 @@
             //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
             //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
             $SlideSpacing: 0, 					                //[Optional] Space between each slide in pixels, default value is 0
-            $DisplayPieces: 1,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+            $DisplayPieces: 3,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
             $ParkingPosition: 0,                                //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
             $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
             $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
@@ -205,7 +205,7 @@
             $SlideWidth: 140,                                   //[Optional] Width of every slide in pixels, default value is width of 'slides' container
             //$SlideHeight: 100,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
             $SlideSpacing: 0, 					                //[Optional] Space between each slide in pixels, default value is 0
-            $DisplayPieces: 7,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+            $DisplayPieces: 6,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
             $ParkingPosition: 0,                              //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
             $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
             $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
@@ -677,32 +677,20 @@
             <div class="panel panel-blue">
                 <div class="panel-heading" style="font-size:small">Nhà tuyển dụng hàng đầu</div>
                 <div class="panel-body">
-
-                    <ul class="list-group" id="myList2" style="margin-left: 2%;">
-                        @for (int i = 0; i < 5; i++)
-                        {
-                            <li class="">
-                                <a href="#"> <img class="salesLogoImage img-responsive" src="~/Content/img/logo_21.jpg" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
-                            </li>
-
-                        }
-                        @for (int i = 0; i < 5; i++)
-                        {
-                            <li class="">
-                                <a href="#"> <img class="salesLogoImage img-responsive" src="~/Content/img/logo_ecopark_88x43.png" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
-                            </li>
-
-                        }
-                        @for (int i = 0; i < 6; i++)
-                        {
-                            <li class="">
-                                <a href="#"> <img class="salesLogoImage img-responsive" src="~/Content/img/logo_unilever_88x43.gif" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
-                            </li>
-
-                        }
-
-                    </ul>
-                </div>
+                    <div id="container" style="overflow-y:scroll;height:500px">
+                        <ul class="list-group" id="myList2" style="margin-left: 2%;">
+                            @if (Model.purchaseAdvertiseTypeB != null)
+                            {
+                                foreach (var item in Model.purchaseAdvertiseTypeB)
+                                {
+                                    <li class="">
+                                        <a href="@item.LinkUrl"> <img class="salesLogoImage img-responsive" src="@item.LogoUrl" width="88" height="43" border="0"></a>
+                                    </li>
+                                }
+                            }
+                          </ul>
+                        </div>
+                    </div>
             </div>
         </div>
 
@@ -720,14 +708,25 @@
 
             <!-- Slides Container -->
             <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 2000px; height: 100px; overflow: hidden;">
-                <div><img u="image" alt="amazon" src="~/Content/img/logo/amazon.jpg" /></div>
+              @if (Model.purchaseAdvertiseTypeC != null) 
+              { 
+                foreach (var item in Model.purchaseAdvertiseTypeC)
+                {
+                      <div><a href="@item.LinkUrl"><img u="image" src="@item.LogoUrl" /></a></div>
+                  
+                  
+                }
+                 
+              }
+
+                @*<div><a href="http://www.vietnamworks.com/"><img u="image" alt="amazon" src="~/Content/img/logo/amazon.jpg" /></a></div>
                 <div><img u="image" alt="android" src="~/Content/img/logo/android.jpg" /></div>
                 <div><img u="image" alt="bitly" src="~/Content/img/logo/bitly.jpg" /></div>
                 <div><img u="image" alt="blogger" src="~/Content/img/logo/blogger.jpg" /></div>
                 <div><img u="image" alt="dnn" src="~/Content/img/logo/dnn.jpg" /></div>
                 <div><img u="image" alt="drupal" src="~/Content/img/logo/drupal.jpg" /></div>
                 <div><img u="image" alt="ebay" src="~/Content/img/logo/ebay.jpg" /></div>
-                <div><img u="image" alt="facebook" src="~/Content/img/logo/facebook.jpg" /></div>
+                <div><a href="http://www.vietnamworks.com/"><img u="image" alt="facebook" src="~/Content/img/logo/facebook.jpg" /></a></div>
                 <div><img u="image" alt="google" src="~/Content/img/logo/google.jpg" /></div>
                 <div><img u="image" alt="ibm" src="~/Content/img/logo/ibm.jpg" /></div>
                 <div><img u="image" alt="ios" src="~/Content/img/logo/ios.jpg" /></div>
@@ -740,7 +739,7 @@
                 <div><img u="image" alt="twitter" src="~/Content/img/logo/twitter.jpg" /></div>
                 <div><img u="image" alt="windows" src="~/Content/img/logo/windows.jpg" /></div>
                 <div><img u="image" alt="wordpress" src="~/Content/img/logo/wordpress.jpg" /></div>
-                <div><img u="image" alt="youtube" src="~/Content/img/logo/youtube.jpg" /></div>
+                <div><img u="image" alt="youtube" src="~/Content/img/logo/youtube.jpg" /></div>*@
             </div>
             <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
         </div>

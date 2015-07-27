@@ -9,6 +9,12 @@
     function AcceptMultiJobPackage() {
         $('form#acceptForm').submit();
     }
+
+    function DeleteMultiJobPackage() {
+        $('form#acceptForm').attr('action', 'DeleteMultiJobPackage');
+        $('form#acceptForm').submit();
+    }
+
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -76,20 +82,21 @@
     });
 </script> 
 
-<div class="page-content" style="padding: 20px 0px 20px 250px">
-    <div class="col-lg-9 panel panel-default">
+<div class="page-content" style="padding: 20px 50px 100px 100px">
+    <div class="col-md-12 panel panel-default">
         <h3 style="font-weight:600;text-align:center">Danh sách mua gói công việc</h3>
         <br />
 
 
-
+      
 
         <br />
         <br />
        
         <div class="row">
-            <div class="col-lg-3"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 4%;"><i class="fa fa-check"></i> Chấp thuận</button></div>
-            <div class="col-lg-9" style="float:right">
+            <div class="col-md-2"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 4%;"><i class="fa fa-check"></i> Chấp thuận</button></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-square" onclick="DeleteMultiJobPackage()" style="margin-top: 7%;"><i class="fa fa-times"></i> Xóa</button></div>
+            <div class="col-md-9" style="float:right">
                 <nav role="navigation" class="navbar navbar-default" style="width: 90%;margin-left: 12%;">
                     <div class="container-fluid">
                         <div class="navbar-header">
@@ -98,31 +105,33 @@
                         </div>
                         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <select class="form-control" style="margin-top: 7%;" id="packageType">
-                                    <option value="all">Tất cả</option>
-                                    <option value="basic">Basic</option>
-                                    <option value="professional">Professional</option>
-                                    <option value="business">Business</option>
-                                    <option value="unlimited">Unlimited</option>
 
-                                </select>
-
+                                <div class="col-md-12">
+                                    <select class="form-control" style="margin-top: 7%;" id="packageType">
+                                        <option value="all">Tất cả</option>
+                                        <option value="basic">Basic</option>
+                                        <option value="professional">Professional</option>
+                                        <option value="business">Business</option>
+                                        <option value="unlimited">Unlimited</option>
+                                    </select>
+                                </div>
                                 @*<li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>Basic</li>
-                                <li class="divider"></li>
-                                <li>Professional</li>
-                                <li>Business</li>
-                                <li>Unlimited</li>
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>Basic</li>
+                                    <li class="divider"></li>
+                                    <li>Professional</li>
+                                    <li>Business</li>
+                                    <li>Unlimited</li>
 
+                                </ul>
+                            </li>*@
                             </ul>
-                        </li>*@
-                            </ul>
+
                             <form role="search" class="navbar-form navbar-left">
                                 <div class="form-group"><input id="txtID" type="text" placeholder="Tên nhà tuyển dụng" class="form-control" /></div>
                                 &nbsp;
-                                <button type="submit" class="btn btn-orange btn-square">Tìm kiếm</button>
+                                <button type="button" class="btn btn-orange btn-square">Tìm kiếm</button>
                             </form>
 
                         </div>
@@ -131,103 +140,103 @@
             </div>
         </div>
 
-    @using (Html.BeginForm("AcceptMultiJobPackage", "JobPackage", FormMethod.Post, new { id = "acceptForm" }))
-    {                   
+        @using (Html.BeginForm("AcceptMultiJobPackage", "JobPackage", FormMethod.Post, new { id = "acceptForm" }))
+        {
 
-        <div class="table-container">
+            <div class="table-container">
 
-            <table id="tblEmployee" class="table table-hover table-striped table-bordered table-advanced tablesorter">
-                <thead>
-                    <tr>
-                        @*<th width="3%">
-                        <input id="square-checkbox-1" tabindex="9" type="checkbox" />
-                    </th>*@
-                        <th width="3%"><input type="checkbox" name="checkAll" /></th>
-                        <th width="3%">No</th>
-                        <th width="14%">Nhà tuyển dụng </th>
-                        <th width="12%">Gói công việc</th>
+                <table id="tblEmployee" class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                    <thead>
+                        <tr>
+                            @*<th width="3%">
+                                    <input id="square-checkbox-1" tabindex="9" type="checkbox" />
+                                </th>*@
+                            <th width="3%"><input type="checkbox" name="checkAll" /></th>
+                            <th width="3%">No</th>
+                            <th width="14%">Nhà tuyển dụng </th>
+                            <th width="12%">Gói công việc</th>
 
-                        <th width="7%">Tình trạng</th>
-                        <th width="7%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.purchaseJobPackageList != null)
-                    {
-                        int i = 0;
-                        foreach (var item in Model.purchaseJobPackageList)
+                            <th width="7%">Tình trạng</th>
+                            <th width="7%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.purchaseJobPackageList != null)
                         {
-                            i++;
-                            <tr>
-                                <td><input type="checkbox" name="purchaseJobPackageID" value="@item.PurchaseJobPackageID" /></td>
-                                @*<td><input id="square-checkbox-1" tabindex="9" type="checkbox" /></td>*@
-                                <td>@i</td>
-                                <td><a href="#">@item.RecruiterName</a></td>
-                                <td><a href="#" style="color: #428bca;">@item.JobPackageName</a></td>
+                            int i = 0;
+                            foreach (var item in Model.purchaseJobPackageList)
+                            {
+                                i++;
+                                <tr>
+                                    <td><input type="checkbox" name="purchaseJobPackageID" value="@item.PurchaseJobPackageID" /></td>
+                                    @*<td><input id="square-checkbox-1" tabindex="9" type="checkbox" /></td>*@
+                                    <td>@i</td>
+                                    <td><a href="#">@item.RecruiterName</a></td>
+                                    <td><a href="#" style="color: #428bca;">@item.JobPackageName</a></td>
 
-                                <td>
-                                    @if (item.IsApproved)
-                                    {
-                                        <span class="label label-sm label-success">Đã chấp thuận</span>
-                                    }
-                                    else
-                                    {
-                                        <a href="/JobPackage/AcceptJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-green btn-sm">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Chấp nhận
+                                    <td>
+                                        @if (item.IsApproved)
+                                        {
+                                            <span class="label label-sm label-success">Đã chấp thuận</span>
+                                        }
+                                        else
+                                        {
+                                            <a href="/JobPackage/AcceptJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-green btn-sm">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                Chấp nhận
+                                            </a>
+                                            @*<button type="button" class="btn btn-green btn-xs">
+                                                    <i class="fa fa-check"></i>&nbsp;
+                                                    Chấp thuận
+                                                </button>*@
+
+
+                                        }
+
+                                    </td>
+                                    <td>
+                                        <a href="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-times"></i>&nbsp;
+                                            Xóa
                                         </a>
-                                        @*<button type="button" class="btn btn-green btn-xs">
-                                        <i class="fa fa-check"></i>&nbsp;
-                                        Chấp thuận
-                                    </button>*@
-
-
-                                    }
-
-                                </td>
-                                <td>
-                                    <a href="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-times"></i>&nbsp;
-                                        Xóa
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="pagination-panel">
-                        Page
-                        &nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-left"></i></a>&nbsp;<input type="text" maxlenght="5" value="1" class="pagination-panel-input form-control input-mini input-inline input-sm text-center">&nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-right"></i></a>&nbsp;
-                        of 6 | View
-                        &nbsp;<select class="form-control input-xsmall input-sm input-inline">
-                            <option value="20" selected="selected">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="150">150</option>
-                            <option value="-1">All</option>
-                        </select>&nbsp;
-                        records | Found total 58 records
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="pagination-panel">
+                            Page
+                            &nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-left"></i></a>&nbsp;<input type="text" maxlenght="5" value="1" class="pagination-panel-input form-control input-mini input-inline input-sm text-center">&nbsp;<a href="#" class="btn btn-sm btn-default btn-prev"><i class="fa fa-angle-right"></i></a>&nbsp;
+                            of 6 | View
+                            &nbsp;<select class="form-control input-xsmall input-sm input-inline">
+                                <option value="20" selected="selected">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                                <option value="-1">All</option>
+                            </select>&nbsp;
+                            records | Found total 58 records
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 text-right">
-                    <div class="pagination-panel">
-                        <ul class="pagination pagination-sm man">
-                            <li><a href="#">«</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                    <div class="col-md-6 text-right">
+                        <div class="pagination-panel">
+                            <ul class="pagination pagination-sm man">
+                                <li><a href="#">«</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
 
 

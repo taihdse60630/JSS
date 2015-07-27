@@ -44,12 +44,26 @@
                             <tr>
                         @*<td><input id="square-checkbox-1" tabindex="9" type="checkbox" /></td>*@
                         <td>1</td>
-                        <td><a href="#">@item.JobName</a></td>
+                        <td><a href="/Job/Detail/?jobID=@item.JobID">@item.JobName</a></td>
                         <td><a href="#" style="color: #428bca;">@item.CompanyName</a></td>
                         <td>
                             @String.Format("{0:d}", item.AppliedDate)
                         </td>
-                        <td><span class="label label-sm label-success">Chấp nhận</span></td>
+                        <td>
+                                @if (item.Status == 0)
+                                {
+                                      <span class="label label-sm label-blue">Đang chờ duyệt</span>
+                                }
+                                else if(item.Status == 1)
+                                {
+                                    <span class="label label-sm label-success">Chấp nhận</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-sm label-danger">Từ chối</span>
+                                }
+                                </td>
+                              
                         <td>
                             <a href="/Job/DeleteAppliedRequest?JobID=@item.JobID&&JobSeekerID=@item.JobSeekerID" class="label label-sm label-danger">
                                 <i class="fa fa-times"></i>&nbsp;

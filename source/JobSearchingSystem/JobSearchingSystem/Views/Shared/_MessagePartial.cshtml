@@ -6,7 +6,7 @@
 
 @using (Html.BeginForm("DeleteMessage", "Message", FormMethod.Post, new { id = "deleteForm" }))
 {    
-<input type="hidden" name="messageRole" id="messageRole"/>         
+<input type="hidden" id="typeOfMessage" name="typeOfMessage"/>      
 <div class="tab-content">
     <div id="home" class="tab-pane fade active in">
         <div class="list-group">

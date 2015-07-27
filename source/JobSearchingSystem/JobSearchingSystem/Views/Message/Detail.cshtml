@@ -103,12 +103,9 @@
                 <button type="button" data-target="#modal-wide-width" data-toggle="modal" class="btn btn-danger btn-sm btn-block"><i class="fa fa-pencil" style="margin-right:10px"></i>Viết tin nhắn mới</button>
                 <div class="mtm mbm"></div>
                 <ul style="border-style: solid;background: #FFF;border-color: rgb(230, 232, 216);" class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#"><span class="badge pull-right">42</span><i class="fa fa-inbox fa-fw mrs"></i>Hộp tin</a></li>
-                    @*<li><a href="#"><i class="fa fa-star-o fa-fw mrs"></i>Starred</a></li>
-            <li><a href="#"><i class="fa fa-info-circle fa-fw mrs"></i>Important</a></li>*@
-                    <li><a href="#"><i class="fa fa-plane fa-fw mrs"></i>Tin đã gửi</a></li>
-                    <li><a href="#">@*<span class="badge badge-orange pull-right">3</span>*@<i class="fa fa-edit fa-fw mrs"></i>Tin nháp</a></li>
-                    <li><a href="#"><i class="fa fa-trash-o fa-fw mrs"></i>Tin đã xóa</a></li>
+                    <li id="allMessage"><a href="/Message/List"><span class="badge pull-right">42</span><i class="fa fa-inbox fa-fw mrs"></i>Hộp tin</a></li>
+                    <li id="sentMessage"><a href="/Message/SentMessageList"><i class="fa fa-plane fa-fw mrs"></i>Tin đã gửi</a></li>
+                    <li id="deletedMessage"><a href="/Message/DeletedMessageList"><i class="fa fa-trash-o fa-fw mrs"></i>Tin đã xóa</a></li>
                 </ul>
                 <hr>
                 @*<ul style="background: #fff" class="nav nav-pills nav-stacked">

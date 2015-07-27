@@ -85,121 +85,41 @@
     </div>
 </div>
 
+@if (Model.jobSeeker != null){
 
+using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
+ {
+     <input type="hidden" name="jobID" value=@Model.Job.JobID />
+     <div id="modal-custom-dialog" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    <h4 class="modal-title" id="myModalLabel" >Bạn đang ứng tuyển cho vị trí <strong>@Model.Job.JobTitle</strong><br></h4>
+                </div>
+                <div class="modal-body">
 
-<div id="modal-custom-dialog" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-                <h4 class="modal-title" id="myModalLabel" >Bạn đang ứng tuyển cho vị trí <strong>20 Android Dev - Làm Dự Án Automative &amp; Smart Tv !</strong><br></h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="row">                    
-                    <div class="col-lg-3">
-                        <a href="#" class="thumbnail"><img alt="hello" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS8sGvToN7LeZB7WZH-PYQ6OqKB94ZLE9DD4WS96dhzudIZqaC_" style="width: 300px; height: 130px;"></a>
-                    </div>
-                    <div class="col-lg-8">
-                        <h3 class="text-orange">
-                            <span id="app-fullName">Hakun Nguyen</span><br>
-                        </h3>
-                        Vị trí: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Developer</a></small>
-                        <input type="hidden" name="appJobTitle" id="appJobTitle" value="Developer"><br>
-                        Công ty gần đây nhất: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">FPT Software Hochiminh Ltd</a></small><br>
-                        Địa điểm làm việc mong muốn: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Ho Chi Minh</a></small><br>
-                        Địa chỉ email: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">paulhenrichanel14@gmail.com</a></small><br>
-                        Điện thoại: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">0982183821</a></small><br>
-                        Hồ sơ đính kèm: <br>
-                        <input type="radio" name="resume" value="currentResume" checked><a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">2015/05/16 10:01:50 Hakun Nguyen</a><br>
-                        <input type="radio" name="resume" value="newAttachment" style="float:left"><input class="editable" type="file" name="resumeFile" id="fileAttach" value="Đính kèm hồ sơ" tabindex="8">
-                        <span class="small gray-light">Hỗ trợ định dạng .doc, .docx, .pdf, nhỏ hơn 512KB</span><br>
-                        <label>Thư giới thiệu: </label>
-                        <br /> <textarea class="expand" rows="1" cols="35"></textarea>
-                    </div>
-                    </div>
-                        @*<div class="form-group">
-                            <div class="resume-header">
-                                <div class="col-sm-3 col-xs-4 resume-img"><a href="#" class="thumbnail"><img data-src="holder.js/300x180/text:hello" alt="hello" src="data:image/png;base64,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" style="width: 300px; height: 180px;"></a></div>
-                                <div class="col-sm-9 col-xs-8">
-                                    <h3 class="text-orange">
-                                        <span id="app-fullName">Hakun Nguyen</span><br>
-                                        <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Developer</a></small>
-                                        <input type="hidden" name="appJobTitle" id="appJobTitle" value="Developer">
-                                    </h3>
-                                    <p>
-                                        <a href="#" class="text-clip editable editable-click hint editable-unsaved" tabindex="2" id="app-company" style="display: inline-block; background-color: rgba(0, 0, 0, 0);">Công ty gần đây nhất</a><br>
-                                        <a href="#" tabindex="3" id="app-location" data-type="select2" data-pk="1" class="editable editable-click">Ho Chi Minh</a><br>
-                                        <span class="error-message" style="display: none;" id="errorAppLocation">Vui lòng chọn địa điểm làm việc mong muốn</span>
-                                    </p>
-                                    <input type="hidden" name="appCompanyName" id="appCompanyName" value="">
-                                    <input type="hidden" name="appExpectedLocation" id="appExpectedLocation" value="29">
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <a href="#" class="thumbnail"><img alt="hello" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS8sGvToN7LeZB7WZH-PYQ6OqKB94ZLE9DD4WS96dhzudIZqaC_" style="width: 300px; height: 130px;"></a>
                         </div>
-                        <div id="resume" class="resume-body">
-                            <div class="form-group">
-                                <label for="app-email" class="col-sm-3 col-xs-12 control-label">Địa chỉ email</label>
-                                <div class="col-sm-9 col-xs-12">
-                                    <p class="form-control-static" id="app-userName">paulhenrichanel14@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="app-phone" class="col-sm-3 col-xs-12 control-label">Điện thoại</label>
-                                <div class="col-sm-9 col-xs-12">
-                                    <p class="form-control-static">
-                                        <a id="app-phone" href="#" data-type="text" data-pk="1" class="editable editable-click hint" value="Nhập số điện thoại" tabindex="4">Nhập số điện thoại</a><br>
-                                        <span class="error-message" style="display: none;" id="errorAppPhone">Vui lòng nhập số điện thoại.</span>
-                                        <input type="hidden" name="appPhoneNumber" id="appPhoneNumber" value="">
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="app-resume" class="col-sm-3 col-xs-12 control-label">
-                                    Hồ sơ đính kèm
-                                </label>
-                                <div class="col-sm-9 col-xs-12">
-                                    <div class="radio">
-                                        <label for="app-resume">
-                                            <input class="editable" tabindex="5" checked="checked" type="radio" name="resumeApply" id="optionsRadios1" value="currentResume">
-                                            <a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">2015/05/16 10:01:50 Hakun Nguyen</a>
-                                            <input type="hidden" name="onlineResumeId" id="appDefaultResume" value="3156664">
-                                            <input type="hidden" name="attachmentResume" id="attachmentResume" value="0">
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input class="editable" tabindex="7" type="radio" name="resumeApply" id="optionsRadios2" value="newAttachment">
-                                            <span class="upload-button">
-                                                <input class="editable" type="file" name="resumeFile" id="fileAttach" value="Đính kèm hồ sơ" tabindex="8">
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <span class="small gray-light pull-left">Hỗ trợ định dạng .doc, .docx, .pdf, nhỏ hơn 512KB</span><br>
-                                    <span class="error-message" style="display: none;" id="errorAppResume">Vui lòng chọn hồ sơ đính kèm</span>
-                                    <span class="error-message" style="display: none;" id="errorAppResumeFile">Vui lòng chọn tập tin đính kèm với định dạng .doc, .docx, .pdf, nhỏ hơn 512KB</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="app-cover" class="col-sm-3 col-xs-12 control-label">
-                                    Thư giới thiệu
-                                </label>
-                                <div class="col-sm-9 col-xs-12">
-                                    <p class="form-control-static full-width">
-                                        <span class="textarea-wrapper"><a id="app-cover" href="#" tabindex="9" data-type="textarea" data-pk="1" class="app-cover editable editable-pre-wrapped editable-click hint">Nhập thư giới thiệu</a></span>
-                                        <br>
-                                        <span class="small gray-light pull-left" id="txtCoverLetterRemain">Bạn có thể nhập thêm 10000 ký tự</span>
-                                        <span class="small pull-right">
-                                            <a target="_blank" tabindex="10" href="http://advice.vietnamworks.com/vi/career/viet-ho-so-thu-tim-viec/mau-thu-xin-viec-cho-sinh-vien-moi-tot-nghiep.html">(Xem mẫu thư giới thiệu)</a>
-                                        </span>
-                                        <br>
-                                        <span class="error-message" style="display: none;" id="errorCover">Vui lòng nhập thư giới thiệu</span>
-                                        <input type="hidden" name="coverLetter" id="appCoverLetter" value="">
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <span id="errorAppSystem" style="display: none;" class="error-message"></span>*@
+                        <div class="col-lg-8">
+                            <h3 class="text-orange">
+                                <span id="app-fullName">Hakun Nguyen</span><br>
+                            </h3>
+                            Vị trí: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Developer</a></small>
+                            <input type="hidden" name="appJobTitle" id="appJobTitle" value="Developer"><br>
+                            Công ty gần đây nhất: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">FPT Software Hochiminh Ltd</a></small><br>
+                            Địa điểm làm việc mong muốn: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Ho Chi Minh</a></small><br>
+                            Địa chỉ email: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">paulhenrichanel14@gmail.com</a></small><br>
+                            Điện thoại: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">0982183821</a></small><br>
+                            Hồ sơ đính kèm: <br>
+                            @foreach(var item in Model.profileList)
+                            {
+                                <input type="radio" name="profileID" value="@item.ProfileID" checked><a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">@item.UpdatedTime @item.Name</a><br>
+                            }                   
+                    </div>
+                    </div>                  
                     </div>
 
                     <div class="modal-footer">
@@ -215,12 +135,14 @@
                             </div>
                         </div>
                         <br />
-                        <button type="button" data-dismiss="modal" class="btn btn-danger">Nộp đơn</button>
+                        <button type="submit" @*data-dismiss="modal"*@ class="btn btn-danger">Nộp đơn</button>
                     </div>
                 </div>
             </div>
 </div>
 
+ }
+}   
 <div class="page-content" style="padding: 20px 0px 100px 200px">
 
 
@@ -248,7 +170,15 @@
             <div class="col-md-2">
                 <div class="push-top-sm"></div>
                 <div class="action-apply center-block">
-                    <button type="button" data-target="#modal-custom-dialog" data-toggle="modal" class="btn btn-success">Nộp đơn</button>
+                    @if (Model.jobSeeker != null)
+                    {
+                        <button type="button" data-target="#modal-custom-dialog" data-toggle="modal" class="btn btn-success">Nộp đơn</button>
+                    }
+                    else
+                    {
+                         <button type="button" onclick="" class="btn btn-success">Nộp đơn</button>
+                    }
+                   
                 </div>
             </div>
             <br>

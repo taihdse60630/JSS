@@ -32,7 +32,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-violet btn-block">Mua ngay</a></div>
+            <div class="panel-footer pan"><a href="/Advertise/Invoice/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-violet btn-block">Mua ngay</a></div>
         </div>
     </div>
         }else if ("Gold".Equals(item.Name))
@@ -53,7 +53,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-yellow btn-block">Mua ngay</a></div>
+            <div class="panel-footer pan"><a href="/Advertise/Invoice/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-yellow btn-block">Mua ngay</a></div>
         </div>
     </div>
         }else if ("Diamond".Equals(item.Name))
@@ -74,7 +74,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" class="btn btn-blue btn-block">Mua ngay</a></div>
+            <div class="panel-footer pan"><a href="/Advertise/Invoice/?advertiseID=@item.AdvertiseID" class="btn btn-blue btn-block">Mua ngay</a></div>
         </div>
     </div>
         }
@@ -85,7 +85,7 @@
                      <div class="panel-heading"><h3 class="panel-title text-center">@item.Name</h3></div>
                      <div class="panel-body pan text-center">
                          <div class="the-price">
-                             <h1>$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
+                             <h1>@item.Cost.ToString().TrimEnd('0').TrimEnd(',')<span class="subscript">/tháng</span></h1>
                              @*<small>1 month FREE trial</small>*@
                          </div>
                          <table class="table mbn">
@@ -96,7 +96,7 @@
                              </tbody>
                          </table>
                      </div>
-                     <div class="panel-footer pan"><a href="/Advertise/SendAdvertiseRequest/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-green btn-block">Mua ngay</a></div>
+                     <div class="panel-footer pan"><a href="/Advertise/Invoice/?advertiseID=@item.AdvertiseID" role="button" class="btn btn-green btn-block">Mua ngay</a></div>
                  </div>
     </div>
         }

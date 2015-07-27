@@ -112,33 +112,33 @@
     }
     function summitDeleteForm() {
 
-        document.getElementById("messageRole").value = document.getElementById("typeOfMessage").value;
+         document.getElementById("typeOfMessage").value = document.getElementById("messageRole").value;
         $('form#deleteForm').submit();
     }
 
     $(document).ready(function () {
-        $("#messageCategory li").click(function () {
+        //$("#messageCategory li").click(function () {
 
-            $('#messageCategory li.active').removeClass('active');
-            $(this).addClass('active');
-            var messageCategory = this.id;          
-            document.getElementById("typeOfMessage").value = messageCategory;
-            $.ajax({
+        //    $('#messageCategory li.active').removeClass('active');
+        //    $(this).addClass('active');
+        //    var messageCategory = this.id;          
+        //    document.getElementById("typeOfMessage").value = messageCategory;
+        //    $.ajax({
 
-                url: "/Message/SentMessageList",
-                type: 'Get',
-                data: { messageCategory: messageCategory },
-                success: function (data) {
-                    //$("#divLoading").hide();
-                    $("#messageList").empty().append(data);
+        //        url: "/Message/SentMessageList",
+        //        type: 'Get',
+        //        data: { messageCategory: messageCategory },
+        //        success: function (data) {
+        //            //$("#divLoading").hide();
+        //            $("#messageList").empty().append(data);
 
-                },
-                error: function () {
-                    //$("#divLoading").hide();
-                    alert("something seems wrong");
-                }
-            });
-        });
+        //        },
+        //        error: function () {
+        //            //$("#divLoading").hide();
+        //            alert("something seems wrong");
+        //        }
+        //    });
+        //});
       
 
         $('.iCheck-helper').click(function () {
@@ -191,7 +191,18 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-       
+        var typeOfMessage = "@Model.typeOfMessage";
+        if("allMessage" == typeOfMessage){
+            $("#allMessage").addClass("active");
+        }
+
+        if ("sentMessage" == typeOfMessage) {
+            $("#sentMessage").addClass("active");
+        }
+
+        if ("deletedMessage" == typeOfMessage) {
+            $("#deletedMessage").addClass("active");
+        }
     })
 </script>
 <script type="text/javascript" language="javascript">
@@ -322,12 +333,9 @@
                 <button type="button" data-target="#modal-wide-width" data-toggle="modal" class="btn btn-danger btn-sm btn-block"><i class="fa fa-pencil" style="margin-right:10px"></i>Viết tin nhắn mới</button>
                 <div class="mtm mbm"></div>
                 <ul id="messageCategory" style="border-style: solid;background: #FFF;border-color: rgb(230, 232, 216);" class="nav nav-pills nav-stacked">
-                    <li class="active" id="allMessage"><a href="#"><span class="badge pull-right">42</span><i class="fa fa-inbox fa-fw mrs"></i>Hộp tin</a></li>
-                    @*<li><a href="#"><i class="fa fa-star-o fa-fw mrs"></i>Starred</a></li>
-            <li><a href="#"><i class="fa fa-info-circle fa-fw mrs"></i>Important</a></li>*@
-                    <li id="sentMessage"><a href="#"><i class="fa fa-plane fa-fw mrs"></i>Tin đã gửi</a></li>
-                   
-                    <li id="deletedMessage"><a href="#"><i class="fa fa-trash-o fa-fw mrs"></i>Tin đã xóa</a></li>
+                    <li id="allMessage"><a href="/Message/List"><span class="badge pull-right">42</span><i class="fa fa-inbox fa-fw mrs"></i>Hộp tin</a></li>                  
+                    <li id="sentMessage"><a href="/Message/SentMessageList"><i class="fa fa-plane fa-fw mrs"></i>Tin đã gửi</a></li>                   
+                    <li id="deletedMessage"><a href="/Message/DeletedMessageList"><i class="fa fa-trash-o fa-fw mrs"></i>Tin đã xóa</a></li>
                 </ul>
                 <hr>
                 @*<ul style="background: #fff" class="nav nav-pills nav-stacked">
@@ -409,10 +417,19 @@
                     </script>
                 }*@
 
+                @if (Model.typeOfMessage == "sentMessage")
+                {
+                  <div id="messageList">
+                    @{Html.RenderPartial("_MessageSentPartial", Model);}
+                </div>
+                }else
+                { 
                 <div id="messageList">
                     @{Html.RenderPartial("_MessagePartial", Model);}
                 </div>
-                <input type="hidden" id="typeOfMessage" value="allMessage" />
+                }
+               
+                <input type="hidden" id="messageRole" value=@Model.typeOfMessage />  
 
                 @*@Html.Partial("_MessagePartial")*@
             

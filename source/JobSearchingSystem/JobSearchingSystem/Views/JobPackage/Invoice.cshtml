@@ -6,17 +6,29 @@
 @model JobSearchingSystem.Models.InvoiceVIewModels
 
 <script>
+    function commafy(num) {
+        var str = num.toString().split('.');
+        if (str[0].length >= 5) {
+            str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        if (str[1] && str[1].length >= 5) {
+            str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+        }
+        return str.join('.');
+    }
 
     $(document).ready(function () {
         var quantity = parseInt($("#quantity").val(), 10);
         var price = parseInt($("#price").val(), 10);
-        $("#total").text(quantity * price);
+      
+        $("#packagePrice").text(commafy(price));
+        $("#total").text(commafy(quantity * price));
 
         $('#quantity').on('change', function (e) {            
             var quantity = parseInt($("#quantity").val(), 10);
             var price = parseInt($("#price").val(), 10);
 
-            $("#total").text(quantity * price);        
+            $("#total").text(commafy(quantity * price));        
 
         });
 
@@ -31,64 +43,64 @@
     <input type="hidden" name="jobPackageID" value="@Model.jobPackage.JobPackageID" />
 <div class="page-content" style="padding: 20px 60px 50px 300px">
     <div id="invoice-page" class="row">
-        <div class="col-md-7">
+        <div class="col-md-11">
             <div class="panel">
                 <div class="panel-body">
                     <div class="invoice-title">
                         <h2>Hóa đơn</h2>
-                        <p class="text-left">@DateTime.Now
-</p>
-                    </div>
-                    <div class="pull-left">
-                        <h2 class="text-green logo">Job Searching System</h2>
-                        <address class="mbn">78183 Sweards Bluff Ave<br />New York, CA 94107<br /><abbr title="Phone">P:</abbr>(123) 456-7890<br /><br />info@email.com</address>
-                    </div>
-                    <div class="clearfix"></div>
-                    <hr />
-                 
-              
-                    <h4 class="block-heading">Thông tin đơn hàng</h4>
-                    <input id="price" type="hidden" value="@Model.jobPackage.Cost"/>
-                    <div class="table-responsive">
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <td><strong>Sản phẩm</strong></td>
-                                    <td class="text-center"><strong>Giá</strong></td>
-                                    <td class="text-center"><strong>Số lượng</strong></td>
-                                    <td class="text-right"><strong>Tổng cộng</strong></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="font-size: medium; padding-top: 2%; font-weight: bolder;">Gói @Model.jobPackage.Name</td>
-                                    <td class="text-center" style="font-size: medium;padding-top: 2%;" >$@Model.jobPackage.Cost.ToString().TrimEnd('0').TrimEnd(',')</td>
-                                    <td class="text-center">
-                                        <select id="quantity" name="packageQuantity">
-                                            @for (int i = 1; i < 21; i++)
-                                            {
-                                                 <option value="@i">@i </option>
-                                            }
-                                           
-                                            @*<option value="2">2 </option>
-                                            <option value="3">3 </option>
-                                            <option value="5">5 </option>
-                                            <option value="10">10</option>*@
-                                        </select>
-                                    </td>
-                                    <td class="text-right"><h2 class="text-green mtn"><strong>$</strong><strong id="total">685.99</strong></h2></td>
-                                </tr>
-                           
-                           
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr class="mbm" />
-                    <p>Thank you for your business. Please remit the total amount due within 30 days.</p>
+                        <p class="text-left">
+                            @DateTime.Now
+                    </p>
                 </div>
+                <div class="pull-left">
+                    <h2 class="text-green logo">Job Searching System</h2>
+                    <address class="mbn">78183 Sweards Bluff Ave<br />New York, CA 94107<br /><abbr title="Phone">P:</abbr>(123) 456-7890<br /><br />info@email.com</address>
+                </div>
+                <div class="clearfix"></div>
+                <hr />
+
+
+                <h4 class="block-heading">Thông tin đơn hàng</h4>
+                <input id="price" type="hidden" value="@Model.jobPackage.Cost" />
+                <div class="table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td><strong>Sản phẩm</strong></td>
+                                <td class="text-center"><strong>Giá</strong></td>
+                                <td class="text-center"><strong>Số lượng</strong></td>
+                                <td class="text-right"><strong>Tổng cộng</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-size: medium; padding-top: 2%; font-weight: bolder;">Gói @Model.jobPackage.Name</td>
+                                <td id="packagePrice" class="text-center" style="font-size: medium;padding-top: 2%;">@Model.jobPackage.Cost.ToString().TrimEnd('0').TrimEnd(',')</td>
+                                <td class="text-center">
+                                    <select id="quantity" name="packageQuantity">
+                                        @for (int i = 1; i < 21; i++)
+                                        {
+                                            <option value="@i">@i </option>
+                                        }
+
+                                        @*<option value="2">2 </option>
+                                        <option value="3">3 </option>
+                                        <option value="5">5 </option>
+                                        <option value="10">10</option>*@
+                                    </select>
+                                </td>
+                                <td class="text-right"><h2 class="text-green mtn"><strong></strong><strong id="total">685.99</strong></h2></td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="mbm" />
+                <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi. Vui lòng thanh toán trong vòng 30 ngày.</p>
             </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-7" style="margin-left: 58%;">
             <button type="submit" class="btn btn-success mrm">
                 <i class="fa fa-credit-card"></i>&nbsp;
                 Thanh toán
@@ -98,6 +110,8 @@
                 Hủy
             </button>
         </div>
+    </div>
+      
     </div>
 </div>
 }
