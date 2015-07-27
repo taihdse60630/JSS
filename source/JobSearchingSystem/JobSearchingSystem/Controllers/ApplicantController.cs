@@ -11,38 +11,31 @@ namespace JobSearchingSystem.Controllers
     {
         private ApplicantUnitOfWork applicantUnitOfWork = new ApplicantUnitOfWork();
 
-        public ActionResult Index()
-        {
-            return List();
-        }
-
         //List all applicants for a specific job
-        public ActionResult List()
+        public ActionResult List(int id)
         {
-            int jobID = 2; //Code for job getting jobID go here
-            return View(applicantUnitOfWork.GetApplicantByJobID(jobID));
+            ViewBag.JobID = id;
+            return View(applicantUnitOfWork.GetApplicantByJobID(id));
         }
 
         //Approve Applicant
-        public ActionResult Approve(string applicantID)
-        {
-            int jobID = 2; //Code for job getting jobID go here
+        public ActionResult Approve(string applicantID, int jobID)
+        {            
             if (applicantUnitOfWork.ApproveApplicant(applicantID, jobID))
             {
-                return RedirectToAction("List");
+                return RedirectToAction("List", new { id = jobID });
             }
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { id = jobID });
         }
 
         //Reject applicant
-        public ActionResult Disapprove(string applicantID)
+        public ActionResult Disapprove(string applicantID, int jobID)
         {
-            int jobID = 2; //Code for job getting jobID go here
             if (applicantUnitOfWork.RejectApplicant(applicantID, jobID))
             {
-                return RedirectToAction("List");
+                return RedirectToAction("List", new { id = jobID });
             }
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { id = jobID });
         }
 	}
 }
