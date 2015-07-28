@@ -30,6 +30,10 @@
     }
     /* selected link */
 </style>
+<script src="~/Content/js//sweetalert.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="~/Content/css/sweetalert.css">
+
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 
@@ -41,11 +45,17 @@
 <script src="~/Content/vendors/bootstrap/js/bootstrap.min.js"></script>
 <script>
     function AlertNoProfile() {
-        alert("Hiện tại bạn không có hồ sơ để applied cho công việc này");
+        swal("Bạn không thể nộp đơn", "Hiện tại bạn không có bất kì hồ sơ nào để nộp cho công việc này","warning")
+       
     }
 
     function AlertAppled() {
-        alert("Bạn đã Applied cho công việc này");
+        swal("Bạn đã nộp đơn cho công việc này", "Bạn không thể nộp đơn 2 lần cho cùng 1 công việc", "error")
+        
+    }
+
+    function ShowLoginModal() {        
+        $('#modal-default-login').modal('show');
     }
 
     function SendReport() {
@@ -58,11 +68,13 @@
             dataType: "json",
             success: function (data) {
                 if (data) {
-                    alert("Đã gửi report thành công");
+                    swal("Đã gửi report thành công","", "success")
+                  
                     $("#modal-report").modal("hide");
                     $(".modal-backdrop").remove();
                 } else {
-                    alert("Gửi report thất bại")
+                    sweetAlert("Oops...", "Gửi report thất bại", "error");
+                   
                 }
             },
             error: function (xhr, status, error) {
@@ -83,7 +95,8 @@
                 <h4 id="modal-header-primary-label" class="modal-title">Report</h4>
             </div>
             <div class="modal-body"><textarea id="reportContent" name="reportContent" rows="4" cols="76"></textarea></div>
-            <input id="refrenceLink" type="hidden" value="/Job/Detail/?jobID = @Model.Job.JobID" />
+            <input id="refrenceLink" type="hidden" name="returnUrl" value="Home/Index" />
+             @*<input id="refrenceLink" type="hidden" value="/Job/Detail/?jobID = @Model.Job.JobID" />*@
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Đóng</button>
                 <button type="button" onclick="SendReport()" class="btn btn-primary">Gửi report </button>
@@ -112,19 +125,27 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                         </div>
                         <div class="col-md-8">
                             <h3 class="text-orange">
-                                <span id="app-fullName">Hakun Nguyen</span><br>
+                                <span id="app-fullName">@Model.jobSeeker.FullName</span><br>
                             </h3>
-                            Vị trí: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Developer</a></small>
+                            @*Vị trí: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Developer</a></small>*@
                             <input type="hidden" name="appJobTitle" id="appJobTitle" value="Developer"><br>
-                            Công ty gần đây nhất: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">FPT Software Hochiminh Ltd</a></small><br>
-                            Địa điểm làm việc mong muốn: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Ho Chi Minh</a></small><br>
-                            Địa chỉ email: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">paulhenrichanel14@gmail.com</a></small><br>
-                            Điện thoại: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">0982183821</a></small><br>
+                            @*Công ty gần đây nhất: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">FPT Software Hochiminh Ltd</a></small><br>
+                            Địa điểm làm việc mong muốn: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">Ho Chi Minh</a></small><br>*@
+                            Địa chỉ email: <small><label style="color:#2B8AE2;" class="editable editable-click" tabindex="1" id="app-title">@Model.jobSeeker.Email</label></small><br>
+                            Điện thoại: <small><label  style="color:#2B8AE2;" class="editable editable-click" tabindex="1" id="app-title">@Model.jobSeeker.PhoneNumber</label></small><br>
                             Hồ sơ đính kèm: <br>
-                            @foreach (var item in Model.profileList)
+                            @if (Model.profileList.ToArray().Length == 0)
                             {
-                                <input type="radio" name="profileID" value="@item.ProfileID" checked><a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">@item.UpdatedTime @item.Name</a><br>
+                                <div style="color:red"> Bạn chưa tạo bất kì hồ sơ nào</div>
                             }
+                            else
+                            {
+                               foreach (var item in Model.profileList)
+                                {
+                                    <input type="radio" name="profileID" value="@item.ProfileID" checked><a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">@item.UpdatedTime @item.Name</a><br>
+                                }
+                            }
+                               
                         </div>
                     </div>                  
                     </div>
@@ -194,9 +215,12 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                     {
                         <button type="button" data-target="#modal-custom-dialog" data-toggle="modal" class="btn btn-success">Nộp đơn</button>
                     }
-                    else
+                    else if (Model.isLogined)
                     {
-                         <button type="button" onclick="" class="btn btn-success">Nộp đơn</button>
+                        <button type="button"  disabled  class="btn btn-success">Nộp đơn</button>
+                    }else
+                    {
+                         <button type="button" onclick="ShowLoginModal()" class="btn btn-success">Nộp đơn</button>
                     }
                    
                 </div>
@@ -273,11 +297,14 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                     <br />
                     <h4 style="margin-left: 10px;font-weight: 600;"><i class="fa fa-rocket" style="font-size: 25px; color: rgb(244, 153, 97); margin-right: 10px; "></i>Chuyên môn của bạn</h4>
                     <p style="margin-left: 10px;">
-                        - Kinh nghiệm lập trình android 2 năm trở lên. <br>
-                        - Có kinh nghiệm làm về UI/UX. <br>
-                        - Có kinh nghiệm làm về mô hình clientserver, sử dụng web API <br>
-                        - Có kinh nghiệm về playback player và video streaming
-
+                        @if (Model.Job.JobRequirement != null)
+                        {
+                            @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Job.JobRequirement));
+                        }
+                        else
+                        {
+                            <div style="margin-left: 40px; font-style: italic;">Chưa cập nhật</div>
+                        }
                     </p>
                 </div>
                 <div class="panel panel-default">
