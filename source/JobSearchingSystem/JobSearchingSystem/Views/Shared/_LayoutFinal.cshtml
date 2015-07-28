@@ -78,6 +78,17 @@
                     $('input[name="PhoneNumber"]').attr("data_val", "true");
                 }
             });
+
+            var href = window.location.href.split('/');
+            if (href.length == 5) {
+                $('input[name="returnUrl"]').val(href[3] + '/' + href[4]);
+            }
+            else if (href.length == 6) {
+                $('input[name="returnUrl"]').val(href[3] + '/' + href[4] + '/' + href[5]);
+            }
+            else {
+                $('input[name="returnUrl"]').val("Home/Index");
+            }
         });
     </script>
 
@@ -100,7 +111,7 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("Login", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
     {
         <!--LOGIN MODAL-->
         <div id="modal-default-login" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
@@ -155,7 +166,7 @@
         </div>
     }
 
-    @using (Html.BeginForm("Register", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
     {
         <!--REGISTER MODAL-->
         <div id="modal-default-register" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
@@ -222,7 +233,7 @@
             </div>
         </div>
     }
-    @using (Html.BeginForm("ChangePassword", "Account", new { returnUrl = "Home/Index" }, FormMethod.Post))
+    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
     {
         <!--CHANGE PASSWORD MODAL-->
         <div id="modal-default-changepassword" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">

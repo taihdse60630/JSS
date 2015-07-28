@@ -42,14 +42,20 @@ namespace JobSearchingSystem.Controllers
             if (user != null)
             {
                 await SignInAsync(user, model.RememberMe);
-                return RedirectToLocal(returnUrl);
             }
             else
             {
-                ModelState.AddModelError("", "Invalid username or password.");
+                TempData["message"] = "Đăng nhập thất bại";
             }
 
-            return RedirectToAction("Index", "Home");
+            if (!String.IsNullOrEmpty(returnUrl))
+            {
+                return Redirect("../" + returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
