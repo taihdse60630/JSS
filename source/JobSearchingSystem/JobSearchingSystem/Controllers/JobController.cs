@@ -96,6 +96,7 @@ namespace JobSearchingSystem.Controllers
 
                 if (!String.IsNullOrEmpty(User.Identity.Name))
                 {
+                    jJobDetailViewModel.isLogined = true;
                     string userID = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
                     IEnumerable<Profile> profileList = jobUnitOfWork.getJobSeekerProfile(userID);
 
@@ -104,6 +105,10 @@ namespace JobSearchingSystem.Controllers
 
                     jJobDetailViewModel.isApplied = jobUnitOfWork.CheckIsApplied(userID, jobID2);
 
+                }
+                else
+                {
+                    jJobDetailViewModel.isLogined = false;
                 }
 
                 return View(jJobDetailViewModel);
