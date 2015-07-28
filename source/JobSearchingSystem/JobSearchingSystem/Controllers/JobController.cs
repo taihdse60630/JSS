@@ -102,6 +102,8 @@ namespace JobSearchingSystem.Controllers
                     jJobDetailViewModel.jobSeeker = jobUnitOfWork.JobseekerRepository.Get(s => s.JobSeekerID == userID).FirstOrDefault();
                     jJobDetailViewModel.profileList = profileList;
 
+                    jJobDetailViewModel.isApplied = jobUnitOfWork.CheckIsApplied(userID, jobID2);
+
                 }
 
                 return View(jJobDetailViewModel);
