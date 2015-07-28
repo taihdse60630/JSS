@@ -66,6 +66,7 @@ namespace JobSearchingSystem.Models
         public Jobseeker jobSeeker { get; set; }
         public int profileID { get; set; }
         public int jobID { get; set; }
+        public bool isApplied { get; set; }
     }
 
     public class JAppliedJob
