@@ -394,5 +394,18 @@ namespace JobSearchingSystem.DAL
         }
 
 
+
+        public bool CheckIsApplied(string userID, int jobID2)
+        {
+            IEnumerable<AppliedJob> appliedJob = AppliedJobRepository.Get(filter: s => s.JobID == jobID2 && s.JobSeekerID == userID).AsEnumerable();
+            if (appliedJob.ToArray().Length == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
