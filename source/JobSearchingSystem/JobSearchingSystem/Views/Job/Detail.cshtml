@@ -40,6 +40,13 @@
 
 <script src="~/Content/vendors/bootstrap/js/bootstrap.min.js"></script>
 <script>
+    function AlertNoProfile() {
+        alert("Hiện tại bạn không có hồ sơ để applied cho công việc này");
+    }
+
+    function AlertAppled() {
+        alert("Bạn đã Applied cho công việc này");
+    }
 
     function SendReport() {
         var userList;
@@ -75,7 +82,7 @@
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                 <h4 id="modal-header-primary-label" class="modal-title">Report</h4>
             </div>
-            <div class="modal-body"><textarea id="reportContent" name="reportContent" rows="4" cols="80"></textarea></div>
+            <div class="modal-body"><textarea id="reportContent" name="reportContent" rows="4" cols="76"></textarea></div>
             <input id="refrenceLink" type="hidden" value="/Job/Detail/?jobID = @Model.Job.JobID" />
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Đóng</button>
@@ -100,10 +107,10 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                 <div class="modal-body">
 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-md-3">
                             <a href="#" class="thumbnail"><img alt="hello" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS8sGvToN7LeZB7WZH-PYQ6OqKB94ZLE9DD4WS96dhzudIZqaC_" style="width: 300px; height: 130px;"></a>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-md-8">
                             <h3 class="text-orange">
                                 <span id="app-fullName">Hakun Nguyen</span><br>
                             </h3>
@@ -114,11 +121,11 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                             Địa chỉ email: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">paulhenrichanel14@gmail.com</a></small><br>
                             Điện thoại: <small><a href="#" class="editable editable-click" tabindex="1" id="app-title">0982183821</a></small><br>
                             Hồ sơ đính kèm: <br>
-                            @foreach(var item in Model.profileList)
+                            @foreach (var item in Model.profileList)
                             {
                                 <input type="radio" name="profileID" value="@item.ProfileID" checked><a id="app-resume" href="#" tabindex="6" data-type="select" data-pk="1" class="editable editable-click">@item.UpdatedTime @item.Name</a><br>
-                            }                   
-                    </div>
+                            }
+                        </div>
                     </div>                  
                     </div>
 
@@ -135,7 +142,20 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                             </div>
                         </div>
                         <br />
-                        <button type="submit" @*data-dismiss="modal"*@ class="btn btn-danger">Nộp đơn</button>
+                        @if (Model.profileList.ToArray().Length != 0 && Model.isApplied)
+                        {
+                              <button type="submit" @*data-dismiss="modal"*@ class="btn btn-danger">Nộp đơn</button>
+                        }
+                        else if (Model.isApplied)
+                        {
+                              
+                            <button type="button" onclick="AlertNoProfile()" @*data-dismiss="modal"*@ class="btn btn-danger">Nộp đơn</button>
+                        }else
+                        {
+                              <button type="button" onclick="AlertAppled()" @*data-dismiss="modal"*@ class="btn btn-danger">Nộp đơn</button>
+                        }
+                       
+                      
                     </div>
                 </div>
             </div>
