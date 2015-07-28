@@ -154,7 +154,8 @@ namespace JobSearchingSystem.DAL
                         SchoolLevel = f.LevelNum,
                         Company = j.Company,
                         Address = c.Address,
-                        JobDescription = j.JobDescription
+                        JobDescription = j.JobDescription,
+                        JobRequirement = j.JobRequirement
                     }).ToArray().First();
 
            job.JobCities = (from a in this.JobCityRepository.Get()
