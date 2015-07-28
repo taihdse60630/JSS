@@ -110,10 +110,10 @@ namespace JobSearchingSystem.DAL
                         profileLanguage.ProfileID = insertedProfile.ProfileID;
                         profileLanguage.Profile = insertedProfile;
                         profileLanguage.Level_ID = level.Level_ID;
-                        profileLanguage.Level = level;
                         profileLanguage.IsDeleted = false;
 
                         this.ProfileLanguageRepository.Insert(profileLanguage);
+                        this.Save();
                     }
 
                     City city = this.CityRepository.GetByID(expectedCityNum);
@@ -121,12 +121,11 @@ namespace JobSearchingSystem.DAL
                     {
                         ExpectedCity expectedCity = new ExpectedCity();
                         expectedCity.ProfileID = insertedProfile.ProfileID;
-                        expectedCity.Profile = insertedProfile;
                         expectedCity.CityID = city.CityID;
-                        expectedCity.City = city;
                         expectedCity.IsDeleted = false;
 
                         this.ExpectedCityRepository.Insert(expectedCity);
+                        this.Save();
                     }
 
                     Category category = this.CategoryRepository.GetByID(categoryID);
@@ -134,15 +133,12 @@ namespace JobSearchingSystem.DAL
                     {
                         ExpectedCategory expectedCategory = new ExpectedCategory();
                         expectedCategory.ProfileID = insertedProfile.ProfileID;
-                        expectedCategory.Profile = insertedProfile;
                         expectedCategory.CategoryID = category.CategoryID;
-                        expectedCategory.Category = category;
                         expectedCategory.IsDeleted = false;
 
                         this.ExpectedCategoryRepository.Insert(expectedCategory);
+                        this.Save();
                     }
-
-                    this.Save();
                 }
                 else
                 {
@@ -160,6 +156,7 @@ namespace JobSearchingSystem.DAL
                     profileToUpdate.Objectives = profile.Objectives;
 
                     this.ProfileRepository.Update(profileToUpdate);
+                    this.Save();
 
                     IEnumerable<ProfileLanguage> oldProfileLanguages = this.ProfileLanguageRepository.Get(filter: d => d.ProfileID == profileToUpdate.ProfileID).AsEnumerable();
                     foreach (ProfileLanguage item in oldProfileLanguages)
@@ -168,6 +165,7 @@ namespace JobSearchingSystem.DAL
                         {
                             item.IsDeleted = true;
                             this.ProfileLanguageRepository.Update(item);
+                            this.Save();
                         }
                     }
                     ProfileLanguage profileLanguage = this.ProfileLanguageRepository.Get(s => s.ProfileID == profileToUpdate.ProfileID && s.LanguageID == languageID).FirstOrDefault();
@@ -175,6 +173,7 @@ namespace JobSearchingSystem.DAL
                     {
                         profileLanguage.IsDeleted = false;
                         this.ProfileLanguageRepository.Update(profileLanguage);
+                        this.Save();
                     }
                     else
                     {
@@ -184,14 +183,12 @@ namespace JobSearchingSystem.DAL
                         {
                             ProfileLanguage newProfileLanguage = new ProfileLanguage();
                             newProfileLanguage.LanguageID = language.LanguageID;
-                            newProfileLanguage.Language = language;
                             newProfileLanguage.ProfileID = profileToUpdate.ProfileID;
-                            newProfileLanguage.Profile = profileToUpdate;
                             newProfileLanguage.Level_ID = level.Level_ID;
-                            newProfileLanguage.Level = level;
                             newProfileLanguage.IsDeleted = false;
 
                             this.ProfileLanguageRepository.Insert(newProfileLanguage);
+                            this.Save();
                         }
                     }
                     
@@ -202,6 +199,7 @@ namespace JobSearchingSystem.DAL
                         {
                             item.IsDeleted = true;
                             this.ExpectedCityRepository.Update(item);
+                            this.Save();
                         }
                     }
                     ExpectedCity expectedCity = this.ExpectedCityRepository.Get(s => s.ProfileID == profileToUpdate.ProfileID && s.CityID == expectedCityNum).FirstOrDefault();
@@ -209,6 +207,7 @@ namespace JobSearchingSystem.DAL
                     {
                         expectedCity.IsDeleted = false;
                         this.ExpectedCityRepository.Update(expectedCity);
+                        this.Save();
                     }
                     else
                     {
@@ -217,12 +216,11 @@ namespace JobSearchingSystem.DAL
                         {
                             ExpectedCity newExpectedCity = new ExpectedCity();
                             newExpectedCity.ProfileID = profileToUpdate.ProfileID;
-                            newExpectedCity.Profile = profileToUpdate;
                             newExpectedCity.CityID = city.CityID;
-                            newExpectedCity.City = city;
                             newExpectedCity.IsDeleted = false;
 
                             this.ExpectedCityRepository.Insert(newExpectedCity);
+                            this.Save();
                         }
                     }
 
@@ -233,6 +231,7 @@ namespace JobSearchingSystem.DAL
                         {
                             item.IsDeleted = true;
                             this.ExpectedCategoryRepository.Update(item);
+                            this.Save();
                         }
                     }
                     ExpectedCategory expectedCategory = this.ExpectedCategoryRepository.Get(s => s.ProfileID == profileToUpdate.ProfileID && s.CategoryID == categoryID).FirstOrDefault();
@@ -240,6 +239,7 @@ namespace JobSearchingSystem.DAL
                     {
                         expectedCategory.IsDeleted = false;
                         this.ExpectedCategoryRepository.Update(expectedCategory);
+                        this.Save();
                     }
                     else
                     {
@@ -248,16 +248,13 @@ namespace JobSearchingSystem.DAL
                         {
                             ExpectedCategory newExpectedCategory = new ExpectedCategory();
                             newExpectedCategory.ProfileID = profileToUpdate.ProfileID;
-                            newExpectedCategory.Profile = profileToUpdate;
                             newExpectedCategory.CategoryID = category.CategoryID;
-                            newExpectedCategory.Category = category;
                             newExpectedCategory.IsDeleted = false;
 
                             this.ExpectedCategoryRepository.Insert(newExpectedCategory);
+                            this.Save();
                         }
                     }
-
-                    this.Save();
                 }
             }
             catch (DataException)

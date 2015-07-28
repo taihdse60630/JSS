@@ -16,29 +16,24 @@ namespace JobSearchingSystem.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private AccountUnitOfWork accountUnitOfWork = new AccountUnitOfWork();
+
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())),
+                   new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext())))
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             UserManager = userManager;
+            RoleManager = roleManager;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
+        public RoleManager<IdentityRole> RoleManager { get; private set; }
 
-        //
-        // GET: /Account/Login
-        /*[AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }*/
-
-        //
-        // POST: /Account/Login
+        #region Common
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Login([Bind(Include = "UserName, Password, RememberMe")]LoginViewModel model, string returnUrl)
@@ -54,31 +49,26 @@ namespace JobSearchingSystem.Controllers
                 ModelState.AddModelError("", "Invalid username or password.");
             }
 
-            // If we got this far, something failed, redisplay form
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Register
-        /*[AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }*/
-
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Register([Bind(Include = "UserName, Password, ConfirmPassword, Email, RoleName")]RegisterViewModel model)
         {
+            UnitOfWork unitOfWork = new UnitOfWork();
+            AspNetUser u = unitOfWork.AspNetUserRepository.Get(s => s.UserName == model.UserName).FirstOrDefault();
+            if (u != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var user = new ApplicationUser() { UserName = model.UserName };
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 var createdUser = await UserManager.FindAsync(model.UserName, model.Password);
                 var roleResult = await UserManager.AddToRoleAsync(createdUser.Id, model.RoleName);
-                UnitOfWork unitOfWork = new UnitOfWork();
                 if (model.RoleName == "Recruiter")
                 {
                     Recruiter recruiter = new Recruiter();
@@ -106,47 +96,9 @@ namespace JobSearchingSystem.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // POST: /Account/Disassociate
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
-        {
-            ManageMessageId? message = null;
-            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            if (result.Succeeded)
-            {
-                message = ManageMessageId.RemoveLoginSuccess;
-            }
-            else
-            {
-                message = ManageMessageId.Error;
-            }
-            return RedirectToAction("Manage", new { Message = message });
-        }*/
-
-        //
-        // GET: /Account/Manage
-
-        /*public ActionResult Manage()
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            ViewBag.HasLocalPassword = HasPassword();
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
-        }*/
-
-        //
-        // POST: /Account/ChangePassword
         [HttpPost]
         public async Task<ActionResult> ChangePassword([Bind(Include = "OldPassword, NewPassword, ConfirmPassword")]ManageUserViewModel model)
         {
@@ -166,7 +118,6 @@ namespace JobSearchingSystem.Controllers
             }
             else
             {
-                // User does not have a password so remove any validation errors caused by a missing OldPassword field
                 ModelState state = ModelState["OldPassword"];
                 if (state != null)
                 {
@@ -184,142 +135,141 @@ namespace JobSearchingSystem.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // POST: /Account/ExternalLogin
-        /*[HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }*/
-
-        //
-        // GET: /Account/ExternalLoginCallback
-        /*[AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            // Sign in the user with this external login provider if the user already has a login
-            var user = await UserManager.FindAsync(loginInfo.Login);
-            if (user != null)
-            {
-                await SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
-            }
-            else
-            {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
-            }
-        }*/
-
-        //
-        // POST: /Account/LinkLogin
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LinkLogin(string provider)
-        {
-            // Request a redirect to the external login provider to link a login for the current user
-            return new ChallengeResult(provider, Url.Action("LinkLoginCallback", "Account"), User.Identity.GetUserId());
-        }*/
-
-        //
-        // GET: /Account/LinkLoginCallback
-        /*public async Task<ActionResult> LinkLoginCallback()
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
-            }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Manage");
-            }
-            return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
-        }*/
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        /*[HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }*/
-
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
+        #endregion
 
-        public ActionResult List()
+        #region Account Manage
+        [Authorize(Roles = "Admin")]
+        public ActionResult List(string showoption)
         {
-            return View();
+            AccListViewModel model = new AccListViewModel();
+            model.showoption = showoption;
+
+            if (String.IsNullOrEmpty(showoption))
+            {
+                model.userList = (from u in accountUnitOfWork.AspNetUserRepository.Get()
+                                  select new AccUserItem
+                                  {
+                                      UserName = u.UserName,
+                                      RoleName = UserManager.GetRoles(u.Id).AsEnumerable().Count() != 0 ? UserManager.GetRoles(u.Id).AsEnumerable().ElementAt(0) : "",
+                                      IsActive = u.IsActive
+                                  }).AsEnumerable();
+            }
+            else if ("0".Equals(showoption))
+            {
+                model.userList = (from u in accountUnitOfWork.AspNetUserRepository.Get()
+                                  select new AccUserItem
+                                  {
+                                      UserName = u.UserName,
+                                      RoleName = UserManager.GetRoles(u.Id).AsEnumerable().Count() != 0 ? UserManager.GetRoles(u.Id).AsEnumerable().ElementAt(0) : "",
+                                      IsActive = u.IsActive
+                                  }).Where(s => s.RoleName == "Staff" || s.RoleName == "Manager").AsEnumerable();
+            }
+            else
+            {
+                model.userList = (from u in accountUnitOfWork.AspNetUserRepository.Get()
+                                  select new AccUserItem
+                                  {
+                                      UserName = u.UserName,
+                                      RoleName = UserManager.GetRoles(u.Id).AsEnumerable().Count() != 0 ? UserManager.GetRoles(u.Id).AsEnumerable().ElementAt(0) : "",
+                                      IsActive = u.IsActive
+                                  }).Where(s => s.RoleName == "Jobseeker" || s.RoleName == "Recruiter").AsEnumerable();
+            }
+
+            return View(model);
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
-        /*[AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CreateAccount([Bind(Include = "UserName, Password, ConfirmPassword, RoleName")]RegisterViewModel model, string showoption)
         {
-            return View();
-        }*/
+            if (!"Staff".Equals(model.RoleName) && !"Manager".Equals(model.RoleName))
+            {
+                return RedirectToAction("List", "Account", new { showoption = showoption });
+            }
 
-        /*[ChildActionOnly]
-        public ActionResult RemoveAccountList()
+            UnitOfWork unitOfWork = new UnitOfWork();
+            AspNetUser u = unitOfWork.AspNetUserRepository.Get(s => s.UserName == model.UserName).FirstOrDefault();
+            if (u != null)
+            {
+                return RedirectToAction("List", "Account", new { showoption = showoption });
+            }
+
+            var user = new ApplicationUser() { UserName = model.UserName };
+            var result = await UserManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var createdUser = await UserManager.FindAsync(model.UserName, model.Password);
+                var roleResult = await UserManager.AddToRoleAsync(createdUser.Id, model.RoleName);
+                if (model.RoleName == "Staff")
+                {
+                    Staff staff = new Staff();
+                    staff.StaffID = createdUser.Id;
+                    staff.IsDeleted = false;
+                    unitOfWork.StaffRepository.Insert(staff);
+                    unitOfWork.Save();
+                }
+                else
+                {
+                    Manager manager = new Manager();
+                    manager.ManagerID = createdUser.Id;
+                    manager.IsDeleted = false;
+                    unitOfWork.ManagerRepository.Insert(manager);
+                    unitOfWork.Save();
+                }
+
+                return RedirectToAction("List", "Account", new { showoption = showoption });
+            }
+            else
+            {
+                AddErrors(result);
+            }
+
+            return RedirectToAction("List", "Account", new { showoption = showoption });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeactiveAccount(string UserName, string showoption)
         {
-            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
-            ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
-            return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
-        }*/
+            UnitOfWork unitOfWork = new UnitOfWork();
+            AspNetUser user = unitOfWork.AspNetUserRepository.Get(s => s.UserName == UserName).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.IsActive = false;
+                unitOfWork.AspNetUserRepository.Update(user);
+                unitOfWork.Save();
+            }
+
+            return RedirectToAction("List", "Account", new { showoption = showoption });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ActiveAccount(string UserName, string showoption)
+        {
+            UnitOfWork unitOfWork = new UnitOfWork();
+            AspNetUser user = unitOfWork.AspNetUserRepository.Get(s => s.UserName == UserName).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.IsActive = true;
+                unitOfWork.AspNetUserRepository.Update(user);
+                unitOfWork.Save();
+            }
+
+            return RedirectToAction("List", "Account", new { showoption = showoption });
+        }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {
@@ -332,7 +282,6 @@ namespace JobSearchingSystem.Controllers
         }
 
         #region Helpers
-        // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
@@ -367,14 +316,6 @@ namespace JobSearchingSystem.Controllers
             }
             return false;
         }
-
-        /*public enum ManageMessageId
-        {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            Error
-        }*/
 
         private ActionResult RedirectToLocal(string returnUrl)
         {

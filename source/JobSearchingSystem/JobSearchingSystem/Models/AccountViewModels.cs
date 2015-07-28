@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace JobSearchingSystem.Models
 {
-    public class ExternalLoginConfirmationViewModel
+    /*public class ExternalLoginConfirmationViewModel
     {
         [Required]
         public string UserName { get; set; }
-    }
+    }*/
 
     public class ManageUserViewModel
     {
@@ -61,5 +62,18 @@ namespace JobSearchingSystem.Models
         public string Email { get; set; }
 
         public string RoleName { get; set; }
+    }
+
+    public class AccUserItem
+    {
+        public string UserName { get; set; }
+        public string RoleName { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class AccListViewModel
+    {
+        public IEnumerable<AccUserItem> userList { get; set; }
+        public string showoption { get; set; }
     }
 }

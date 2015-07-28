@@ -20,7 +20,15 @@ namespace JobSearchingSystem.Controllers
         // GET: /CommonList/
         public ActionResult Index()
         {
-            return View();
+            ComIndexViewModel model = new ComIndexViewModel();
+            model.cities = commonListUnitOfWork.CityRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
+            model.categories = commonListUnitOfWork.CategoryRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
+            model.languages = commonListUnitOfWork.LanguageRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.Name).AsEnumerable();
+            model.jobLevels = commonListUnitOfWork.JobLevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
+            model.schoolLevels = commonListUnitOfWork.SchoolLevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
+            model.levels = commonListUnitOfWork.LevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
+
+            return View(model);
         }
 
         public ActionResult CityList()
@@ -229,7 +237,7 @@ namespace JobSearchingSystem.Controllers
         {
 
             ComJobLevelViewModel model = new ComJobLevelViewModel();
-            model.jobLevels = commonListUnitOfWork.JobLevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable();
+            model.jobLevels = commonListUnitOfWork.JobLevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
             model.name = "";
 
             return View(model);
@@ -306,7 +314,7 @@ namespace JobSearchingSystem.Controllers
         {
 
             ComSchoolLevelViewModel model = new ComSchoolLevelViewModel();
-            model.schoolLevels = commonListUnitOfWork.SchoolLevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable(); ;
+            model.schoolLevels = commonListUnitOfWork.SchoolLevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
             model.name = "";
 
             return View(model);
@@ -383,7 +391,7 @@ namespace JobSearchingSystem.Controllers
         {
 
             ComLevelViewModel model = new ComLevelViewModel();
-            model.levels = commonListUnitOfWork.LevelRepository.Get(s => s.IsDeleted == false).OrderBy(s => s.LevelNum).AsEnumerable(); ;
+            model.levels = commonListUnitOfWork.LevelRepository.Get(s => s.IsDeleted == false).OrderByDescending(s => s.LevelNum).AsEnumerable();
             model.name = "";
 
             return View(model);

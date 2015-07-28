@@ -6,6 +6,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobSearchingSystem.Models
 {
+    public class ComIndexViewModel
+    {
+        public IEnumerable<City> cities { get; set; }
+        public IEnumerable<Category> categories { get; set; }
+        public IEnumerable<Language> languages { get; set; }
+        public IEnumerable<JobLevel> jobLevels { get; set; }
+        public IEnumerable<SchoolLevel> schoolLevels { get; set; }
+        public IEnumerable<Level> levels { get; set; }
+    }
+
     public class ComCityListViewModel
     {
         [Required(ErrorMessage = "Thông tin này bắt buộc")]

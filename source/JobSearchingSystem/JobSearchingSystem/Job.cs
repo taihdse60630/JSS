@@ -32,6 +32,7 @@ namespace JobSearchingSystem
         public Nullable<decimal> MinSalary { get; set; }
         public Nullable<decimal> MaxSalary { get; set; }
         public string JobDescription { get; set; }
+        public string JobRequirement { get; set; }
         public int JobLevel_ID { get; set; }
         public int MinSchoolLevel_ID { get; set; }
         public long JobView { get; set; }

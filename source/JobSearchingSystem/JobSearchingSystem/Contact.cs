@@ -22,6 +22,7 @@ namespace JobSearchingSystem
         public string Address { get; set; }
         public System.DateTime DateofBirth { get; set; }
         public string PhoneNumber { get; set; }
+        public string AvatarUrl { get; set; }
         public int CityID { get; set; }
         public string District { get; set; }
         public bool IsVisible { get; set; }

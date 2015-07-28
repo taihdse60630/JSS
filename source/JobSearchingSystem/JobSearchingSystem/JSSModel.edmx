@@ -153,13 +153,14 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Gender" Type="bit" Nullable="false" />
           <Property Name="MaritalStatus" Type="bit" Nullable="false" />
           <Property Name="Nationality" Type="bit" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="150" />
           <Property Name="DateofBirth" Type="date" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AvatarUrl" Type="nvarchar" MaxLength="250" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="District" Type="nvarchar" MaxLength="20" />
           <Property Name="IsVisible" Type="bit" Nullable="false" />
@@ -234,6 +235,7 @@
           <Property Name="MinSalary" Type="money" />
           <Property Name="MaxSalary" Type="money" />
           <Property Name="JobDescription" Type="ntext" Nullable="false" />
+          <Property Name="JobRequirement" Type="ntext" />
           <Property Name="JobLevel_ID" Type="int" Nullable="false" />
           <Property Name="MinSchoolLevel_ID" Type="int" Nullable="false" />
           <Property Name="JobView" Type="bigint" Nullable="false" />
@@ -310,7 +312,9 @@
             <PropertyRef Name="JobSeekerID" />
           </Key>
           <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="150" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="JobSkill">
@@ -2136,13 +2140,14 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Boolean" Nullable="false" />
           <Property Name="MaritalStatus" Type="Boolean" Nullable="false" />
           <Property Name="Nationality" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AvatarUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CityID" Type="Int32" Nullable="false" />
           <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
@@ -2228,6 +2233,7 @@
           <Property Name="MinSalary" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="MaxSalary" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="JobDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JobRequirement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="JobLevel_ID" Type="Int32" Nullable="false" />
           <Property Name="MinSchoolLevel_ID" Type="Int32" Nullable="false" />
           <Property Name="JobView" Type="Int64" Nullable="false" />
@@ -2326,7 +2332,9 @@
             <PropertyRef Name="JobSeekerID" />
           </Key>
           <Property Name="JobSeekerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AppliedJobs" Relationship="JSSModel.FK_AppliedJob_Jobseeker" FromRole="Jobseeker" ToRole="AppliedJob" />
           <NavigationProperty Name="AspNetUser" Relationship="JSSModel.FK_Jobseeker_AspNetUsers" FromRole="Jobseeker" ToRole="AspNetUser" />
@@ -3540,6 +3548,7 @@
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -3621,6 +3630,7 @@
                 <ScalarProperty Name="JobView" ColumnName="JobView" />
                 <ScalarProperty Name="MinSchoolLevel_ID" ColumnName="MinSchoolLevel_ID" />
                 <ScalarProperty Name="JobLevel_ID" ColumnName="JobLevel_ID" />
+                <ScalarProperty Name="JobRequirement" ColumnName="JobRequirement" />
                 <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
                 <ScalarProperty Name="MaxSalary" ColumnName="MaxSalary" />
                 <ScalarProperty Name="MinSalary" ColumnName="MinSalary" />
@@ -3702,7 +3712,9 @@
             <EntityTypeMapping TypeName="JSSModel.Jobseeker">
               <MappingFragment StoreEntitySet="Jobseeker">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="JobSeekerID" ColumnName="JobSeekerID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3961,8 +3973,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
