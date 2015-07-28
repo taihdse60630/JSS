@@ -23,9 +23,10 @@
     </Key>
     <Property Name="AdvertiseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Cost" Type="money" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AlertEmail">
     <Key>
@@ -99,8 +100,8 @@
       <PropertyRef Name="BenefitID" />
     </Key>
     <Property Name="BenefitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Category">
@@ -108,7 +109,7 @@
       <PropertyRef Name="CategoryID" />
     </Key>
     <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -148,23 +149,15 @@
     </Key>
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="DateofBirth" Type="date" Nullable="false" />
     <Property Name="Gender" Type="bit" Nullable="false" />
     <Property Name="MaritalStatus" Type="bit" Nullable="false" />
     <Property Name="Nationality" Type="bit" Nullable="false" />
     <Property Name="Address" Type="nvarchar" MaxLength="150" />
-    <Property Name="District" Type="nvarchar" MaxLength="20" />
+    <Property Name="DateofBirth" Type="date" Nullable="false" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="IsVisible" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ContactCity">
-    <Key>
-      <PropertyRef Name="JobSeekerID" />
-      <PropertyRef Name="CityID" />
-    </Key>
-    <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="CityID" Type="int" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="20" />
+    <Property Name="IsVisible" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="DesiredBenefit">
     <Key>
@@ -183,11 +176,7 @@
     <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="School" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="SchoolLevel_ID" Type="int" Nullable="false" />
-    <Property Name="BeginMonth" Type="date" />
-    <Property Name="EndMonth" Type="date" />
     <Property Name="Achievement" Type="ntext" />
-    <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
     <Property Name="ProfileID" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -198,12 +187,8 @@
     <Property Name="EmploymentHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Company" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="BeginMonth" Type="date" />
-    <Property Name="EndMonth" Type="date" />
-    <Property Name="IsCurrentJob" Type="bit" Nullable="false" />
+    <Property Name="WorkingTime" Type="int" Nullable="false" />
     <Property Name="Description" Type="ntext" />
-    <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
     <Property Name="ProfileID" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -246,6 +231,7 @@
     <Property Name="JobDescription" Type="ntext" Nullable="false" />
     <Property Name="JobLevel_ID" Type="int" Nullable="false" />
     <Property Name="MinSchoolLevel_ID" Type="int" Nullable="false" />
+    <Property Name="JobView" Type="bigint" Nullable="false" />
     <Property Name="StartedDate" Type="date" />
     <Property Name="EndedDate" Type="date" />
     <Property Name="IsPublic" Type="bit" Nullable="false" />
@@ -262,11 +248,11 @@
   </EntityType>
   <EntityType Name="JobCategory">
     <Key>
-      <PropertyRef Name="JobID" />
       <PropertyRef Name="CategoryID" />
+      <PropertyRef Name="JobID" />
     </Key>
-    <Property Name="JobID" Type="int" Nullable="false" />
     <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="JobID" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="JobCity">
@@ -309,10 +295,10 @@
     <Property Name="IsHighlight" Type="bit" Nullable="false" />
     <Property Name="IsCategoryPriority" Type="bit" Nullable="false" />
     <Property Name="IsHomepagePosting" Type="bit" Nullable="false" />
-    <Property Name="AutoUpNumber" Type="int" />
     <Property Name="ViewMultiNumber" Type="int" />
     <Property Name="MoreDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Cost" Type="money" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Jobseeker">
     <Key>
@@ -345,7 +331,7 @@
       <PropertyRef Name="Level_ID" />
     </Key>
     <Property Name="Level_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LevelNum" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -391,6 +377,7 @@
       <PropertyRef Name="ProfileID" />
     </Key>
     <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="YearOfExperience" Type="int" Nullable="false" />
     <Property Name="HighestSchoolLevel_ID" Type="int" Nullable="false" />
     <Property Name="MostRecentCompany" Type="nvarchar" MaxLength="50" />
@@ -398,9 +385,11 @@
     <Property Name="CurrentJobLevel_ID" Type="int" />
     <Property Name="ExpectedPosition" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ExpectedJobLevel_ID" Type="int" Nullable="false" />
-    <Property Name="ExpectedMinSalary" Type="money" Nullable="false" />
-    <Property Name="ExpectedMaxSalary" Type="money" />
+    <Property Name="ExpectedSalary" Type="money" Nullable="false" />
+    <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
     <Property Name="Objectives" Type="ntext" Nullable="false" />
+    <Property Name="PercentStatus" Type="int" Nullable="false" />
     <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -429,6 +418,7 @@
     <Property Name="IsVisible" Type="bit" Nullable="false" />
     <Property Name="IsApproved" Type="bit" Nullable="false" />
     <Property Name="ManagerID" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="PurchaseJobPackage">
     <Key>
@@ -441,12 +431,14 @@
     <Property Name="EndDate" Type="datetime" Nullable="false" />
     <Property Name="IsApproved" Type="bit" Nullable="false" />
     <Property Name="StaffID" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Recruiter">
     <Key>
       <PropertyRef Name="RecruiterID" />
     </Key>
     <Property Name="RecruiterID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ReferencePerson">
@@ -454,13 +446,11 @@
       <PropertyRef Name="ReferencePersonID" />
     </Key>
     <Property Name="ReferencePersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Company" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReferencePersonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReferencePersonPosition" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReferencePersonCompany" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
-    <Property Name="CreatedTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
+    <Property Name="ReferencePersonPhoneNumber" Type="nvarchar" MaxLength="20" />
     <Property Name="ProfileID" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -470,6 +460,7 @@
     </Key>
     <Property Name="ReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Report_content" Type="ntext" Nullable="false" />
+    <Property Name="ReferenceLink" Type="nvarchar" MaxLength="200" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="SenderID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="IsSolved" Type="bit" Nullable="false" />
@@ -481,7 +472,7 @@
       <PropertyRef Name="SchoolLevel_ID" />
     </Key>
     <Property Name="SchoolLevel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LevelNum" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -515,7 +506,9 @@
       <PropertyRef Name="TopicID" />
     </Key>
     <Property Name="TopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
     <Property Name="WriterID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ImageUrl" Type="varchar" MaxLength="250" />
     <Property Name="Topic_content" Type="ntext" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="UpdatedDate" Type="datetime" />
@@ -640,27 +633,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ContactCity_City">
+  <Association Name="FK_Contact_City">
     <End Role="City" Type="Self.City" Multiplicity="1" />
-    <End Role="ContactCity" Type="Self.ContactCity" Multiplicity="*" />
+    <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="City">
         <PropertyRef Name="CityID" />
       </Principal>
-      <Dependent Role="ContactCity">
+      <Dependent Role="Contact">
         <PropertyRef Name="CityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ContactCity_Contact">
-    <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
-    <End Role="ContactCity" Type="Self.ContactCity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Contact">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="ContactCity">
-        <PropertyRef Name="JobSeekerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1361,7 +1342,6 @@
     <EntitySet Name="CompanyInfo" EntityType="Self.CompanyInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CompanyInfoCity" EntityType="Self.CompanyInfoCity" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ContactCity" EntityType="Self.ContactCity" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DesiredBenefit" EntityType="Self.DesiredBenefit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EducationHistory" EntityType="Self.EducationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmploymentHistory" EntityType="Self.EmploymentHistory" Schema="dbo" store:Type="Tables" />
@@ -1432,13 +1412,9 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Contact" EntitySet="Contact" />
     </AssociationSet>
-    <AssociationSet Name="FK_ContactCity_City" Association="Self.FK_ContactCity_City">
+    <AssociationSet Name="FK_Contact_City" Association="Self.FK_Contact_City">
       <End Role="City" EntitySet="City" />
-      <End Role="ContactCity" EntitySet="ContactCity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ContactCity_Contact" Association="Self.FK_ContactCity_Contact">
       <End Role="Contact" EntitySet="Contact" />
-      <End Role="ContactCity" EntitySet="ContactCity" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

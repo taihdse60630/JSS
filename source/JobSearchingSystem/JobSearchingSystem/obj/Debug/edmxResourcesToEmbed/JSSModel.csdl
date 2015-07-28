@@ -16,7 +16,6 @@
     <EntitySet Name="CompanyInfoes" EntityType="JSSModel.CompanyInfo" />
     <EntitySet Name="CompanyInfoCities" EntityType="JSSModel.CompanyInfoCity" />
     <EntitySet Name="Contacts" EntityType="JSSModel.Contact" />
-    <EntitySet Name="ContactCities" EntityType="JSSModel.ContactCity" />
     <EntitySet Name="DesiredBenefits" EntityType="JSSModel.DesiredBenefit" />
     <EntitySet Name="EducationHistories" EntityType="JSSModel.EducationHistory" />
     <EntitySet Name="EmploymentHistories" EntityType="JSSModel.EmploymentHistory" />
@@ -143,9 +142,9 @@
       <End Role="City" EntitySet="Cities" />
       <End Role="CompanyInfoCity" EntitySet="CompanyInfoCities" />
     </AssociationSet>
-    <AssociationSet Name="FK_ContactCity_City" Association="JSSModel.FK_ContactCity_City">
+    <AssociationSet Name="FK_Contact_City" Association="JSSModel.FK_Contact_City">
       <End Role="City" EntitySet="Cities" />
-      <End Role="ContactCity" EntitySet="ContactCities" />
+      <End Role="Contact" EntitySet="Contacts" />
     </AssociationSet>
     <AssociationSet Name="FK_ExpectedCity_City" Association="JSSModel.FK_ExpectedCity_City">
       <End Role="City" EntitySet="Cities" />
@@ -162,10 +161,6 @@
     <AssociationSet Name="FK_CompanyInfoCity_CompanyInfo" Association="JSSModel.FK_CompanyInfoCity_CompanyInfo">
       <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
       <End Role="CompanyInfoCity" EntitySet="CompanyInfoCities" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ContactCity_Contact" Association="JSSModel.FK_ContactCity_Contact">
-      <End Role="Contact" EntitySet="Contacts" />
-      <End Role="ContactCity" EntitySet="ContactCities" />
     </AssociationSet>
     <AssociationSet Name="FK_DesiredBenefit_Jobseeker" Association="JSSModel.FK_DesiredBenefit_Jobseeker">
       <End Role="Jobseeker" EntitySet="Jobseekers" />
@@ -340,9 +335,10 @@
     </Key>
     <Property Name="AdvertiseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PurchaseAdvertises" Relationship="JSSModel.FK_PurchaseAdvertise_Advertise" FromRole="Advertise" ToRole="PurchaseAdvertise" />
   </EntityType>
   <EntityType Name="AlertEmail">
@@ -430,8 +426,8 @@
       <PropertyRef Name="BenefitID" />
     </Key>
     <Property Name="BenefitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="DesiredBenefits" Relationship="JSSModel.FK_DesiredBenefit_Benefit" FromRole="Benefit" ToRole="DesiredBenefit" />
     <NavigationProperty Name="JobBenefits" Relationship="JSSModel.FK_JobBenefit_Benefit" FromRole="Benefit" ToRole="JobBenefit" />
@@ -441,7 +437,7 @@
       <PropertyRef Name="CategoryID" />
     </Key>
     <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ExpectedCategories" Relationship="JSSModel.FK_ExpectedCategory_Category" FromRole="Category" ToRole="ExpectedCategory" />
@@ -455,7 +451,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="CompanyInfoCities" Relationship="JSSModel.FK_CompanyInfoCity_City" FromRole="City" ToRole="CompanyInfoCity" />
-    <NavigationProperty Name="ContactCities" Relationship="JSSModel.FK_ContactCity_City" FromRole="City" ToRole="ContactCity" />
+    <NavigationProperty Name="Contacts" Relationship="JSSModel.FK_Contact_City" FromRole="City" ToRole="Contact" />
     <NavigationProperty Name="ExpectedCities" Relationship="JSSModel.FK_ExpectedCity_City" FromRole="City" ToRole="ExpectedCity" />
     <NavigationProperty Name="JobCities" Relationship="JSSModel.FK_JobCity_City" FromRole="City" ToRole="JobCity" />
   </EntityType>
@@ -491,27 +487,17 @@
     </Key>
     <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Gender" Type="Boolean" Nullable="false" />
     <Property Name="MaritalStatus" Type="Boolean" Nullable="false" />
     <Property Name="Nationality" Type="Boolean" Nullable="false" />
     <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="IsVisible" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="AspNetUser" Relationship="JSSModel.FK_Contact_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
-    <NavigationProperty Name="ContactCities" Relationship="JSSModel.FK_ContactCity_Contact" FromRole="Contact" ToRole="ContactCity" />
-  </EntityType>
-  <EntityType Name="ContactCity">
-    <Key>
-      <PropertyRef Name="JobSeekerID" />
-      <PropertyRef Name="CityID" />
-    </Key>
-    <Property Name="JobSeekerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="CityID" Type="Int32" Nullable="false" />
-    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="City" Relationship="JSSModel.FK_ContactCity_City" FromRole="ContactCity" ToRole="City" />
-    <NavigationProperty Name="Contact" Relationship="JSSModel.FK_ContactCity_Contact" FromRole="ContactCity" ToRole="Contact" />
+    <NavigationProperty Name="City" Relationship="JSSModel.FK_Contact_City" FromRole="Contact" ToRole="City" />
   </EntityType>
   <EntityType Name="DesiredBenefit">
     <Key>
@@ -532,11 +518,7 @@
     <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SchoolLevel_ID" Type="Int32" Nullable="false" />
-    <Property Name="BeginMonth" Type="DateTime" Precision="0" />
-    <Property Name="EndMonth" Type="DateTime" Precision="0" />
     <Property Name="Achievement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ProfileID" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Profile" Relationship="JSSModel.FK_EducationHistory_Profile" FromRole="EducationHistory" ToRole="Profile" />
@@ -549,12 +531,8 @@
     <Property Name="EmploymentHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="BeginMonth" Type="DateTime" Precision="0" />
-    <Property Name="EndMonth" Type="DateTime" Precision="0" />
-    <Property Name="IsCurrentJob" Type="Boolean" Nullable="false" />
+    <Property Name="WorkingTime" Type="Int32" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ProfileID" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Profile" Relationship="JSSModel.FK_EmploymentHistory_Profile" FromRole="EmploymentHistory" ToRole="Profile" />
@@ -602,6 +580,7 @@
     <Property Name="JobDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="JobLevel_ID" Type="Int32" Nullable="false" />
     <Property Name="MinSchoolLevel_ID" Type="Int32" Nullable="false" />
+    <Property Name="JobView" Type="Int64" Nullable="false" />
     <Property Name="StartedDate" Type="DateTime" Precision="0" />
     <Property Name="EndedDate" Type="DateTime" Precision="0" />
     <Property Name="IsPublic" Type="Boolean" Nullable="false" />
@@ -629,11 +608,11 @@
   </EntityType>
   <EntityType Name="JobCategory">
     <Key>
-      <PropertyRef Name="JobID" />
       <PropertyRef Name="CategoryID" />
+      <PropertyRef Name="JobID" />
     </Key>
-    <Property Name="JobID" Type="Int32" Nullable="false" />
     <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="JobID" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Category" Relationship="JSSModel.FK_JobCategory_Category" FromRole="JobCategory" ToRole="Category" />
     <NavigationProperty Name="Job" Relationship="JSSModel.FK_JobCategory_Job" FromRole="JobCategory" ToRole="Job" />
@@ -686,10 +665,10 @@
     <Property Name="IsHighlight" Type="Boolean" Nullable="false" />
     <Property Name="IsCategoryPriority" Type="Boolean" Nullable="false" />
     <Property Name="IsHomepagePosting" Type="Boolean" Nullable="false" />
-    <Property Name="AutoUpNumber" Type="Int32" />
     <Property Name="ViewMultiNumber" Type="Int32" />
     <Property Name="MoreDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PurchaseJobPackages" Relationship="JSSModel.FK_PurchaseJobPackage_JobPackage" FromRole="JobPackage" ToRole="PurchaseJobPackage" />
   </EntityType>
   <EntityType Name="Jobseeker">
@@ -732,7 +711,7 @@
       <PropertyRef Name="Level_ID" />
     </Key>
     <Property Name="Level_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="LevelNum" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="JobLanguages" Relationship="JSSModel.FK_JobLanguage_Level" FromRole="Level" ToRole="JobLanguage" />
@@ -788,6 +767,7 @@
       <PropertyRef Name="ProfileID" />
     </Key>
     <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="YearOfExperience" Type="Int32" Nullable="false" />
     <Property Name="HighestSchoolLevel_ID" Type="Int32" Nullable="false" />
     <Property Name="MostRecentCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -795,9 +775,11 @@
     <Property Name="CurrentJobLevel_ID" Type="Int32" />
     <Property Name="ExpectedPosition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ExpectedJobLevel_ID" Type="Int32" Nullable="false" />
-    <Property Name="ExpectedMinSalary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="ExpectedMaxSalary" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ExpectedSalary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Objectives" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PercentStatus" Type="Int32" Nullable="false" />
     <Property Name="JobSeekerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -841,6 +823,7 @@
     <Property Name="IsVisible" Type="Boolean" Nullable="false" />
     <Property Name="IsApproved" Type="Boolean" Nullable="false" />
     <Property Name="ManagerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Advertise" Relationship="JSSModel.FK_PurchaseAdvertise_Advertise" FromRole="PurchaseAdvertise" ToRole="Advertise" />
     <NavigationProperty Name="Manager" Relationship="JSSModel.FK_PurchaseAdvertise_Manager" FromRole="PurchaseAdvertise" ToRole="Manager" />
     <NavigationProperty Name="Recruiter" Relationship="JSSModel.FK_PurchaseAdvertise_Recruiter" FromRole="PurchaseAdvertise" ToRole="Recruiter" />
@@ -856,6 +839,7 @@
     <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IsApproved" Type="Boolean" Nullable="false" />
     <Property Name="StaffID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="JobPackage" Relationship="JSSModel.FK_PurchaseJobPackage_JobPackage" FromRole="PurchaseJobPackage" ToRole="JobPackage" />
     <NavigationProperty Name="Recruiter" Relationship="JSSModel.FK_PurchaseJobPackage_Recruiter" FromRole="PurchaseJobPackage" ToRole="Recruiter" />
     <NavigationProperty Name="Staff" Relationship="JSSModel.FK_PurchaseJobPackage_Staff" FromRole="PurchaseJobPackage" ToRole="Staff" />
@@ -865,6 +849,7 @@
       <PropertyRef Name="RecruiterID" />
     </Key>
     <Property Name="RecruiterID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="AspNetUser" Relationship="JSSModel.FK_Recruiter_AspNetUsers" FromRole="Recruiter" ToRole="AspNetUser" />
     <NavigationProperty Name="CompanyInfo" Relationship="JSSModel.FK_CompanyInfo_Recruiter" FromRole="Recruiter" ToRole="CompanyInfo" />
@@ -878,13 +863,11 @@
       <PropertyRef Name="ReferencePersonID" />
     </Key>
     <Property Name="ReferencePersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReferencePersonName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReferencePersonPosition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReferencePersonCompany" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ReferencePersonPhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="ProfileID" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Profile" Relationship="JSSModel.FK_ReferencePerson_Profile" FromRole="ReferencePerson" ToRole="Profile" />
@@ -895,6 +878,7 @@
     </Key>
     <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Report_content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReferenceLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="SenderID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="IsSolved" Type="Boolean" Nullable="false" />
@@ -908,7 +892,7 @@
       <PropertyRef Name="SchoolLevel_ID" />
     </Key>
     <Property Name="SchoolLevel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="LevelNum" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="EducationHistories" Relationship="JSSModel.FK_EducationHistory_SchoolLevel" FromRole="SchoolLevel" ToRole="EducationHistory" />
@@ -951,7 +935,9 @@
       <PropertyRef Name="TopicID" />
     </Key>
     <Property Name="TopicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="WriterID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="Topic_content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
@@ -1252,14 +1238,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ContactCity_City">
+  <Association Name="FK_Contact_City">
     <End Type="JSSModel.City" Role="City" Multiplicity="1" />
-    <End Type="JSSModel.ContactCity" Role="ContactCity" Multiplicity="*" />
+    <End Type="JSSModel.Contact" Role="Contact" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="City">
         <PropertyRef Name="CityID" />
       </Principal>
-      <Dependent Role="ContactCity">
+      <Dependent Role="Contact">
         <PropertyRef Name="CityID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1309,18 +1295,6 @@
       </Principal>
       <Dependent Role="CompanyInfoCity">
         <PropertyRef Name="RecuiterID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ContactCity_Contact">
-    <End Type="JSSModel.Contact" Role="Contact" Multiplicity="1" />
-    <End Type="JSSModel.ContactCity" Role="ContactCity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Contact">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="ContactCity">
-        <PropertyRef Name="JobSeekerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

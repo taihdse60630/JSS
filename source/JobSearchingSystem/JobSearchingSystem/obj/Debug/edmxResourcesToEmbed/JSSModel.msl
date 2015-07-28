@@ -22,6 +22,7 @@
     <EntitySetMapping Name="Advertises">
       <EntityTypeMapping TypeName="JSSModel.Advertise">
         <MappingFragment StoreEntitySet="Advertise">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="Position" ColumnName="Position" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -148,24 +149,16 @@
       <EntityTypeMapping TypeName="JSSModel.Contact">
         <MappingFragment StoreEntitySet="Contact">
           <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Nationality" ColumnName="Nationality" />
           <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ContactCities">
-      <EntityTypeMapping TypeName="JSSModel.ContactCity">
-        <MappingFragment StoreEntitySet="ContactCity">
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="JobSeekerID" ColumnName="JobSeekerID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -183,11 +176,7 @@
         <MappingFragment StoreEntitySet="EducationHistory">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
           <ScalarProperty Name="Achievement" ColumnName="Achievement" />
-          <ScalarProperty Name="EndMonth" ColumnName="EndMonth" />
-          <ScalarProperty Name="BeginMonth" ColumnName="BeginMonth" />
           <ScalarProperty Name="SchoolLevel_ID" ColumnName="SchoolLevel_ID" />
           <ScalarProperty Name="School" ColumnName="School" />
           <ScalarProperty Name="Subject" ColumnName="Subject" />
@@ -200,12 +189,8 @@
         <MappingFragment StoreEntitySet="EmploymentHistory">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="IsCurrentJob" ColumnName="IsCurrentJob" />
-          <ScalarProperty Name="EndMonth" ColumnName="EndMonth" />
-          <ScalarProperty Name="BeginMonth" ColumnName="BeginMonth" />
+          <ScalarProperty Name="WorkingTime" ColumnName="WorkingTime" />
           <ScalarProperty Name="Company" ColumnName="Company" />
           <ScalarProperty Name="Position" ColumnName="Position" />
           <ScalarProperty Name="EmploymentHistoryID" ColumnName="EmploymentHistoryID" />
@@ -244,6 +229,7 @@
           <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
           <ScalarProperty Name="EndedDate" ColumnName="EndedDate" />
           <ScalarProperty Name="StartedDate" ColumnName="StartedDate" />
+          <ScalarProperty Name="JobView" ColumnName="JobView" />
           <ScalarProperty Name="MinSchoolLevel_ID" ColumnName="MinSchoolLevel_ID" />
           <ScalarProperty Name="JobLevel_ID" ColumnName="JobLevel_ID" />
           <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
@@ -271,8 +257,8 @@
       <EntityTypeMapping TypeName="JSSModel.JobCategory">
         <MappingFragment StoreEntitySet="JobCategory">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -309,10 +295,10 @@
     <EntitySetMapping Name="JobPackages">
       <EntityTypeMapping TypeName="JSSModel.JobPackage">
         <MappingFragment StoreEntitySet="JobPackage">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="MoreDescription" ColumnName="MoreDescription" />
           <ScalarProperty Name="ViewMultiNumber" ColumnName="ViewMultiNumber" />
-          <ScalarProperty Name="AutoUpNumber" ColumnName="AutoUpNumber" />
           <ScalarProperty Name="IsHomepagePosting" ColumnName="IsHomepagePosting" />
           <ScalarProperty Name="IsCategoryPriority" ColumnName="IsCategoryPriority" />
           <ScalarProperty Name="IsHighlight" ColumnName="IsHighlight" />
@@ -406,9 +392,11 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="JobSeekerID" ColumnName="JobSeekerID" />
+          <ScalarProperty Name="PercentStatus" ColumnName="PercentStatus" />
           <ScalarProperty Name="Objectives" ColumnName="Objectives" />
-          <ScalarProperty Name="ExpectedMaxSalary" ColumnName="ExpectedMaxSalary" />
-          <ScalarProperty Name="ExpectedMinSalary" ColumnName="ExpectedMinSalary" />
+          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+          <ScalarProperty Name="ExpectedSalary" ColumnName="ExpectedSalary" />
           <ScalarProperty Name="ExpectedJobLevel_ID" ColumnName="ExpectedJobLevel_ID" />
           <ScalarProperty Name="ExpectedPosition" ColumnName="ExpectedPosition" />
           <ScalarProperty Name="CurrentJobLevel_ID" ColumnName="CurrentJobLevel_ID" />
@@ -416,6 +404,7 @@
           <ScalarProperty Name="MostRecentCompany" ColumnName="MostRecentCompany" />
           <ScalarProperty Name="HighestSchoolLevel_ID" ColumnName="HighestSchoolLevel_ID" />
           <ScalarProperty Name="YearOfExperience" ColumnName="YearOfExperience" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -433,6 +422,7 @@
     <EntitySetMapping Name="PurchaseAdvertises">
       <EntityTypeMapping TypeName="JSSModel.PurchaseAdvertise">
         <MappingFragment StoreEntitySet="PurchaseAdvertise">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
@@ -449,6 +439,7 @@
     <EntitySetMapping Name="PurchaseJobPackages">
       <EntityTypeMapping TypeName="JSSModel.PurchaseJobPackage">
         <MappingFragment StoreEntitySet="PurchaseJobPackage">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="StaffID" ColumnName="StaffID" />
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -463,6 +454,7 @@
       <EntityTypeMapping TypeName="JSSModel.Recruiter">
         <MappingFragment StoreEntitySet="Recruiter">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="RecruiterID" ColumnName="RecruiterID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -472,13 +464,11 @@
         <MappingFragment StoreEntitySet="ReferencePerson">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
-          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="ReferencePersonPhoneNumber" ColumnName="ReferencePersonPhoneNumber" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="Company" ColumnName="Company" />
-          <ScalarProperty Name="Position" ColumnName="Position" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="ReferencePersonCompany" ColumnName="ReferencePersonCompany" />
+          <ScalarProperty Name="ReferencePersonPosition" ColumnName="ReferencePersonPosition" />
+          <ScalarProperty Name="ReferencePersonName" ColumnName="ReferencePersonName" />
           <ScalarProperty Name="ReferencePersonID" ColumnName="ReferencePersonID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -491,6 +481,7 @@
           <ScalarProperty Name="IsSolved" ColumnName="IsSolved" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ReferenceLink" ColumnName="ReferenceLink" />
           <ScalarProperty Name="Report_content" ColumnName="Report_content" />
           <ScalarProperty Name="ReportID" ColumnName="ReportID" />
         </MappingFragment>
@@ -543,7 +534,9 @@
           <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Topic_content" ColumnName="Topic_content" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
           <ScalarProperty Name="WriterID" ColumnName="WriterID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="TopicID" ColumnName="TopicID" />
         </MappingFragment>
       </EntityTypeMapping>
