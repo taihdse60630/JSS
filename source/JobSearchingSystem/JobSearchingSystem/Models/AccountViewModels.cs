@@ -61,6 +61,16 @@ namespace JobSearchingSystem.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Họ và tên không được trống.")]
+        [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 kí tự.")]
+        public string FullName { get; set; }
+
+        [Required(ErrorMessage = "Số điện thoại không được trống.")]
+        [StringLength(20, ErrorMessage = "Số điện thoại không được vượt quá 20 kí tự.")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Hãy nhập đúng định dạng số điện thoại.")]
+        public string PhoneNumber { get; set; }
+
         public string RoleName { get; set; }
     }
 

@@ -63,6 +63,21 @@
             $('input[type="checkbox"][id="RememberMeCheckBox"]').on('ifUnchecked', function (event) {
                 $('input[type="hidden"][name="RememberMe"]').val("false");
             });
+
+            $('#selRoleName').change(function () {
+                if ($('#selRoleName').val() == "Recruiter") {
+                    $('input[name="FullName"]').attr("disabled", "disabled");
+                    $('input[name="PhoneNumber"]').attr("disabled", "disabled");
+                    $('input[name="FullName"]').attr("data_val", "false");
+                    $('input[name="PhoneNumber"]').attr("data_val", "false");
+                }
+                else {
+                    $('input[name="FullName"]').removeAttr("disabled");
+                    $('input[name="PhoneNumber"]').removeAttr("disabled");
+                    $('input[name="FullName"]').attr("data_val", "true");
+                    $('input[name="PhoneNumber"]').attr("data_val", "true");
+                }
+            });
         });
     </script>
 
@@ -175,7 +190,7 @@
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <div class="input-icon right"><i class="fa fa-key"></i><input type="text" data-val="true" data-val-email="Email không đúng định dạng." data-val-length="Độ dài Email không được vượt quá 150." data-val-length-max="150" data-val-required="Email không được trống." placeholder="vd: abc@gmail.com" name="Email" class="form-control" value=""></div>
+                            <div class="input-icon right"><i class="fa fa-envelope"></i><input type="text" data-val="true" data-val-email="Email không đúng định dạng." data-val-length="Độ dài Email không được vượt quá 150." data-val-length-max="150" data-val-required="Email không được trống." placeholder="vd: abc@gmail.com" name="Email" class="form-control" value=""></div>
                             <span class="field-validation-valid ErrorMessage" data-valmsg-for="Email" data-valmsg-replace="true"></span>
                         </div>
                         <div class="form-group">
@@ -184,6 +199,16 @@
                                 <option value="Jobseeker">Người tìm việc</option>
                                 <option value="Recruiter">Nhà tuyển dụng</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Họ và tên:</label>
+                            <div class="input-icon right"><i class="fa fa-user"></i><input type="text" data-val="true" data-val-length="Họ và tên không được vượt quá 50 kí tự." data-val-length-max="50" data-val-required="Họ và tên không được trống." placeholder="" name="FullName" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Điện thoại:</label>
+                            <div class="input-icon right"><i class="fa fa-phone"></i><input type="text" data-val="true" data-val-length="Số điện thoại không được vượt quá 20 kí tự." data-val-length-max="20" data-val-regex="Hãy nhập đúng định dạng số điện thoại." data-val-regex-pattern="^\d+$" data-val-required="Số điện thoại không được trống." placeholder="" name="PhoneNumber" class="form-control" value=""></div>
+                            <span class="field-validation-valid ErrorMessage" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
                         </div>
                         <div class="form-group pull-right">
                             <button type="submit" value="Register" class="btn btn-success">

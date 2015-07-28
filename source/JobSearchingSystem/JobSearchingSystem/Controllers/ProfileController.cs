@@ -21,15 +21,15 @@ namespace JobSearchingSystem.Controllers
         }
 
         [Authorize(Roles = "Jobseeker")]
-        public ActionResult List(string message)
+        public ActionResult List()
         {
+            ViewBag.message = TempData["message"];
+
             ProListViewModel proListViewModel = new ProListViewModel();
 
-            if (!String.IsNullOrEmpty(message))
-            {
-                ViewBag.message = message;
-            }
-            proListViewModel.proList = profileUnitOfWork.GetAllProList();
+            string jobseekerId = profileUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+
+            proListViewModel.proList = profileUnitOfWork.GetAllProList(jobseekerId);
 
             return View(proListViewModel);
         }
@@ -37,6 +37,8 @@ namespace JobSearchingSystem.Controllers
         [Authorize(Roles = "Jobseeker")]
         public ActionResult Update(string profileID)
         {
+            ViewBag.message = TempData["message"];
+
             ProUpdateViewModel proUpdateViewModel = new ProUpdateViewModel();
 
             proUpdateViewModel.cities = profileUnitOfWork.CityRepository.Get(filter: d => d.IsDeleted == false).OrderBy(d => d.Name).AsEnumerable();
@@ -148,15 +150,12 @@ namespace JobSearchingSystem.Controllers
         [Authorize(Roles = "Jobseeker")]
         public ActionResult Update([Bind(Include = "FullName, Gender, MaritalStatus, Nationality, Address, DateofBirth, PhoneNumber, CityID, District, IsVisible")] 
                                         Contact contact,
-                                   [Bind(Include = "Name, YearOfExperience, HighestSchoolLevel_ID, MostRecentCompany, MostRecentPosition, CurrentJobLevel_ID, ExpectedPosition, ExpectedJobLevel_ID, ExpectedSalary, Objectives")]
+                                   [Bind(Include = "ProfileID, Name, YearOfExperience, HighestSchoolLevel_ID, MostRecentCompany, MostRecentPosition, CurrentJobLevel_ID, ExpectedPosition, ExpectedJobLevel_ID, ExpectedSalary, Objectives")]
                                             Profile profile, string languageID, string level_ID, string expectedCity, string categoryID,
                                    [Bind(Include = "EmploymentHistoryID, Position, Company, WorkingTime, Description")]EmploymentHistory employmentHistory,
                                    [Bind(Include = "EducationHistoryID, Subject, School, SchoolLevel_ID, Achievement")]EducationHistory educationHistory,
                                    [Bind(Include = "ReferencePersonID, ReferencePersonName, ReferencePersonPosition, ReferencePersonCompany, EmailAddress, ReferencePersonPhoneNumber")]ReferencePerson referencePerson)
         {
-            int percentStatus = 0;
-            string message = "";
-
             bool contactResult = UpdateContact(contact);
             bool commonInfoResult = UpdateCommonInfo(profile, languageID, level_ID, expectedCity, categoryID);
             bool employmentHistoryResult = false;
@@ -165,7 +164,8 @@ namespace JobSearchingSystem.Controllers
             if (commonInfoResult) {
                 Profile updatedProfile = profileUnitOfWork.ProfileRepository.Get(s => s.Name == profile.Name).LastOrDefault();
                 if (profile != null) {
-                    percentStatus = 25;
+                    int percentStatus = 25;
+
                     int profileID = updatedProfile.ProfileID;
 
                     employmentHistoryResult = UpdateEmploymentHistory(employmentHistory, profileID);
@@ -179,11 +179,16 @@ namespace JobSearchingSystem.Controllers
                     profileUnitOfWork.ProfileRepository.Update(updatedProfile);
                     profileUnitOfWork.Save();
 
+                    TempData["message"] = "Tạo/Cập nhật hồ sơ thành công";
                     return RedirectToAction("List");
                 }
+
+                TempData["message"] = "Tạo/Cập nhật hồ sơ thất bại";
+                return RedirectToAction("Update");
             }
 
-            return Update("");
+            TempData["message"] = "Tạo/Cập nhật hồ sơ thất bại";
+            return RedirectToAction("Update", new { profileID = profile.ProfileID });
         }
 
         [Authorize(Roles = "Jobseeker")]
@@ -413,13 +418,17 @@ namespace JobSearchingSystem.Controllers
                     }
 
                     profileUnitOfWork.Save();
-                    return RedirectToAction("List", new { message = "Xóa hồ sơ " + profile.Name + " thành công." });
+
+                    TempData["message"] = "Xóa hồ sơ thành công";
+                    return RedirectToAction("List");
                 }
 
-                return RedirectToAction("List", new { message = "Xóa hồ sơ " + profile.Name + " thất bại." });
+                TempData["message"] = "Xóa hồ sơ thất bại";
+                return RedirectToAction("List");
             }
 
-            return RedirectToAction("List", new { message = "Xóa hồ sơ thất bại." });
+            TempData["message"] = "Xóa hồ sơ thất bại";
+            return RedirectToAction("List");
         }
 	}
 }

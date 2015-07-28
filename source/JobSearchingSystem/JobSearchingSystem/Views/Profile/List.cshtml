@@ -7,9 +7,35 @@
 
 <script>
     $(document).ready(function () {
-        
+        $('#deleteButton').click(function (id) {
+            $('#deleteprofileID').val($(this).data('id'));
+        });
     });
 </script>
+
+<div id="ModalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="false" class="modal fade in" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                <h4 id="modal-default-label" class="modal-title">Xóa hồ sơ</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Profile", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <p>
+                        Bạn có chắc chắn sẽ xóa hồ sơ này?
+                    </p>
+                    <input type="hidden" name="profileID" id="deleteprofileID" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy bỏ</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 <div class="page-content" style="padding: 20px 0px 20px 250px">
     <div class="col-lg-9 panel panel-default">
@@ -63,13 +89,10 @@
                                 <td>
                                     <a href="@Url.Action("Update", new { profileID = item.ProfileID })" style = "display:inline" class="btn btn-blue btn-xs"><i class="fa fa-edit"></i>&nbsp;Xem và Cập nhật</a>
                                     &nbsp;
-                                    @using (Html.BeginForm("Delete", "Profile", new { profileID = item.ProfileID }, FormMethod.Post, new { style = "display:inline" }))
-                                    {
-                                        <button class="btn btn-danger btn-xs">
-                                            <i class="fa fa-trash-o"></i>&nbsp;
-                                            Xóa
-                                        </button>
-                                    }
+                                    <button type="button" id="deleteButton" class="btn btn-danger btn-xs" style="display:inline" data-target="#ModalDeleteConfirm" data-id="@item.ProfileID" data-toggle="modal">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Xóa
+                                    </button>
                                 </td>
                             </tr>
                         }

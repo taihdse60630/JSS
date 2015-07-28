@@ -9,25 +9,33 @@ namespace JobSearchingSystem.DAL
 {
     public class ProfileUnitOfWork : UnitOfWork
     {
-        public IEnumerable<ProListItem> GetAllProList()
+        public IEnumerable<ProListItem> GetAllProList(string jobseekerId)
         {
-            int no = 0;
-            IEnumerable<ProListItem> outList = (from p in this.ProfileRepository.Get()
-                                                where p.IsDeleted == false
-                                                select new ProListItem {
-                                                    ProfileID = p.ProfileID,
-                                                    No = ++no,
-                                                    ProfileName = p.Name,
-                                                    IsActive = p.IsActive,
-                                                    ViewedCount = (from pr in this.ViewProfileRepository.Get()
-                                                                   where pr.ProfileID == p.ProfileID
-                                                                   select pr).Count(),
-                                                    UpdatedTime = p.UpdatedTime,
-                                                    PerccentStatus = p.PercentStatus,
-                                                    IsDeleted = p.IsDeleted
-                                                }).AsEnumerable();
+            if (!String.IsNullOrEmpty(jobseekerId)
+                && this.JobseekerRepository.GetByID(jobseekerId) != null)
+            {
+                int no = 0;
+                IEnumerable<ProListItem> outList = (from p in this.ProfileRepository.Get()
+                                                    where p.IsDeleted == false
+                                                          && p.JobSeekerID == jobseekerId
+                                                    select new ProListItem
+                                                    {
+                                                        ProfileID = p.ProfileID,
+                                                        No = ++no,
+                                                        ProfileName = p.Name,
+                                                        IsActive = p.IsActive,
+                                                        ViewedCount = (from pr in this.ViewProfileRepository.Get()
+                                                                       where pr.ProfileID == p.ProfileID
+                                                                       select pr).Count(),
+                                                        UpdatedTime = p.UpdatedTime,
+                                                        PerccentStatus = p.PercentStatus,
+                                                        IsDeleted = p.IsDeleted
+                                                    }).AsEnumerable();
 
-            return outList;
+                return outList;
+            }
+
+            return null;
         }
 
         public bool UpdateContact(Contact contact)

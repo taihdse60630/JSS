@@ -54,7 +54,7 @@ namespace JobSearchingSystem.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Register([Bind(Include = "UserName, Password, ConfirmPassword, Email, RoleName")]RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Include = "UserName, Password, ConfirmPassword, Email, FullName, PhoneNumber, RoleName")]RegisterViewModel model)
         {
             UnitOfWork unitOfWork = new UnitOfWork();
             AspNetUser u = unitOfWork.AspNetUserRepository.Get(s => s.UserName == model.UserName).FirstOrDefault();
@@ -83,6 +83,8 @@ namespace JobSearchingSystem.Controllers
                     Jobseeker jobseeker = new Jobseeker();
                     jobseeker.JobSeekerID = createdUser.Id;
                     jobseeker.Email = model.Email;
+                    jobseeker.FullName = model.FullName;
+                    jobseeker.PhoneNumber = model.PhoneNumber;
                     jobseeker.IsDeleted = false;
                     unitOfWork.JobseekerRepository.Insert(jobseeker);
                     unitOfWork.Save();
