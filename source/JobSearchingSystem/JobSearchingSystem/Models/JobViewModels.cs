@@ -15,6 +15,7 @@ namespace JobSearchingSystem.Models
         public decimal? MaxSalary { get; set; }
         public string JobLevelName { get; set; }
         public string JobDescription { get; set; }
+        public string JobRequirement { get; set; }
         public string CompanyDescription { get; set; }
         public int SchoolLevel { get; set; }
         public string Company { get; set; }
@@ -67,6 +68,7 @@ namespace JobSearchingSystem.Models
         public int profileID { get; set; }
         public int jobID { get; set; }
         public bool isApplied { get; set; }
+        public bool isLogined { get; set; }
     }
 
     public class JAppliedJob
