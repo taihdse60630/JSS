@@ -5,6 +5,15 @@
 
 @model JobSearchingSystem.Models.HIndexViewModel
 
+
+<style>
+    .track .inner {
+        background: #FFFFFF !important;
+        width: 96% !important;
+        margin-bottom:0px !important;
+    }
+</style>
+
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.1.1.min.css">
 <link rel="stylesheet" href="~/Content/css/jquery.multiselect.css" />
 <style>
@@ -13,14 +22,37 @@
         background: rgba(0,0,0,0.5);
     }
 </style>
+<link rel="stylesheet" href="~/Content/css/prism.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="~/Content/css/gh-buttons.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="~/Content/css/style.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="~/Content/css/responsive.css" type="text/css" media="screen" charset="utf-8">
+
+
+<script type="text/javascript" src="~/Content/js/jquery-easing-1.3.0.js"></script>
+<script type="text/javascript" src="~/Content/js/modernizr.mediaqueries.transforms3d.js"></script>
+<script type="text/javascript" src="~/Content/js/responsive-hub.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery.silver_track.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/Content/js/jquery.silver_track.circular_navigator.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="~/Content/js/jquery.silver_track_recipes.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/Content/js/jquery.silver_track.navigator.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/Content/js/jquery.silver_track.bullet_navigator.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/Content/js/jquery.silver_track.responsive_hub_connector.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="~/Content/js/recipe_example1.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/Content/js/recipe_example1_usage.js" charset="utf-8"></script>
+
+
 <script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <script src="~/Content/js/ui-progressbars.js"></script>
 
-<script type="text/javascript" src="~/Content/js/jquery.js"></script>
+@*<script type="text/javascript" src="~/Content/js/jquery.js"></script>*@
 <script type="text/javascript" src="~/Content/js/jquery-ui.min.js"></script>
 <script src="~/Content/js/jquery.multiselect.js"></script>
 <script>
     $(document).ready(function () {
+
+
         $("#jobCities").multiselect({
             header: "Bạn chỉ có thể chọn tối đa 3 địa điểm",
 
@@ -204,7 +236,7 @@
             $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
             $SlideWidth: 140,                                   //[Optional] Width of every slide in pixels, default value is width of 'slides' container
             //$SlideHeight: 100,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
-            $SlideSpacing: 0, 					                //[Optional] Space between each slide in pixels, default value is 0
+            $SlideSpacing: 20, 					                //[Optional] Space between each slide in pixels, default value is 0
             $DisplayPieces: 6,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
             $ParkingPosition: 0,                              //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
             $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
@@ -239,7 +271,7 @@
 
 <!-- Jssor Slider Begin -->
 <!-- To move inline styles to css file/block, please specify a class name for each element. -->
-<div id="slider1_container" style="position: relative; margin: 0 auto;
+<div id="slider1_container" style="position: relative; margin: 0 auto;margin-top:20px;
         top: 0px; left: 0px; width: 1300px; height: 500px; overflow: hidden;">
     <!-- Loading Screen -->
     <div u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -252,90 +284,7 @@
     <!-- Slides Container -->
     <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1300px;
             height: 500px; overflow: hidden;">
-        @*<div>
-                <img u="image" src="~/Content/img/red.jpg" />
-                <div u="caption" t="NO" t3="RTT|2" r3="137.5%" du3="3000" d3="500" style="position: absolute; width: 445px; height: 300px; top: 100px; left: 600px;">
-                    <img src="~/Content/img/c-phone.png" style="position: absolute; width: 445px; height: 300px; top: 0px; left: 0px;" />
-                    <img u="caption" t="CLIP|LR" du="4000" t2="NO" src="~/Content/img/c-jssor-slider.png" style="position: absolute; width: 102px; height: 78px; top: 70px; left: 130px;" />
-                    <img u="caption" t="ZMF|10" t2="NO" src="~/Content/img/c-text.png" style="position: absolute; width: 80px; height: 53px; top: 153px; left: 163px;" />
-                    <img u="caption" t="RTT|10" t2="NO" src="~/Content/img//c-fruit.png" style="position: absolute; width: 140px; height: 90px; top: 60px; left: 220px;" />
-                    <img u="caption" t="T" du="4000" t2="NO" src="~/Content/img/c-navigator.png" style="position: absolute; width: 200px; height: 155px; top: 57px; left: 121px;" />
-                </div>
-                <div u="caption" t="RTT|2" r="-75%" du="1600" d="2500" t2="NO" style="position: absolute; width: 470px; height: 220px; top: 120px; left: 650px;">
-                    <img src="~/Content/img/c-phone-horizontal.png" style="position: absolute; width: 470px; height: 220px; top: 0px; left: 0px;" />
-                    <img u="caption" t3="MCLIP|L" du3="2000" src="~/Content/img/c-slide-1.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-                    <img u="caption" t="MCLIP|R" du="2000" t2="NO" src="~/Content/img/c-slide-3.jpg" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-                    <img u="caption" t="RTTL|BR" x="500%" y="500%" du="1000" d="-3000" r="-30%" t3="L" x3="70%" du3="1600" src="~/Content/img/c-finger-pointing.png" style="position: absolute; width: 257px; height: 300px; top: 80px; left: 200px;" />
-                    <img src="~/Content/img/c-navigator-horizontal.png" style="position: absolute; width: 379px; height: 213px; top: 4px; left: 45px;" />
-                </div>
-                <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
-                    <div class="panel panel-white transparent">
-
-                        <div class="panel-body transparent">
-                            Leading Southeast Asian IT outsourcing provider<br />
-                            Rank #57 in 2014 Global Outsourcing 100<br />
-                            AWS Advanced Consulting Partner<br />
-                            Microsoft Gold Partner<br />
-                            SAP Gold Partner<br />
-                        </div>
-                    </div>
-                </div>
-                <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
-                        text-align: left; line-height: 36px; font-size: 30px;
-                            color: #FFFFFF;">
-                    Build your slider with anything, includes image, content, text, html, photo, picture
-                </div>
-            </div>*@
-        @*<div>
-                <img u="image" src="~/Content/img/purple.jpg" />
-                <div style="position: absolute; width: 480px; height: 120px; top: 30px; left: 30px; padding: 5px;">
-                    <div class="col-lg-9">
-
-                    <div class="col-lg-12">
-                        <div class="panel panel-grey">
-                            <div class="panel-heading">Tìm việc làm</div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Địa điểm" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Mức lương tối thiểu" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Cấp bậc" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="inputName" type="text" placeholder="Nghành nghề" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                </div>
-                <div style="position: absolute; width: 480px; height: 120px; top: 300px; left: 30px; padding: 5px;
-                        text-align: left; line-height: 36px; font-size: 30px;
-                            color: #FFFFFF;">
-                    Build your slider with anything, includes image, content, text, html, photo, picture
-                </div>
-            </div>*@
+    
         <div>
             <img u="image" src="~/Content/img/all-job.png" />
             <div style="position: absolute; width: 1000px; height: 200px; top: 250px; left: 200px; padding: 5px;">
@@ -539,12 +488,50 @@
     <!--#endregion Arrow Navigator Skin End -->
     <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
 </div>
-<!-- Jssor Slider End -->
 
-<div class="page-content" style="padding: 20px 0px 300px 150px">
+<div style="margin-bottom:30px"></div>
+<div id="slider2_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
+
+    <!-- Loading Screen -->
+    <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+        <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
+        </div>
+        <div style="position: absolute; display: block; background: url(/Content/img/loading.gif) no-repeat center center;
+                top: 0px; left: 0px;width: 100%;height:100%;">
+        </div>
+    </div>
+
+    <!-- Slides Container -->
+    <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 2000px; height: 100px; overflow: hidden;">
+        @if (Model.purchaseAdvertiseTypeA != null)
+        {
+            foreach (var item in Model.purchaseAdvertiseTypeA)
+            {
+                <div style="border: 1px solid #ccc; padding-right:10px"><a href="@item.LinkUrl"><img u="image" src="@item.LogoUrl" /></a></div>
+
+
+            }
+
+        }
+    </div>
+    <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
+</div>
+
+
+
+<div class="page-content" style="padding: 50px 0px 3px 80px">
     <div class="row" style="margin-right: 8%;">
 
-        <div id="slider3_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
+      
+
+       
+    
+
+
+
+
+        @*<div id="slider3_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
 
             <!-- Loading Screen -->
             <div u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -555,6 +542,9 @@
                 top: 0px; left: 0px;width: 100%;height:100%;">
                 </div>
             </div>
+
+
+
 
             <!-- Slides Container -->
             <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 2000px; height: 100px; overflow: hidden;">
@@ -570,11 +560,11 @@
                 }
             </div>
             <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
-        </div>
+        </div>*@
 
 
 
-
+        <!-- Jssor Slider End -->
 
         <div class="col-md-8" >
 
@@ -730,55 +720,72 @@
             </div>
         </div>
 
-        <div id="slider2_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
-
-            <!-- Loading Screen -->
-            <div u="loading" style="position: absolute; top: 0px; left: 0px;">
-                <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
-                background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
-                </div>
-                <div style="position: absolute; display: block; background: url(/Content/img/loading.gif) no-repeat center center;
-                top: 0px; left: 0px;width: 100%;height:100%;">
-                </div>
-            </div>
-
-            <!-- Slides Container -->
-            <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 2000px; height: 100px; overflow: hidden;">
-              @if (Model.purchaseAdvertiseTypeC != null) 
-              { 
-                foreach (var item in Model.purchaseAdvertiseTypeC)
-                {
-                      <div><a href="@item.LinkUrl"><img u="image" src="@item.LogoUrl" /></a></div>
-                  
-                  
-                }
-                 
-              }      
-            </div>
-            <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
-        </div>
-        <!-- Jssor Slider End -->
+      
     </div>
 
 </div>
-@*<div><a href="http://www.vietnamworks.com/"><img u="image" alt="amazon" src="~/Content/img/logo/amazon.jpg" /></a></div>
-    <div><img u="image" alt="android" src="~/Content/img/logo/android.jpg" /></div>
-    <div><img u="image" alt="bitly" src="~/Content/img/logo/bitly.jpg" /></div>
-    <div><img u="image" alt="blogger" src="~/Content/img/logo/blogger.jpg" /></div>
-    <div><img u="image" alt="dnn" src="~/Content/img/logo/dnn.jpg" /></div>
-    <div><img u="image" alt="drupal" src="~/Content/img/logo/drupal.jpg" /></div>
-    <div><img u="image" alt="ebay" src="~/Content/img/logo/ebay.jpg" /></div>
-    <div><a href="http://www.vietnamworks.com/"><img u="image" alt="facebook" src="~/Content/img/logo/facebook.jpg" /></a></div>
-    <div><img u="image" alt="google" src="~/Content/img/logo/google.jpg" /></div>
-    <div><img u="image" alt="ibm" src="~/Content/img/logo/ibm.jpg" /></div>
-    <div><img u="image" alt="ios" src="~/Content/img/logo/ios.jpg" /></div>
-    <div><img u="image" alt="joomla" src="~/Content/img/logo/joomla.jpg" /></div>
-    <div><img u="image" alt="linkedin" src="~/Content/img/logo/linkedin.jpg" /></div>
-    <div><img u="image" alt="mac" src="~/Content/img/logo/mac.jpg" /></div>
-    <div><img u="image" alt="magento" src="~/Content/img/logo/magento.jpg" /></div>
-    <div><img u="image" alt="pinterest" src="~/Content/img/logo/pinterest.jpg" /></div>
-    <div><img u="image" alt="samsung" src="~/Content/img/logo/samsung.jpg" /></div>
-    <div><img u="image" alt="twitter" src="~/Content/img/logo/twitter.jpg" /></div>
-    <div><img u="image" alt="windows" src="~/Content/img/logo/windows.jpg" /></div>
-    <div><img u="image" alt="wordpress" src="~/Content/img/logo/wordpress.jpg" /></div>
-    <div><img u="image" alt="youtube" src="~/Content/img/logo/youtube.jpg" /></div>*@
+<!-- Jssor Slider End -->
+<div class="track example-1">
+    <div class="inner">
+
+        <div class="view-port">
+            <div class="slider-container" style="height:130px">
+                @if (Model.purchaseAdvertiseTypeC != null)
+                {
+                    foreach (var item in Model.purchaseAdvertiseTypeC)
+                    {
+                        <div class="item">
+                            <a href="@item.LinkUrl">
+                                <img src="@item.LogoUrl" width="224" height="128" />
+                            </a>
+                        </div>
+
+                    }
+                }
+                @*<div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/1/">
+                        <p>Trailer 1</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/2/">
+                        <p>Trailer 2</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/3/">
+                        <p>Trailer 3</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/4/">
+                        <p>Trailer 4</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/5/">
+                        <p>Trailer 5</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/6/">
+                        <p>Trailer 6</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/7/">
+                        <p>Trailer 7</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/8/">
+                        <p>Trailer 8</p>
+                    </div>
+                    <div class="item">
+                        <img src="http://lorempixel.com/220/124/animals/9/">
+                        <p>Trailer 9</p>
+                    </div>*@
+            </div>
+        </div>
+
+        <div class="bullet-pagination"></div>
+    </div>
+
+    <div class="pagination">
+        <a href="#" class="prev disabled"></a>
+        <a href="#" class="next disabled"></a>
+    </div>
+</div>
