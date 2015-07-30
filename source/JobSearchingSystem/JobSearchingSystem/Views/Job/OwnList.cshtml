@@ -96,38 +96,18 @@
 </div>
 
 
-<div class="page-content" style="padding: 20px 60px 795px 80px">
+<div class="page-content" style="padding: 20px 60px 80px 80px">
     <div class="col-lg-12 panel panel-default">
         <h2 style="font-weight:600;text-align:center">Quản lý việc làm</h2>
         <br />
         <div class="row">
-
+            <div class="col-sm-3 col-md-3" style="width:23%">
+                <a href="@Url.Action("Create","Job")" class="btn btn-blue btn-sm btn-block"><i class="fa fa-pencil"></i>&nbsp;Đăng việc làm mới</a>
+            </div>
         </div>
         <div class="mtl mbl"></div>
         <div class="row">
-            <div class="col-sm-3 col-md-3" style="width:23%">
-                <button type="button" data-target="#modal-wide-width" data-toggle="modal" class="btn btn-blue btn-sm btn-block" onclick="window.location.href='CreateJobPosting'"><i class="fa fa-pencil" style="margin-right:10px"></i>Đăng việc làm mới</button>
-                <div class="mtm mbm"></div>
-                <ul style="border-style: solid;background: #FFF;border-color: rgb(230, 232, 216);" class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#"><span class="badge pull-right">@Model.Count()</span>Tất cả việc làm</a></li>
-                    @*
-                        <li><a href="#"><i class="fa fa-star-o fa-fw mrs"></i>Starred</a></li>
-                        <li><a href="#"><i class="fa fa-info-circle fa-fw mrs"></i>Important</a></li>*@
-                    <li><a href="#"><span class="badge badge-success pull-right">12</span><i class="fa fa-globe fa-fw mrs"></i>Đang hiển thị</a></li>
-                    <li><a href="#"><span class="badge badge-orange pull-right">10</span><i class="fa fa-warning fa-fw mrs"></i>Sắp hết hạn trong 7 ngày</a></li>
-                    <li><a href="#"><span class="badge badge-danger pull-right">10</span><i class="fa fa-bell fa-fw mrs"></i>Ngưng nhận hồ sơ</a></li>
-                    <li><a href="#"><span class="badge pull-right">10</span><i class="fa fa-lock fa-fw mrs"></i>Hết hạn đăng</a></li>
-                </ul>
-                <hr>
-                @*<ul style="background: #fff" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#">Buddy Online</a></li>
-                        <li><a href="#"><i class="fa fa-circle text-yellow pull-right"></i>Home</a></li>
-                        <li><a href="#"><i class="fa fa-circle text-success pull-right"></i>Work</a></li>
-                        <li><a href="#"><i class="fa fa-circle text-red pull-right"></i>Family</a></li>
-                        <li><a href="#"><i class="fa fa-circle text-muted pull-right"></i>Other</a></li>
-                    </ul>*@
-            </div>
-            <div class="col-sm-9 col-md-9">
+            <div class="col-sm-12 col-md-12">
                 <div class="table-container">
 
                     <table class="table table-hover table-striped table-bordered table-advanced tablesorter">
@@ -138,8 +118,8 @@
                                 <th width="10%">Ngày đăng</th>
                                 <th width="10%">Hết hạn</th>
                                 <th width="10%">Ứng viên</th>
-                                <th width="25%">Tình trạng</th>
-                                <th width="28%">Thao tác</th>
+                                <th width="20%">Tình trạng</th>
+                                <th width="33%">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -174,7 +154,7 @@
                                         }
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-info" data-toggle="tooltip" title="Xem thông tin"><i class="fa fa-info-circle"></i></button>
+                                        <a href="@Url.Action("Detail","Job",new { jobID = item.JobID })" class="btn btn-info" data-toggle="tooltip" title="Xem thông tin"><i class="fa fa-info-circle"></i></a>
                                         @if (DateTime.Now.CompareTo(item.EndedDate) < 0)
                                         {
                                             <button type="button" class="btn btn-violet" data-toggle="tooltip" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>
@@ -190,6 +170,10 @@
                                                 <button type="button" data-target="#ModalDisplayConfirm" data-id="@item.JobID" data-toggle="modal" class="open-ModalDisplayConfirm btn btn-success">
                                                     <i class="fa fa-check"></i>
                                                 </button>
+                                            }
+                                            if (item.ApplicantCount > 0)
+                                            {
+                                                <a href="@Url.Action("List","Applicant",new { id = item.JobID })" class="btn btn-blue" data-toggle="tooltip" title="Ứng viên"><i class="fa fa-male"></i></a>
                                             }
                                         }
                                     </td>

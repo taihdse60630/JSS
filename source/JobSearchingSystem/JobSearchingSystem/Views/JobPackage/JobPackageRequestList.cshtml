@@ -179,25 +179,27 @@
                                         {
                                             <span class="label label-sm label-success">Đã chấp thuận</span>
                                         }
+                                        else if (!item.IsApproved)
+                                        {
+                                            <span class="label label-sm label-danger">Đã từ chối</span>
+
+                                        }
                                         else
                                         {
-                                            <a href="/JobPackage/AcceptJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-green btn-sm">
-                                                <i class="fa fa-check"></i>&nbsp;
-                                                Chấp nhận
-                                            </a>
-                                            @*<button type="button" class="btn btn-green btn-xs">
-                                                    <i class="fa fa-check"></i>&nbsp;
-                                                    Chấp thuận
-                                                </button>*@
-
-
+                                            <span class="label label-sm label-blue">Chưa xử lý</span>
                                         }
 
                                     </td>
                                     <td>
-                                        <a href="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" class="btn btn-danger btn-sm">
+
+                                        @*<button type="button" class="btn btn-violet" data-toggle="tooltip" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>*@
+                                        <a href="/JobPackage/AcceptJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" data-toggle="tooltip" title="Chấp nhận" class="btn btn-green btn-sm">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                          
+                                        </a>
+                                        <a href="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" data-toggle="tooltip" title="Xóa" class="btn btn-danger btn-sm">
                                             <i class="fa fa-times"></i>&nbsp;
-                                            Xóa
+                                            @*Xóa*@
                                         </a>
                                     </td>
                                 </tr>

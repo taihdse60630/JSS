@@ -21,7 +21,25 @@
 </style>
 <script src="~/Content/js/jquery-1.10.2.min.js"></script>
 <script>
+    function commafy(num) {
+        var str = num.toString().split('.');
+        if (str[0].length >= 5) {
+            str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        if (str[1] && str[1].length >= 5) {
+            str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+        }
+        return str.join('.');
+        
+    }
     $(document).ready(function () {
+        
+        $(".pricePackage").each(function () {
+            var num = $(this).text();
+            var num2 = commafy(num);
+            $(this).text(num2);
+        });
+
         $('.formbuilder div').on('click', function () {
             $('.formbuilder div').removeClass('active');
             $(this).children("div:first").addClass('active');
@@ -42,7 +60,7 @@
                         <div class="pricing-head">@item.Name</div>
                         <div class="pricing-body">
                             <div class="pricing-cost">
-                                <strong style="display: block">$@item.Cost.ToString().TrimEnd('0').TrimEnd(',')</strong>
+                                <strong class="pricePackage" style="display: block">@item.Cost.ToString().TrimEnd('0').TrimEnd(',')</strong>
                                 <small>@item.JobNumber lần đăng tuyển</small>
                             </div>
                             <ul class="pricing-list text-center">

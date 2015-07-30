@@ -15,6 +15,7 @@
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-switch/css/bootstrap-switch.css">
 
 <script src="~/Content/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Content/vendors/bootstrap/js/bootstrap.js"></script>
 <script src="~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="~/Content/vendors/moment/moment.js"></script>
 <script src="~/Content/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
@@ -26,6 +27,7 @@
 <script src="~/Content/js/form-components.js"></script>
 
 <link rel="stylesheet" href="~/Content/css/multiple-select.css" />
+
 
 
 
@@ -90,6 +92,7 @@
                                             <div class="form-group">
                                                 <label for="inputName" class="col-md-3 control-label">Tiêu đề<span class="require">*</span></label>
                                                 <div class="col-md-9"><input id="inputName" name="JobInfo.JobTitle" type="text" placeholder="" class="form-control"></div>
+                                                <input type="hidden" name="JobInfo.RecruiterID" value="@Model.JobInfo.RecruiterID"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -198,7 +201,16 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="inputBirthday" class="col-md-3 control-label" style="width: 10%">Mô tả công việc<span class="require">*</span></label>
-                                                <div class="col-md-9" style="width: 90%"><textarea name="JobInfo.JobDescription" rows="6" cols="50" class="form-control" style="margin-left: 30px; width: 97%; resize:none"  ></textarea></div>
+                                                <div class="col-md-9" style="width: 90%"><textarea name="JobInfo.JobDescription" rows="6" cols="50" class="form-control" style="margin-left: 30px; width: 97%; resize:none"></textarea></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="inputBirthday" class="col-md-3 control-label" style="width: 10%">Yêu cầu công việc<span class="require">*</span></label>
+                                                <div class="col-md-9" style="width: 90%"><textarea name="JobInfo.JobRequirement" rows="6" cols="50" class="form-control" style="margin-left: 30px; width: 97%; resize:none"></textarea></div>
                                             </div>
                                         </div>
                                     </div>
@@ -209,23 +221,11 @@
                                                 <label for="inputFirstName" class="col-md-3 control-label">Kỹ năng cần thiết<span class="require">*</span></label>
                                                 <div class="col-md-9">
                                                     <select id="demo5" multiple="multiple" name="SkillSelectList">
-                                                        <option value="33">Computer Skills – MS Word, Excel, Power Point.</option>
-                                                        <option value="34">Japanese ( N1 Or N2)</option>
-                                                        <option value="32">Communication and Presentation Skill Good</option>
-                                                        <option value="24">English Advanced Level General English</option>
+                                                        @foreach (var item in @Model.SkillList)
+                                                        {
+                                                            <option value="@item.Skill_ID">@item.SkillTag</option>
+                                                        }
                                                     </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputFirstName" class="col-md-3 control-label">Phúc lợi<span class="require">*</span></label>
-
-                                                <div class="col-md-9">
-                                                    <input id="inputName" type="text" placeholder="" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@
                         <div class="form-actions text-right pal">
                             <button type="submit" class="btn btn-primary">Tạo tuyển dụng</button>
                             &nbsp;
-                            <button type="button" class="btn btn-green">Hủy</button>
+                            <a href="@Url.Action("OwnList", "Job")" class="btn btn-green" style="width:10%">Hủy</a>
                         </div>
                     </div>
                 </div>

@@ -93,48 +93,12 @@
     </div>
 </div>
 
-<div class="page-content" style="padding: 20px 0px 20px 250px">
+<div class="page-content" style="padding: 20px 60px 80px 80px">
     <div class="col-lg-9 panel panel-default">
         <h3 style="font-weight:600;text-align:center">Quản lý ứng viên</h3>
         <br />
         @using (Html.BeginForm("List", "Applicant", FormMethod.Post))
         {
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="#" class="btn btn-green btn-sm">
-                        <i class="fa fa-check"></i>&nbsp;
-                        Chấp nhận
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm">
-                        <i class="fa fa-times"></i>&nbsp;
-                        Từ chối
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <div class="input-group-btn">
-                            <button type="button" data-toggle="dropdown" class="btn btn-grey dropdown-toggle"><i class="fa fa-filter"></i>  Lọc <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="fa fa-user"></i> Tên ứng viên</a></li>
-                                <li><a href="#"><i class="fa fa-suitcase"></i>  Chức danh</a></li>
-                                <li><a href="#"><i class="fa fa-calendar"></i>  Ngày nhận</a></li>
-                                <li><a href="#"><i class="fa fa-tasks"></i>  Độ phù hợp</a></li>
-                                @*<li class="divider"></li>*@
-
-                            </ul>
-                        </div>
-                        <input type="text" class="form-control" />
-
-                        <div class="input-group-btn">
-                            <a href="#" class="btn btn-yellow">
-                                Search
-                                &nbsp;<i class="fa fa-search"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br />
             <br />
             <div class="table-container">
                 <table class="table table-hover table-striped table-bordered table-advanced tablesorter">

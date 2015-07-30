@@ -85,7 +85,7 @@
     });
 </script>
 
-<div class="page-content" style="padding: 20px 0px 20px 250px">
+<div class="page-content" style="padding: 20px 100px 20px 100px;background-color: #dedede">
     <div class="col-lg-9 panel panel-default">
         <h3 style="font-weight:600;text-align:center">Danh sách mua gói quảng cáo </h3>
         <br />
@@ -97,9 +97,9 @@
         <br />
         
         <div class="row">
-            <div class="col-lg-2"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 4%;"><i class="fa fa-check"></i> Chấp thuận</button></div>
-            <div class="col-lg-1"><button type="button" class="btn btn-danger btn-square" onclick="DeleteMultiJobPackage()" style="margin-top: 7%;"><i class="fa fa-times"></i> Xóa</button></div>
-            <div class="col-lg-9" style="float:right">
+            <div class="col-md-2"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 4%;"><i class="fa fa-check"></i> Chấp thuận</button></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-square" onclick="DeleteMultiJobPackage()" style="margin-top: 7%;"><i class="fa fa-times"></i> Xóa</button></div>
+            <div class="col-md-9" style="float:right">
                 <nav role="navigation" class="navbar navbar-default" style="width: 90%;margin-left: 12%;">
                     <div class="container-fluid">
                         <div class="navbar-header">
@@ -113,21 +113,21 @@
                                     <option value="silver">Silver</option>
                                     <option value="gold">Gold</option>
                                     <option value="diamond">Diamond</option>
-                                 
+
 
                                 </select>
 
                                 @*<li class="dropdown">
-                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li>Basic</li>
-                                            <li class="divider"></li>
-                                            <li>Professional</li>
-                                            <li>Business</li>
-                                            <li>Unlimited</li>
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>Basic</li>
+                                    <li class="divider"></li>
+                                    <li>Professional</li>
+                                    <li>Business</li>
+                                    <li>Unlimited</li>
 
-                                        </ul>
-                                    </li>*@
+                                </ul>
+                            </li>*@
                             </ul>
                             <form role="search" class="navbar-form navbar-left">
                                 <div class="form-group"><input id="txtID" type="text" placeholder="Tên nhà tuyển dụng" class="form-control" /></div>
@@ -185,7 +185,7 @@
                                             <a href="/Advertise/AcceptMultiAdvertise?PurchaseAdsID=@item.PurchaseAdsID" class="btn btn-green btn-sm">
                                                 <i class="fa fa-check"></i>&nbsp;
                                                 Chấp nhận
-                                            </a>                                          
+                                            </a>
 
                                         }
 

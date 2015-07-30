@@ -5,7 +5,50 @@
 }
 @model JobSearchingSystem.Models.InvoiceVIewModels
 
+<script src="~/Content/js//sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/css/sweetalert.css">
 <script>
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+    function SendPackageRequest() {
+        var packageForm = $('#packageForm');
+        var packageId = $("input[name='jobPackageID']").val();
+        var quantity = $("#quantity option:selected").text();
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/JobPackage/SendPackageRequest",
+                data: "{'packageQuantity':'" + quantity + "','jobPackageID' :'" + packageId + "'}",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        //swal("Đã gửi yêu cầu thành công", "", "success");
+                        swal({ title: "Đã gửi yêu cầu thành công", text: "", type: "success", showCancelButton: false, confirmButtonColor: "#DD6B55", confirmButtonText: "Đóng", closeOnConfirm: false }, function () { window.location.href = "/JobPackage/Choose"; });
+                     
+                        
+                        
+                      
+                        //$("#modal-report").modal("hide");
+                        //$(".modal-backdrop").remove();
+                    } else {
+                      
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+
+            });
+         
+        }
+
     function commafy(num) {
         var str = num.toString().split('.');
         if (str[0].length >= 5) {
@@ -20,7 +63,7 @@
     $(document).ready(function () {
         var quantity = parseInt($("#quantity").val(), 10);
         var price = parseInt($("#price").val(), 10);
-      
+       
         $("#packagePrice").text(commafy(price));
         $("#total").text(commafy(quantity * price));
 
@@ -36,12 +79,12 @@
     ;
 </script>
 
-@using (Html.BeginForm("SendPackageRequest", "JobPackage"))
+@using (Html.BeginForm("SendPackageRequest", "JobPackage", new { id="packageForm"}))
 {
 
 
     <input type="hidden" name="jobPackageID" value="@Model.jobPackage.JobPackageID" />
-<div class="page-content" style="padding: 20px 60px 50px 300px">
+<div class="page-content" style="padding: 20px 60px 50px 200px; background-color: #dedede">
     <div id="invoice-page" class="row">
         <div class="col-md-11">
             <div class="panel">
@@ -100,10 +143,10 @@
                 <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi. Vui lòng thanh toán trong vòng 30 ngày.</p>
             </div>
         </div>
-        <div class="col-lg-7" style="margin-left: 58%;">
-            <button type="submit" class="btn btn-success mrm">
+        <div class="col-lg-7" style="margin-left: 64%;">
+            <button type="button" class="btn btn-success mrm" onclick="SendPackageRequest()">
                 <i class="fa fa-credit-card"></i>&nbsp;
-                Thanh toán
+                Gửi yêu cầu
             </button>
             <button type="button" class="btn btn-white">
                 <i class="fa fa-times"></i>&nbsp;

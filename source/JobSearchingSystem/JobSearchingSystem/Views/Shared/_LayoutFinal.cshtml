@@ -281,7 +281,7 @@
             <nav id="topbar" role="navigation" style="margin-bottom: 0;" class="navbar navbar-default navbar-static-top">
                 <div class="navbar-header">
                     <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                    <a id="logo" href="index.html" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text" style="font-size:large">Hệ thống tìm việc</span></a>
+                    <a id="logo" href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text" style="font-size:large">Hệ thống tìm việc</span></a>
                 </div>
                 <div class="topbar-main">
                     <!--<a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
@@ -507,8 +507,17 @@
                         <li class="dropdown topbar-user">
                             <a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-user"></i>&nbsp;<span class="hidden-xs">@User.Identity.Name</span>&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu dropdown-user pull-right">
-                                <li><a href="@Url.Action("List", "Profile")"><i class="fa fa-user"></i>Hồ sơ</a></li>
-                                <li><a href="email-inbox.html"><i class="fa fa-envelope"></i>Hộp thư<span class="badge badge-danger">3</span></a></li>
+                                @if (User.IsInRole("Jobseeker"))
+                                {
+                                    <li><a href="@Url.Action("List", "Profile")"><i class="fa fa-user"></i>Hồ sơ</a></li>
+                                    <li><a href="@Url.Action("AppliedJobList", "Job")"><i class="fa fa-user"></i>Quản lý tình trạng ứng tuyển</a></li>
+                                }
+                                else if (User.IsInRole("Recruiter"))
+                                {
+                                    <li><a href="@Url.Action("Choose", "JobPackage")"><i class="fa fa-user"></i>Mua gói công việc</a></li>
+                                    <li><a href="@Url.Action("OwnList", "Job")"><i class="fa fa-user"></i>Danh sách công việc</a></li>
+                                }
+                                <li><a href="@Url.Action("List", "Message")"><i class="fa fa-envelope"></i>Hộp thư<span class="badge badge-danger">3</span></a></li>
                                 <li class="divider"></li>
                                 <li><a data-target="#modal-default-changepassword" data-toggle="modal"><i class="fa fa-pencil"></i>Đổi mật khẩu</a></li>
                                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "LogOffForm" })) { }
