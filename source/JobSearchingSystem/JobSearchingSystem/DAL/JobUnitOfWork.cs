@@ -283,6 +283,7 @@ namespace JobSearchingSystem.DAL
             temp.MinSalary = model.JobInfo.MinSalary;
             temp.MaxSalary = model.JobInfo.MaxSalary;
             temp.JobDescription = model.JobInfo.JobDescription;
+            temp.JobRequirement = model.JobInfo.JobRequirement;
             temp.JobLevel_ID = model.JobInfo.JobLevel_ID;
             temp.MinSchoolLevel_ID = model.JobInfo.MinSchoolLevel_ID;
             temp.JobView = model.JobInfo.JobView;
@@ -295,8 +296,8 @@ namespace JobSearchingSystem.DAL
         //Create new job
         public bool CreateJob(JobCreateModel model)
         {
-            try
-            {
+            //try
+            //{
                 this.JobRepository.Insert(Model_Topic(model));
                 this.Save();
 
@@ -322,11 +323,11 @@ namespace JobSearchingSystem.DAL
                     this.Save();
                 }
                 return true;
-            }
-            catch
-            {
-                return false;
-            }
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
         }
 
         //Get list of job by recruiterID
@@ -344,7 +345,7 @@ namespace JobSearchingSystem.DAL
                         this.Save();
                     }
 
-                    jobList.Add(new JobItem(job.JobID, job.JobTitle, job.StartedDate, job.EndedDate, job.IsPublic, job.AppliedJobs.Count()));
+                    jobList.Add(new JobItem(job.JobID, job.JobTitle, job.StartedDate, job.EndedDate, job.IsPublic, job.AppliedJobs.Where(s => s.IsDeleted == false).Count()));
                 }
                 return jobList;
             }
@@ -398,7 +399,7 @@ namespace JobSearchingSystem.DAL
 
         public bool CheckIsApplied(string userID, int jobID2)
         {
-            IEnumerable<AppliedJob> appliedJob = AppliedJobRepository.Get(filter: s => s.JobID == jobID2 && s.JobSeekerID == userID).AsEnumerable();
+            IEnumerable<AppliedJob> appliedJob = AppliedJobRepository.Get(filter: s => s.JobID == jobID2 && s.JobSeekerID == userID && s.IsDeleted == false).AsEnumerable();
             if (appliedJob.ToArray().Length == 0)
             {
                 return true;

@@ -18,24 +18,41 @@ namespace JobSearchingSystem.DAL
             return JobPackageRepository.GetByID(jobPackageId);
         }
 
-        public void CreateJobPackageRequest(string userID, int packageID, int quantity)
+        public bool CreateJobPackageRequest(string userID, int packageID, int quantity)
         {
+            var length = PurchaseJobPackageRepository.Get().ToArray().Length;
             PurchaseJobPackage purchaseJobPackage = null;
-            for(int i = 0; i < quantity; i++){
-            purchaseJobPackage = new PurchaseJobPackage();
-            purchaseJobPackage.JobPackageID = packageID;
-            purchaseJobPackage.RecruiterID = userID;
-            purchaseJobPackage.PurchasedDate = DateTime.Now;
-            purchaseJobPackage.IsApproved = false;
-            purchaseJobPackage.EndDate = DateTime.Now.AddDays(30);
+            //try{
+                for (int i = 0; i < quantity; i++)
+                {
+                    purchaseJobPackage = new PurchaseJobPackage();
+                    purchaseJobPackage.JobPackageID = packageID;
+                    purchaseJobPackage.RecruiterID = userID;
+                    purchaseJobPackage.PurchasedDate = DateTime.Now;
+                    purchaseJobPackage.IsApproved = false;
+                    purchaseJobPackage.EndDate = DateTime.Now.AddDays(30);
 
-            PurchaseJobPackageRepository.Insert(purchaseJobPackage);
-            Save();
+               
+                        PurchaseJobPackageRepository.Insert(purchaseJobPackage);
+                        Save();
+                        
+                    }
+              var lengthAfterRequest = PurchaseJobPackageRepository.Get().ToArray().Length;
+                    if(lengthAfterRequest > length){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    //return true;
+                 }
 
-            }
+          
+                //catch (Exception e)
+                //{
+                //    return false;
+                //}
+            
         
-
-        }
 
         public IEnumerable<JPurchaseJobPackage> GetAllJobPackageRequest()
         {
