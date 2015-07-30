@@ -82,7 +82,7 @@ namespace JobSearchingSystem.DAL
             return true;
         }
 
-        public bool UpdateCommonInfo(Profile profile, int languageID, int level_ID, int expectedCityNum, int categoryID)
+        public bool UpdateCommonInfo(Profile profile, int expectedCityNum, int categoryID)
         {
             Jobseeker jobseeker = this.JobseekerRepository.GetByID(profile.JobSeekerID);
             if (jobseeker == null)
@@ -106,22 +106,6 @@ namespace JobSearchingSystem.DAL
                     if (insertedProfile == null)
                     {
                         return false;
-                    }
-
-                    Language language = this.LanguageRepository.GetByID(languageID);
-                    Level level = this.LevelRepository.GetByID(level_ID);
-                    if (language != null && level != null)
-                    {
-                        ProfileLanguage profileLanguage = new ProfileLanguage();
-                        profileLanguage.LanguageID = language.LanguageID;
-                        profileLanguage.Language = language;
-                        profileLanguage.ProfileID = insertedProfile.ProfileID;
-                        profileLanguage.Profile = insertedProfile;
-                        profileLanguage.Level_ID = level.Level_ID;
-                        profileLanguage.IsDeleted = false;
-
-                        this.ProfileLanguageRepository.Insert(profileLanguage);
-                        this.Save();
                     }
 
                     City city = this.CityRepository.GetByID(expectedCityNum);
@@ -154,6 +138,8 @@ namespace JobSearchingSystem.DAL
                     Profile profileToUpdate = this.ProfileRepository.Get(filter: d => d.Name == profile.Name).FirstOrDefault();
                     profileToUpdate.YearOfExperience = profile.YearOfExperience;
                     profileToUpdate.HighestSchoolLevel_ID = profile.HighestSchoolLevel_ID;
+                    profileToUpdate.LanguageID = profile.LanguageID;
+                    profileToUpdate.Level_ID = profile.Level_ID;
                     profileToUpdate.MostRecentCompany = profile.MostRecentCompany;
                     profileToUpdate.MostRecentPosition = profile.MostRecentPosition;
                     profileToUpdate.CurrentJobLevel_ID = profile.CurrentJobLevel_ID;
@@ -165,40 +151,6 @@ namespace JobSearchingSystem.DAL
 
                     this.ProfileRepository.Update(profileToUpdate);
                     this.Save();
-
-                    IEnumerable<ProfileLanguage> oldProfileLanguages = this.ProfileLanguageRepository.Get(filter: d => d.ProfileID == profileToUpdate.ProfileID).AsEnumerable();
-                    foreach (ProfileLanguage item in oldProfileLanguages)
-                    {
-                        if (item.IsDeleted == false)
-                        {
-                            item.IsDeleted = true;
-                            this.ProfileLanguageRepository.Update(item);
-                            this.Save();
-                        }
-                    }
-                    ProfileLanguage profileLanguage = this.ProfileLanguageRepository.Get(s => s.ProfileID == profileToUpdate.ProfileID && s.LanguageID == languageID).FirstOrDefault();
-                    if (profileLanguage != null)
-                    {
-                        profileLanguage.IsDeleted = false;
-                        this.ProfileLanguageRepository.Update(profileLanguage);
-                        this.Save();
-                    }
-                    else
-                    {
-                        Language language = this.LanguageRepository.GetByID(languageID);
-                        Level level = this.LevelRepository.GetByID(level_ID);
-                        if (language != null && level != null)
-                        {
-                            ProfileLanguage newProfileLanguage = new ProfileLanguage();
-                            newProfileLanguage.LanguageID = language.LanguageID;
-                            newProfileLanguage.ProfileID = profileToUpdate.ProfileID;
-                            newProfileLanguage.Level_ID = level.Level_ID;
-                            newProfileLanguage.IsDeleted = false;
-
-                            this.ProfileLanguageRepository.Insert(newProfileLanguage);
-                            this.Save();
-                        }
-                    }
                     
                     IEnumerable<ExpectedCity> oldExpectedCities = this.ExpectedCityRepository.Get(filter: d => d.ProfileID == profileToUpdate.ProfileID).AsEnumerable();
                     foreach (ExpectedCity item in oldExpectedCities)

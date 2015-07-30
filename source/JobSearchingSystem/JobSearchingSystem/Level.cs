@@ -17,7 +17,7 @@ namespace JobSearchingSystem
         public Level()
         {
             this.JobLanguages = new HashSet<JobLanguage>();
-            this.ProfileLanguages = new HashSet<ProfileLanguage>();
+            this.Profiles = new HashSet<Profile>();
         }
     
         public int Level_ID { get; set; }
@@ -26,6 +26,6 @@ namespace JobSearchingSystem
         public bool IsDeleted { get; set; }
     
         public virtual ICollection<JobLanguage> JobLanguages { get; set; }
-        public virtual ICollection<ProfileLanguage> ProfileLanguages { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }

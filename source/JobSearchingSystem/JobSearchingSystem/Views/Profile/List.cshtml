@@ -7,8 +7,17 @@
 
 <script>
     $(document).ready(function () {
-        $('#deleteButton').click(function (id) {
+        $('.deletebutton').click(function (id) {
             $('#deleteprofileID').val($(this).data('id'));
+        });
+
+        $('input[type="checkbox"][name="activeStatusChx"]').on('ifChecked', function (event) {
+            this.form.submit();
+            //$('input[type="hidden"][name="activeStatus"]').val("true");
+        });
+        $('input[type="checkbox"][name="activeStatusChx"]').on('ifUnchecked', function (event) {
+            this.form.submit();
+            //$('input[type="hidden"][name="activeStatus"]').val("false");
         });
     });
 </script>
@@ -69,12 +78,21 @@
                             <tr>
                                 <td>@item.No</td>
                                 <td>@item.ProfileName</td>
-                                @if (item.IsActive == true) {
-                                    <td><input id="square-checkbox-1" tabindex="9" type="checkbox" checked = "checked" /></td>
-                                }
-                                @if (item.IsActive == false) {
-                                    <td><input id="square-checkbox-1" tabindex="9" type="checkbox" /></td>
-                                }
+                                <td>
+                                    @using (Html.BeginForm("ActiveProfile", "Profile", new { activeProfileId = item.ProfileID }, FormMethod.Post))
+                                    {
+                                        if (item.IsActive == true)
+                                        {
+                                            <input type="hidden" name="activeStatus" id="activeStatus" value="false" />
+                                            <input id="activeStatusChx" name="activeStatusChx" tabindex="9" type="checkbox" checked="checked" />
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" name="activeStatus" id="activeStatus" value="true" />
+                                            <input id="activeStatusChx" name="activeStatusChx" tabindex="9" type="checkbox" />
+                                        }
+                                    }
+                                </td>
                                 <td>@item.ViewedCount</td>
                                 <td>@item.UpdatedTime</td>
                                 @if (item.PerccentStatus == 100)
@@ -89,7 +107,7 @@
                                 <td>
                                     <a href="@Url.Action("Update", new { profileID = item.ProfileID })" style = "display:inline" class="btn btn-blue btn-xs"><i class="fa fa-edit"></i>&nbsp;Xem và Cập nhật</a>
                                     &nbsp;
-                                    <button type="button" id="deleteButton" class="btn btn-danger btn-xs" style="display:inline" data-target="#ModalDeleteConfirm" data-id="@item.ProfileID" data-toggle="modal">
+                                    <button type="button" class="btn btn-danger btn-xs deletebutton" style="display:inline" data-target="#ModalDeleteConfirm" data-id="@item.ProfileID" data-toggle="modal">
                                         <i class="fa fa-trash-o"></i>&nbsp;
                                         Xóa
                                     </button>
@@ -99,7 +117,7 @@
                     }
                 </tbody>
             </table>
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-lg-6">
                     <div class="pagination-panel">
                         Page
@@ -128,7 +146,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
     </div>

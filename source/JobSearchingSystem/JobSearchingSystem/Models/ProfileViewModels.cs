@@ -27,8 +27,6 @@ namespace JobSearchingSystem.Models
     {
         public Profile profile { get; set; }
         
-        public int languageID { get; set; }
-        public int level_ID { get; set; }
         public int expectedCity { get; set; }
         public int categoryID { get; set; }
 
@@ -37,9 +35,9 @@ namespace JobSearchingSystem.Models
             profile = new Profile();
             profile.YearOfExperience = 0;
             profile.ExpectedSalary = 0;
-
-            languageID = -1;
-            level_ID = -1;
+            profile.LanguageID = -1;
+            profile.Level_ID = -1;
+            
             expectedCity = -1;
             categoryID = -1;
         }

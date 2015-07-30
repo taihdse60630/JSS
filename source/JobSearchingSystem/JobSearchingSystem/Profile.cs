@@ -21,7 +21,6 @@ namespace JobSearchingSystem
             this.EmploymentHistories = new HashSet<EmploymentHistory>();
             this.ExpectedCategories = new HashSet<ExpectedCategory>();
             this.ExpectedCities = new HashSet<ExpectedCity>();
-            this.ProfileLanguages = new HashSet<ProfileLanguage>();
             this.ReferencePersons = new HashSet<ReferencePerson>();
             this.ViewProfiles = new HashSet<ViewProfile>();
         }
@@ -30,6 +29,8 @@ namespace JobSearchingSystem
         public string Name { get; set; }
         public int YearOfExperience { get; set; }
         public int HighestSchoolLevel_ID { get; set; }
+        public Nullable<int> LanguageID { get; set; }
+        public Nullable<int> Level_ID { get; set; }
         public string MostRecentCompany { get; set; }
         public string MostRecentPosition { get; set; }
         public Nullable<int> CurrentJobLevel_ID { get; set; }
@@ -52,8 +53,9 @@ namespace JobSearchingSystem
         public virtual JobLevel JobLevel { get; set; }
         public virtual JobLevel JobLevel1 { get; set; }
         public virtual Jobseeker Jobseeker { get; set; }
+        public virtual Language Language { get; set; }
+        public virtual Level Level { get; set; }
         public virtual SchoolLevel SchoolLevel { get; set; }
-        public virtual ICollection<ProfileLanguage> ProfileLanguages { get; set; }
         public virtual ICollection<ReferencePerson> ReferencePersons { get; set; }
         public virtual ICollection<ViewProfile> ViewProfiles { get; set; }
     }

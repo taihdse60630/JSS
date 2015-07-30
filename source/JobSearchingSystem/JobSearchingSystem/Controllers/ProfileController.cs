@@ -12,8 +12,15 @@ namespace JobSearchingSystem.Controllers
     {
         private ProfileUnitOfWork profileUnitOfWork = new ProfileUnitOfWork();
 
-        //
-        // GET: /Profile/
+        /*private JobUnitOfWork jobUnitOfWork = new JobUnitOfWork();
+        public ActionResult Matching()
+        {
+            int profileId = 1;
+            int jobId = 6;
+            int result = jobUnitOfWork.Matching(profileId, jobId);
+            return View();
+        }*/
+
         [Authorize(Roles = "Jobseeker")]
         public ActionResult Index()
         {
@@ -72,12 +79,6 @@ namespace JobSearchingSystem.Controllers
                 if (profile != null)
                 {
                     proUpdateViewModel.commonInfoItem.profile = profile;
-
-                    ProfileLanguage profileLanguage = profileUnitOfWork.ProfileLanguageRepository.Get(filter: d => d.ProfileID == profileIDNum && d.IsDeleted == false).FirstOrDefault();
-                    if (profileLanguage != null){
-                        proUpdateViewModel.commonInfoItem.languageID = profileLanguage.LanguageID;
-                        proUpdateViewModel.commonInfoItem.level_ID = profileLanguage.Level_ID;
-                    }
 
                     ExpectedCity expectedCity = profileUnitOfWork.ExpectedCityRepository.Get(filter: d => d.ProfileID == profileIDNum && d.IsDeleted == false).FirstOrDefault();
                     if (expectedCity != null){
@@ -150,20 +151,21 @@ namespace JobSearchingSystem.Controllers
         [Authorize(Roles = "Jobseeker")]
         public ActionResult Update([Bind(Include = "FullName, Gender, MaritalStatus, Nationality, Address, DateofBirth, PhoneNumber, CityID, District, IsVisible")] 
                                         Contact contact,
-                                   [Bind(Include = "ProfileID, Name, YearOfExperience, HighestSchoolLevel_ID, MostRecentCompany, MostRecentPosition, CurrentJobLevel_ID, ExpectedPosition, ExpectedJobLevel_ID, ExpectedSalary, Objectives")]
-                                            Profile profile, string languageID, string level_ID, string expectedCity, string categoryID,
+                                   [Bind(Include = "ProfileID, Name, YearOfExperience, HighestSchoolLevel_ID, LanguageID, Level_ID, MostRecentCompany, MostRecentPosition, CurrentJobLevel_ID, ExpectedPosition, ExpectedJobLevel_ID, ExpectedSalary, Objectives")]
+                                            Profile profile, string expectedCity, string categoryID,
                                    [Bind(Include = "EmploymentHistoryID, Position, Company, WorkingTime, Description")]EmploymentHistory employmentHistory,
                                    [Bind(Include = "EducationHistoryID, Subject, School, SchoolLevel_ID, Achievement")]EducationHistory educationHistory,
                                    [Bind(Include = "ReferencePersonID, ReferencePersonName, ReferencePersonPosition, ReferencePersonCompany, EmailAddress, ReferencePersonPhoneNumber")]ReferencePerson referencePerson)
         {
             bool contactResult = UpdateContact(contact);
-            bool commonInfoResult = UpdateCommonInfo(profile, languageID, level_ID, expectedCity, categoryID);
+            bool commonInfoResult = UpdateCommonInfo(profile, expectedCity, categoryID);
             bool employmentHistoryResult = false;
             bool educationHistoryResult = false;
             bool referencePersonResult = false;
             if (commonInfoResult) {
                 Profile updatedProfile = profileUnitOfWork.ProfileRepository.Get(s => s.Name == profile.Name).LastOrDefault();
-                if (profile != null) {
+                if (updatedProfile != null)
+                {
                     int percentStatus = 25;
 
                     int profileID = updatedProfile.ProfileID;
@@ -211,25 +213,19 @@ namespace JobSearchingSystem.Controllers
         }
 
         [Authorize(Roles = "Jobseeker")]
-        private bool UpdateCommonInfo(Profile profile, string languageID, string level_ID, string expectedCity, string categoryID)
+        private bool UpdateCommonInfo(Profile profile, string expectedCity, string categoryID)
         {
             if (!String.IsNullOrEmpty(profile.Name)
                 && !String.IsNullOrEmpty(profile.ExpectedPosition)
                 && !String.IsNullOrEmpty(profile.Objectives)
-                && !String.IsNullOrEmpty(languageID)
-                && !String.IsNullOrEmpty(level_ID)
                 && !String.IsNullOrEmpty(expectedCity)
                 && !String.IsNullOrEmpty(categoryID))
             {
-                int languageIDNum = 0;
-                int level_IDNum = 0;
                 int expectedCityNum = 0;
                 int categoryIDNum = 0;
 
                 try
                 {
-                    languageIDNum = Int32.Parse(languageID);
-                    level_IDNum = Int32.Parse(level_ID);
                     expectedCityNum = Int32.Parse(expectedCity);
                     categoryIDNum = Int32.Parse(categoryID);
                 }
@@ -250,7 +246,7 @@ namespace JobSearchingSystem.Controllers
                 profile.IsActive = false;
                 profile.IsDeleted = false;
 
-                bool result = this.profileUnitOfWork.UpdateCommonInfo(profile, languageIDNum, level_IDNum, expectedCityNum, categoryIDNum);
+                bool result = this.profileUnitOfWork.UpdateCommonInfo(profile, expectedCityNum, categoryIDNum);
 
                 if (result)
                 {
@@ -364,6 +360,51 @@ namespace JobSearchingSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Jobseeker")]
+        public ActionResult ActiveProfile(string activeProfileId, string activeStatus)
+        {
+            if (!String.IsNullOrEmpty(activeProfileId)
+                && !String.IsNullOrEmpty(activeStatus))
+            {
+                int profileIDNum;
+
+                try
+                {
+                    profileIDNum = Int32.Parse(activeProfileId);
+                }
+                catch (Exception)
+                {
+                    TempData["message"] = "Thay đổi trạng thái cho phép tìm kiếm thất bại";
+                    return RedirectToAction("List");
+                }
+
+                Profile profile = profileUnitOfWork.ProfileRepository.GetByID(profileIDNum);
+
+                if (profile != null)
+                {
+                    if ("true".Equals(activeStatus))
+                    {
+                        profile.IsActive = true;
+                    }
+                    else
+                    {
+                        profile.IsActive = false;
+                    }
+                    profileUnitOfWork.ProfileRepository.Update(profile);
+                    profileUnitOfWork.Save();
+
+                    return RedirectToAction("List");
+                }
+
+                TempData["message"] = "Thay đổi trạng thái cho phép tìm kiếm thất bại";
+                return RedirectToAction("List");
+            }
+
+            TempData["message"] = "Thay đổi trạng thái cho phép tìm kiếm thất bại";
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Jobseeker")]
         public ActionResult Delete(string profileID)
         {
             if (!String.IsNullOrEmpty(profileID))
@@ -376,6 +417,7 @@ namespace JobSearchingSystem.Controllers
                 }
                 catch (Exception)
                 {
+                    TempData["message"] = "Xóa hồ sơ thất bại";
                     return RedirectToAction("List");
                 }
 
@@ -386,16 +428,6 @@ namespace JobSearchingSystem.Controllers
                     profile.IsActive = false;
                     profile.IsDeleted = true;
                     profileUnitOfWork.ProfileRepository.Update(profile);
-
-                    IEnumerable<ProfileLanguage> profileLanguages = profileUnitOfWork.ProfileLanguageRepository.Get(s => s.ProfileID == profile.ProfileID).AsEnumerable();
-                    if (profileLanguages != null)
-                    {
-                        foreach (ProfileLanguage item in profileLanguages)
-                        {
-                            item.IsDeleted = true;
-                            profileUnitOfWork.ProfileLanguageRepository.Update(item);
-                        }
-                    }
 
                     IEnumerable<ExpectedCity> expectedCities = profileUnitOfWork.ExpectedCityRepository.Get(s => s.ProfileID == profile.ProfileID).AsEnumerable();
                     if (expectedCities != null)

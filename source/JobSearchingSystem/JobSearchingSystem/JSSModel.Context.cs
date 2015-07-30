@@ -62,7 +62,6 @@ namespace JobSearchingSystem
         public virtual DbSet<MessageReceiver> MessageReceivers { get; set; }
         public virtual DbSet<OwnSkill> OwnSkills { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<ProfileLanguage> ProfileLanguages { get; set; }
         public virtual DbSet<PurchaseAdvertise> PurchaseAdvertises { get; set; }
         public virtual DbSet<PurchaseJobPackage> PurchaseJobPackages { get; set; }
         public virtual DbSet<Recruiter> Recruiters { get; set; }

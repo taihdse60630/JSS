@@ -176,7 +176,7 @@
     });
 
 
-    function enableDisable(bEnable, textBoxID) {
+    /*function enableDisable(bEnable, textBoxID) {
         document.getElementById(textBoxID).disabled = !bEnable;
     }
     function AddLanguage() {
@@ -212,7 +212,7 @@
                                                   + '  </div>'
                                                + ' </div>'
                                            + ' </div>';
-    }
+    }*/
     
 </script>
 
@@ -381,7 +381,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="inputRecruiterShow" class="col-md-3 control-label">Hiện với nhà tốt nghiệp<span class="require">*</span></label>
+                                                <label for="inputRecruiterShow" class="col-md-3 control-label">Hiện với nhà tuyển dụng<span class="require">*</span></label>
                                                 <div class="col-md-9">
                                                     @if (@Model.contact.IsVisible == true)
                                                     {
@@ -528,7 +528,7 @@
                                                             {
                                                                 for (int count = 0; count < Model.languages.Count(); count++)
                                                                 {
-                                                                    if (@Model.languages.ElementAt(count).LanguageID == @Model.commonInfoItem.languageID)
+                                                                    if (@Model.languages.ElementAt(count).LanguageID == @Model.commonInfoItem.profile.LanguageID)
                                                                     {
                                                                         <option selected value="@Model.languages.ElementAt(count).LanguageID">
                                                                             @Model.languages.ElementAt(count).Name
@@ -558,7 +558,7 @@
                                                             {
                                                                 for (int count = 0; count < Model.levels.Count(); count++)
                                                                 {
-                                                                    if (@Model.levels.ElementAt(count).Level_ID == @Model.commonInfoItem.level_ID)
+                                                                    if (@Model.levels.ElementAt(count).Level_ID == @Model.commonInfoItem.profile.Level_ID)
                                                                     {
                                                                         <option selected value="@Model.levels.ElementAt(count).Level_ID">
                                                                             @Model.levels.ElementAt(count).Name
@@ -579,7 +579,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-3">
@@ -595,7 +595,7 @@
 
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

@@ -46,7 +46,6 @@ namespace JobSearchingSystem.DAL
         private GenericRepository<MessageReceiver> messageReceiverRepository;
         private GenericRepository<OwnSkill> ownSkillRepository;
         private GenericRepository<Profile> profileRepository;
-        private GenericRepository<ProfileLanguage> profileLanguageRepository;
         private GenericRepository<PurchaseAdvertise> purchaseAdvertiseRepository;
         private GenericRepository<PurchaseJobPackage> purchaseJobPackageRepository;
         private GenericRepository<Recruiter> recruiterRepository;
@@ -487,18 +486,6 @@ namespace JobSearchingSystem.DAL
                     this.profileRepository = new GenericRepository<Profile>(context);
                 }
                 return profileRepository;
-            }
-        }
-
-        public GenericRepository<ProfileLanguage> ProfileLanguageRepository
-        {
-            get
-            {
-                if (this.profileLanguageRepository == null)
-                {
-                    this.profileLanguageRepository = new GenericRepository<ProfileLanguage>(context);
-                }
-                return profileLanguageRepository;
             }
         }
 

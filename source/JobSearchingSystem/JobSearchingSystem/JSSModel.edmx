@@ -389,6 +389,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="YearOfExperience" Type="int" Nullable="false" />
           <Property Name="HighestSchoolLevel_ID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" />
+          <Property Name="Level_ID" Type="int" />
           <Property Name="MostRecentCompany" Type="nvarchar" MaxLength="50" />
           <Property Name="MostRecentPosition" Type="nvarchar" MaxLength="50" />
           <Property Name="CurrentJobLevel_ID" Type="int" />
@@ -401,16 +403,6 @@
           <Property Name="PercentStatus" Type="int" Nullable="false" />
           <Property Name="JobSeekerID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProfileLanguage">
-          <Key>
-            <PropertyRef Name="LanguageID" />
-            <PropertyRef Name="ProfileID" />
-          </Key>
-          <Property Name="LanguageID" Type="int" Nullable="false" />
-          <Property Name="ProfileID" Type="int" Nullable="false" />
-          <Property Name="Level_ID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PurchaseAdvertise">
@@ -1106,6 +1098,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Profile_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageID" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profile_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Level_ID" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Level_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Profile_SchoolLevel">
           <End Role="SchoolLevel" Type="Self.SchoolLevel" Multiplicity="1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -1115,42 +1131,6 @@
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="HighestSchoolLevel_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProfileLanguage_Language">
-          <End Role="Language" Type="Self.Language" Multiplicity="1" />
-          <End Role="ProfileLanguage" Type="Self.ProfileLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language">
-              <PropertyRef Name="LanguageID" />
-            </Principal>
-            <Dependent Role="ProfileLanguage">
-              <PropertyRef Name="LanguageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProfileLanguage_Level">
-          <End Role="Level" Type="Self.Level" Multiplicity="1" />
-          <End Role="ProfileLanguage" Type="Self.ProfileLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Level">
-              <PropertyRef Name="Level_ID" />
-            </Principal>
-            <Dependent Role="ProfileLanguage">
-              <PropertyRef Name="Level_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProfileLanguage_Profile">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
-          <End Role="ProfileLanguage" Type="Self.ProfileLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="ProfileID" />
-            </Principal>
-            <Dependent Role="ProfileLanguage">
-              <PropertyRef Name="LanguageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1373,7 +1353,6 @@
           <EntitySet Name="MessageReceiver" EntityType="Self.MessageReceiver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OwnSkill" EntityType="Self.OwnSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProfileLanguage" EntityType="Self.ProfileLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseAdvertise" EntityType="Self.PurchaseAdvertise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseJobPackage" EntityType="Self.PurchaseJobPackage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recruiter" EntityType="Self.Recruiter" Schema="dbo" store:Type="Tables" />
@@ -1573,21 +1552,17 @@
             <End Role="Jobseeker" EntitySet="Jobseeker" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
+          <AssociationSet Name="FK_Profile_Language" Association="Self.FK_Profile_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profile_Level" Association="Self.FK_Profile_Level">
+            <End Role="Level" EntitySet="Level" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
           <AssociationSet Name="FK_Profile_SchoolLevel" Association="Self.FK_Profile_SchoolLevel">
             <End Role="SchoolLevel" EntitySet="SchoolLevel" />
             <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Language" Association="Self.FK_ProfileLanguage_Language">
-            <End Role="Language" EntitySet="Language" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Level" Association="Self.FK_ProfileLanguage_Level">
-            <End Role="Level" EntitySet="Level" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Profile" Association="Self.FK_ProfileLanguage_Profile">
-            <End Role="Profile" EntitySet="Profile" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguage" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseAdvertise_Advertise" Association="Self.FK_PurchaseAdvertise_Advertise">
             <End Role="Advertise" EntitySet="Advertise" />
@@ -1692,7 +1667,6 @@
           <EntitySet Name="MessageReceivers" EntityType="JSSModel.MessageReceiver" />
           <EntitySet Name="OwnSkills" EntityType="JSSModel.OwnSkill" />
           <EntitySet Name="Profiles" EntityType="JSSModel.Profile" />
-          <EntitySet Name="ProfileLanguages" EntityType="JSSModel.ProfileLanguage" />
           <EntitySet Name="PurchaseAdvertises" EntityType="JSSModel.PurchaseAdvertise" />
           <EntitySet Name="PurchaseJobPackages" EntityType="JSSModel.PurchaseJobPackage" />
           <EntitySet Name="Recruiters" EntityType="JSSModel.Recruiter" />
@@ -1904,13 +1878,13 @@
             <End Role="Skill" EntitySet="Skills" />
             <End Role="JobSkill" EntitySet="JobSkills" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Language" Association="JSSModel.FK_ProfileLanguage_Language">
+          <AssociationSet Name="FK_Profile_Language" Association="JSSModel.FK_Profile_Language">
             <End Role="Language" EntitySet="Languages" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguages" />
+            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Level" Association="JSSModel.FK_ProfileLanguage_Level">
+          <AssociationSet Name="FK_Profile_Level" Association="JSSModel.FK_Profile_Level">
             <End Role="Level" EntitySet="Levels" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguages" />
+            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseAdvertise_Manager" Association="JSSModel.FK_PurchaseAdvertise_Manager">
             <End Role="Manager" EntitySet="Managers" />
@@ -1927,10 +1901,6 @@
           <AssociationSet Name="FK_Profile_SchoolLevel" Association="JSSModel.FK_Profile_SchoolLevel">
             <End Role="SchoolLevel" EntitySet="SchoolLevels" />
             <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProfileLanguage_Profile" Association="JSSModel.FK_ProfileLanguage_Profile">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="ProfileLanguage" EntitySet="ProfileLanguages" />
           </AssociationSet>
           <AssociationSet Name="FK_ReferencePerson_Profile" Association="JSSModel.FK_ReferencePerson_Profile">
             <End Role="Profile" EntitySet="Profiles" />
@@ -2362,7 +2332,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="JobLanguages" Relationship="JSSModel.FK_JobLanguage_Language" FromRole="Language" ToRole="JobLanguage" />
-          <NavigationProperty Name="ProfileLanguages" Relationship="JSSModel.FK_ProfileLanguage_Language" FromRole="Language" ToRole="ProfileLanguage" />
+          <NavigationProperty Name="Profiles" Relationship="JSSModel.FK_Profile_Language" FromRole="Language" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Level">
           <Key>
@@ -2373,7 +2343,7 @@
           <Property Name="LevelNum" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="JobLanguages" Relationship="JSSModel.FK_JobLanguage_Level" FromRole="Level" ToRole="JobLanguage" />
-          <NavigationProperty Name="ProfileLanguages" Relationship="JSSModel.FK_ProfileLanguage_Level" FromRole="Level" ToRole="ProfileLanguage" />
+          <NavigationProperty Name="Profiles" Relationship="JSSModel.FK_Profile_Level" FromRole="Level" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Manager">
           <Key>
@@ -2428,6 +2398,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="YearOfExperience" Type="Int32" Nullable="false" />
           <Property Name="HighestSchoolLevel_ID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" />
+          <Property Name="Level_ID" Type="Int32" />
           <Property Name="MostRecentCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MostRecentPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CurrentJobLevel_ID" Type="Int32" />
@@ -2449,23 +2421,11 @@
           <NavigationProperty Name="JobLevel" Relationship="JSSModel.FK_Profile_JobLevel" FromRole="Profile" ToRole="JobLevel" />
           <NavigationProperty Name="JobLevel1" Relationship="JSSModel.FK_Profile_JobLevel1" FromRole="Profile" ToRole="JobLevel" />
           <NavigationProperty Name="Jobseeker" Relationship="JSSModel.FK_Profile_Jobseeker" FromRole="Profile" ToRole="Jobseeker" />
+          <NavigationProperty Name="Language" Relationship="JSSModel.FK_Profile_Language" FromRole="Profile" ToRole="Language" />
+          <NavigationProperty Name="Level" Relationship="JSSModel.FK_Profile_Level" FromRole="Profile" ToRole="Level" />
           <NavigationProperty Name="SchoolLevel" Relationship="JSSModel.FK_Profile_SchoolLevel" FromRole="Profile" ToRole="SchoolLevel" />
-          <NavigationProperty Name="ProfileLanguages" Relationship="JSSModel.FK_ProfileLanguage_Profile" FromRole="Profile" ToRole="ProfileLanguage" />
           <NavigationProperty Name="ReferencePersons" Relationship="JSSModel.FK_ReferencePerson_Profile" FromRole="Profile" ToRole="ReferencePerson" />
           <NavigationProperty Name="ViewProfiles" Relationship="JSSModel.FK_ViewProfile_Profile" FromRole="Profile" ToRole="ViewProfile" />
-        </EntityType>
-        <EntityType Name="ProfileLanguage">
-          <Key>
-            <PropertyRef Name="LanguageID" />
-            <PropertyRef Name="ProfileID" />
-          </Key>
-          <Property Name="LanguageID" Type="Int32" Nullable="false" />
-          <Property Name="ProfileID" Type="Int32" Nullable="false" />
-          <Property Name="Level_ID" Type="Int32" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Language" Relationship="JSSModel.FK_ProfileLanguage_Language" FromRole="ProfileLanguage" ToRole="Language" />
-          <NavigationProperty Name="Level" Relationship="JSSModel.FK_ProfileLanguage_Level" FromRole="ProfileLanguage" ToRole="Level" />
-          <NavigationProperty Name="Profile" Relationship="JSSModel.FK_ProfileLanguage_Profile" FromRole="ProfileLanguage" ToRole="Profile" />
         </EntityType>
         <EntityType Name="PurchaseAdvertise">
           <Key>
@@ -3220,26 +3180,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProfileLanguage_Language">
-          <End Type="JSSModel.Language" Role="Language" Multiplicity="1" />
-          <End Type="JSSModel.ProfileLanguage" Role="ProfileLanguage" Multiplicity="*" />
+        <Association Name="FK_Profile_Language">
+          <End Type="JSSModel.Language" Role="Language" Multiplicity="0..1" />
+          <End Type="JSSModel.Profile" Role="Profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Language">
               <PropertyRef Name="LanguageID" />
             </Principal>
-            <Dependent Role="ProfileLanguage">
+            <Dependent Role="Profile">
               <PropertyRef Name="LanguageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProfileLanguage_Level">
-          <End Type="JSSModel.Level" Role="Level" Multiplicity="1" />
-          <End Type="JSSModel.ProfileLanguage" Role="ProfileLanguage" Multiplicity="*" />
+        <Association Name="FK_Profile_Level">
+          <End Type="JSSModel.Level" Role="Level" Multiplicity="0..1" />
+          <End Type="JSSModel.Profile" Role="Profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Level">
               <PropertyRef Name="Level_ID" />
             </Principal>
-            <Dependent Role="ProfileLanguage">
+            <Dependent Role="Profile">
               <PropertyRef Name="Level_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3289,18 +3249,6 @@
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="HighestSchoolLevel_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProfileLanguage_Profile">
-          <End Type="JSSModel.Profile" Role="Profile" Multiplicity="1" />
-          <End Type="JSSModel.ProfileLanguage" Role="ProfileLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="ProfileID" />
-            </Principal>
-            <Dependent Role="ProfileLanguage">
-              <PropertyRef Name="LanguageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3803,20 +3751,12 @@
                 <ScalarProperty Name="CurrentJobLevel_ID" ColumnName="CurrentJobLevel_ID" />
                 <ScalarProperty Name="MostRecentPosition" ColumnName="MostRecentPosition" />
                 <ScalarProperty Name="MostRecentCompany" ColumnName="MostRecentCompany" />
+                <ScalarProperty Name="Level_ID" ColumnName="Level_ID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
                 <ScalarProperty Name="HighestSchoolLevel_ID" ColumnName="HighestSchoolLevel_ID" />
                 <ScalarProperty Name="YearOfExperience" ColumnName="YearOfExperience" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProfileLanguages">
-            <EntityTypeMapping TypeName="JSSModel.ProfileLanguage">
-              <MappingFragment StoreEntitySet="ProfileLanguage">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Level_ID" ColumnName="Level_ID" />
-                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
