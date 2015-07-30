@@ -49,14 +49,15 @@ namespace JobSearchingSystem.Controllers
             
         }
 
-         [Authorize(Roles = "Recruiter")]
-        public ActionResult SendPackageRequest(InvoiceVIewModels model)
+         //[Authorize(Roles = "Recruiter")]
+        public JsonResult SendPackageRequest(int packageQuantity, int jobPackageID)
         {
-            int quantity = model.packageQuantity;
-            int packageID = model.jobPackageID;
+            int quantity = packageQuantity;
+            int packageID =jobPackageID;
             string userID = packageUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; ;
-            packageUnitOfWork.CreateJobPackageRequest(userID, packageID, quantity);
-            return RedirectToAction("Choose");
+            bool result = packageUnitOfWork.CreateJobPackageRequest(userID, packageID, quantity);
+
+            return Json(result, JsonRequestBehavior.AllowGet);      
   
         }
 

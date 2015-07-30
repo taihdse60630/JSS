@@ -21,7 +21,7 @@ namespace JobSearchingSystem.Controllers
         //Displayed list of job created by recruiter
         public ActionResult OwnList()
         {
-            string recruiterID = "1";
+            string recruiterID = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; 
             return View(this.jobUnitOfWork.GetJobByRecruiterID(recruiterID));
         }
 
@@ -43,10 +43,13 @@ namespace JobSearchingSystem.Controllers
         public ActionResult Create()
         {
             JobCreateModel jobCreateModel = new JobCreateModel();
+            string UserID = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
             jobCreateModel.JobLevelList = jobUnitOfWork.JobLevelRepository.Get(filter: d => d.IsDeleted == false);
             jobCreateModel.SchoolLevelList = jobUnitOfWork.SchoolLevelRepository.Get(filter: d => d.IsDeleted == false);
             jobCreateModel.CityList = jobUnitOfWork.CityRepository.Get(filter: city => city.IsDeleted == false);
             jobCreateModel.CategoryList = jobUnitOfWork.CategoryRepository.Get(category => category.IsDeleted == false);
+            jobCreateModel.SkillList = jobUnitOfWork.SkillRepository.Get(skill => skill.IsDeleted == false);
+            jobCreateModel.JobInfo.RecruiterID = UserID;
             return View(jobCreateModel);
         }
 

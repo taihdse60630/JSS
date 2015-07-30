@@ -83,6 +83,9 @@ namespace JobSearchingSystem.Controllers
                     recruiter.IsDeleted = false;
                     unitOfWork.RecruiterRepository.Insert(recruiter);
                     unitOfWork.Save();
+
+                    await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Update", "CompanyInfo");
                 }
                 else
                 {
@@ -94,10 +97,10 @@ namespace JobSearchingSystem.Controllers
                     jobseeker.IsDeleted = false;
                     unitOfWork.JobseekerRepository.Insert(jobseeker);
                     unitOfWork.Save();
-                }
 
-                await SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                    await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
