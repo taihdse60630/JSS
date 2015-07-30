@@ -17,6 +17,7 @@ namespace JobSearchingSystem.Models
         public Nullable<decimal> MinSalary { get; set; }
         public Nullable<decimal> MaxSalary { get; set; }
         public string JobDescription { get; set; }
+        public string JobRequirement { get; set; }
         public int JobLevel_ID { get; set; }
         public int MinSchoolLevel_ID { get; set; }
         public int JobView { get; set; }
@@ -34,6 +35,7 @@ namespace JobSearchingSystem.Models
             this.MinSalary = null;
             this.MaxSalary = null;
             this.JobDescription = "";
+            this.JobRequirement = "";
             this.JobLevel_ID = 2;
             this.MinSchoolLevel_ID = 1;
             this.JobView = 0;
@@ -51,17 +53,19 @@ namespace JobSearchingSystem.Models
         public IEnumerable<SchoolLevel> SchoolLevelList { get; set; }
         public IEnumerable<City> CityList { get; set; }
         public IEnumerable<Category> CategoryList { get; set; }
+        public IEnumerable<Skill> SkillList { get; set; }
 
         public List<int> CategorySelectList { get; set; }
         public List<int> CitySelectList { get; set; }
         public List<int> SkillSelectList { get; set; }
-        
+
         //Constructor (0 parameter)
         public JobCreateModel()
         {
             JobInfo = new JobCoreInformation();
             JobLevelList = new List<JobLevel>();
             SchoolLevelList = new List<SchoolLevel>();
+            SkillList = new List<Skill>();
             CityList = new List<City>();
             CategoryList = new List<Category>();
             CategorySelectList = new List<int>();
