@@ -20,6 +20,8 @@ namespace JobSearchingSystem.Models
         public int SchoolLevel { get; set; }
         public string Company { get; set; }
         public string Address { get; set; }
+        public long JobView { get; set; }
+        public int ApplicantNumber { get; set; }
         //[DataType(DataType.Date)]
         public DateTime? PostedDate { get; set; }
         public IEnumerable<JJobCategory> JobCategory { get; set; }
