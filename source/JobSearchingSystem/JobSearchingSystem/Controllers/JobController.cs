@@ -77,6 +77,7 @@ namespace JobSearchingSystem.Controllers
             }
 
             model.jJobItem = jobUnitOfWork.FindJob(model.searchString, model.minSalary, model.schoolLevel, model.searchJobCities, model.searchjobCategories);
+            
             return View(model);
         }
 
