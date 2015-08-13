@@ -15,7 +15,9 @@ namespace JobSearchingSystem.DAL
                            join c in this.CompanyInfoRepository.Get() on j.RecruiterID equals c.RecruiterID
                            join d in this.JobLevelRepository.Get() on j.JobLevel_ID equals d.JobLevel_ID
                            join f in this.SchoolLevelRepository.Get() on j.MinSchoolLevel_ID equals f.SchoolLevel_ID
-                           where (c.IsVisible == true && (j.IsPublic == true) && (DateTime.Now.CompareTo(j.StartedDate) >= 0) && (DateTime.Now.CompareTo(j.EndedDate) <= 0))
+                           //join g in this.PurchaseJobPackageRepository.Get() on j.PurchaseJobPackageId equals g.PurchaseJobPackageID
+                           //join h in this.JobPackageRepository.Get() on g.JobPackageID equals h.JobPackageID
+                           where ((c.IsVisible == true) && (j.IsPublic == true) && (DateTime.Now.CompareTo(j.StartedDate) >= 0) && (DateTime.Now.CompareTo(j.EndedDate) <= 0))
                            select new JJobItem()
                            {
                                JobID = j.JobID,
@@ -27,7 +29,9 @@ namespace JobSearchingSystem.DAL
                                MaxSalary = j.MaxSalary,
                                PostedDate = j.StartedDate,
                                SchoolLevel = f.LevelNum,
-                               CompanyDescription = c.Description
+                               CompanyDescription = c.Description,
+                               JobView = j.JobView,
+                               purchaseJobPackageId = j.PurchaseJobPackageId
                            }
                  ).ToArray();
 
@@ -73,7 +77,7 @@ namespace JobSearchingSystem.DAL
             
 
 
-            model.jobList = jobList;
+            model.jobList = jobList.Reverse();
         }
      
 
