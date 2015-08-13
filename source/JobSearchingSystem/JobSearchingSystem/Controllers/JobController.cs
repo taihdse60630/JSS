@@ -19,11 +19,8 @@ namespace JobSearchingSystem.Controllers
         }
 
         //Displayed list of job created by recruiter
-        [Authorize(Roles = "Recruiter")]
         public ActionResult OwnList()
         {
-            ViewBag.message = TempData["message"];
-
             string recruiterID = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id; 
             return View(this.jobUnitOfWork.GetJobByRecruiterID(recruiterID));
         }
@@ -43,61 +40,27 @@ namespace JobSearchingSystem.Controllers
             return RedirectToAction("AppliedJobList");
         }
 
-        [Authorize(Roles = "Recruiter")]
         public ActionResult Create()
         {
-            ViewBag.message = TempData["message"];
-
             JobCreateModel jobCreateModel = new JobCreateModel();
-            AspNetUser user = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault();
-            if (user != null && jobUnitOfWork.RecruiterRepository.GetByID(user.Id) != null) 
-            {
-                string UserID = user.Id;
-                jobCreateModel.JobLevelList = jobUnitOfWork.JobLevelRepository.Get(filter: d => d.IsDeleted == false);
-                jobCreateModel.SchoolLevelList = jobUnitOfWork.SchoolLevelRepository.Get(filter: d => d.IsDeleted == false);
-                jobCreateModel.CityList = jobUnitOfWork.CityRepository.Get(filter: city => city.IsDeleted == false);
-                jobCreateModel.CategoryList = jobUnitOfWork.CategoryRepository.Get(category => category.IsDeleted == false);
-                jobCreateModel.JobPackageItemSelectItemList = jobUnitOfWork.PurchaseJobPackageRepository.Get(s => s.RecruiterID == user.Id && DateTime.Now <= s.EndDate && s.IsApproved == true && s.IsDeleted == false)
-                                                                .Join(jobUnitOfWork.JobPackageRepository.Get(), pur => pur.JobPackageID, jp => jp.JobPackageID, (pur, jp) => new JobPackageSelectItem { PurchaseJobPackageID = pur.PurchaseJobPackageID, JobPackageName = jp.Name }).ToList();
-                jobCreateModel.SkillList = jobUnitOfWork.SkillRepository.Get(skill => skill.IsDeleted == false);
-                jobCreateModel.JobInfo.RecruiterID = UserID;
-                return View(jobCreateModel);
-            }
-
-            return RedirectToAction("OwnList");
+            string UserID = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+            jobCreateModel.JobLevelList = jobUnitOfWork.JobLevelRepository.Get(filter: d => d.IsDeleted == false);
+            jobCreateModel.SchoolLevelList = jobUnitOfWork.SchoolLevelRepository.Get(filter: d => d.IsDeleted == false);
+            jobCreateModel.CityList = jobUnitOfWork.CityRepository.Get(filter: city => city.IsDeleted == false);
+            jobCreateModel.CategoryList = jobUnitOfWork.CategoryRepository.Get(category => category.IsDeleted == false);
+            jobCreateModel.SkillList = jobUnitOfWork.SkillRepository.Get(skill => skill.IsDeleted == false);
+            jobCreateModel.JobInfo.RecruiterID = UserID;
+            return View(jobCreateModel);
         }
 
-        [Authorize(Roles = "Recruiter")]
         [HttpPost]
         public ActionResult Create(JobCreateModel model, int PurchaseJobPackageId)
         {
-            AspNetUser user = jobUnitOfWork.AspNetUserRepository.Get(s => s.UserName == User.Identity.Name).FirstOrDefault();
-            if (user != null)
+            if (jobUnitOfWork.CreateJob(model, PurchaseJobPackageId))
             {
-                Recruiter recruiter = jobUnitOfWork.RecruiterRepository.GetByID(user.Id);
-
-                if (recruiter != null)
-                {
-                    bool isCanPost = jobUnitOfWork.CheckIfCanPostJob(recruiter.RecruiterID);
-
-                    if (isCanPost)
-                    {
-                        if (jobUnitOfWork.CreateJob(model, PurchaseJobPackageId))
-                        {
-                            TempData["message"] = "Tạo công việc thành công!";
-                            return RedirectToAction("OwnList");
-                        }
-                        TempData["message"] = "Tạo công việc thất bại!";
-                        return RedirectToAction("Create");
-                    }
-                    TempData["message"] = "Bạn cần phải mua gói công việc trước!";
-                    return RedirectToAction("Create");
-                }
-                TempData["message"] = "Bạn cần phải dùng tài khoản Nhà tuyển dụng!";
-                return RedirectToAction("Create");
+                return RedirectToAction("OwnList");
             }
-            TempData["message"] = "Bạn cần phải đăng ký tài khoản Nhà tuyển dụng!";
-            return RedirectToAction("Create");
+            return View(model);
         }
 
         public ActionResult Find(JFindViewModel model)
