@@ -41,6 +41,32 @@
     <script src="~/Content/vendors/jquery-pace/pace.min.js"></script>
     <script src="~/Content/vendors/holder/holder.js"></script>
 
+
+    <script src="~/Content/js//sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/sweetalert.css">
+    <script>
+        $(document).ready(function () {
+            $('.confirmation').on('click', function () {
+                var id = this.id;
+                swal({
+                    title: "Bạn có muốn xóa",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Có",
+                    cancelButtonText: "Không",
+                    closeOnConfirm: false
+                },
+                function () {
+                    window.location.href = id;
+                    //alert(id);
+                });
+            });
+        });
+
+
+    </script>
     <!--loading validation-->
     @Scripts.Render("~/bundles/jqueryval")
 

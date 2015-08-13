@@ -12,7 +12,27 @@
 
     function DeleteMultiJobPackage() {
         $('form#acceptForm').attr('action', 'DeleteMultiJobPackage');
-        $('form#acceptForm').submit();
+        swal({
+            title: "Bạn có muốn xóa",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
+            closeOnConfirm: false
+        },
+               function () {
+                   var checkboxes = $(input).icheck('data');
+                   if (checkboxes.length == 0) {
+                       alert("dsdsda")
+                   } else {
+                       $('form#acceptForm').submit();
+                   }
+                  
+                   //alert(id);
+               });
+       
     }
 
 </script>
@@ -94,8 +114,8 @@
         <br />
        
         <div class="row">
-            <div class="col-md-2"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 4%;"><i class="fa fa-check"></i> Chấp thuận</button></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger btn-square" onclick="DeleteMultiJobPackage()" style="margin-top: 7%;"><i class="fa fa-times"></i> Xóa</button></div>
+            <div class="col-md-2"><button type="button" class="btn btn-green btn-square" onclick="AcceptMultiJobPackage()" style="margin-top: 7%;"><i class="fa fa-check"></i> Chấp thuận nhiều</button></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-square" onclick="DeleteMultiJobPackage()" style="margin-top:20%;margin-left: 70%;"><i class="fa fa-times"></i> Xóa nhiều</button></div>
             <div class="col-md-9" style="float:right">
                 <nav role="navigation" class="navbar navbar-default" style="width: 90%;margin-left: 12%;">
                     <div class="container-fluid">
@@ -197,7 +217,7 @@
                                             <i class="fa fa-check"></i>&nbsp;
                                           
                                         </a>
-                                        <a href="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" data-toggle="tooltip" title="Xóa" class="btn btn-danger btn-sm">
+                                        <a id="/JobPackage/DeleteJobPackageRequest?purchaseJobPackageID=@item.PurchaseJobPackageID" href="#" data-toggle="tooltip" title="Xóa" class="btn btn-danger btn-sm confirmation">
                                             <i class="fa fa-times"></i>&nbsp;
                                             @*Xóa*@
                                         </a>

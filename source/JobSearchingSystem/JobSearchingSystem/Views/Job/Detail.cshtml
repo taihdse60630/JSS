@@ -184,7 +184,7 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
 
  }
 }   
-<div class="page-content" style="padding: 20px 0px 100px 200px">
+<div class="page-content" style="padding: 20px 0px 100px 130px">
 
 
 
@@ -194,21 +194,31 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
         <div class="media">
             <a href="#" class="pull-left"><img alt="avatar" class="media-object" src="http://images.vietnamworks.com/pictureofcompany/49/10197315.jpg" style="width: 100px; height: 64px;"></a>
 
-            <div class="media-body col-md-8">
+            <div class="media-body col-md-8" style="padding-right:0px">
                 <h3 class="media-heading text-blue" style="font-weight:700">@Model.Job.JobTitle</h3>
                 <h4><strong>@Model.Job.Company</strong></h4>
                 <div>@Model.Job.Address</div>
                 <div style="float:left"><i class="fa fa-building-o"></i> Nơi làm việc:  <div class="text-yellow" style="float:right"> @foreach (var item in Model.Job.JobCities)
                 { <span>@item.Name,</span> }</div></div>
-                <br><div style="float:left"><i class="fa fa-usd"></i> Mức lương: <span class="badge badge-orange">$@Model.Job.MinSalary.ToString().TrimEnd('0').TrimEnd(',') - $@Model.Job.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</span></div>
+                <br>
+                @if ((Model.Job.MinSalary == null) && (Model.Job.MaxSalary == null))
+                {
+                     <div style="float:left"><i class="fa fa-usd"></i> Mức lương: <span class="badge badge-orange">Thỏa thuận</span></div>
+                }
+                else
+                {
+                     <div style="float:left"><i class="fa fa-usd"></i> Mức lương: <span class="badge badge-orange">$@Model.Job.MinSalary.ToString().TrimEnd('0').TrimEnd(',') - $@Model.Job.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</span></div>
+                }
+               
                 <div class="pull-right">
-                    <div class="pull-left small padding-15" style="padding-right:15px">8 Applications</div>
-                    <div class="pull-left small padding-15" style="padding-right:15px">1289 Views</div>
-                    <div class="pull-left small padding-15">Posted 10 days ago</div>
+                    <div class="pull-left small padding-15" style="padding-right:15px">@Model.Job.ApplicantNumber người ứng tuyển</div>
+                    <div class="pull-left small padding-15" style="padding-right:15px">@Model.Job.JobView lượt xem</div>
+                 
+                    
                 </div>
                 <br><br>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-left:0px">
                 <div class="push-top-sm"></div>
                 <div class="action-apply center-block">
                     @if (Model.jobSeeker != null)
@@ -217,13 +227,25 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                     }
                     else if (Model.isLogined)
                     {
-                        <button type="button"  disabled  class="btn btn-success">Nộp đơn</button>
-                    }else
-                    {
-                         <button type="button" onclick="ShowLoginModal()" class="btn btn-success">Nộp đơn</button>
+                        <button type="button" disabled class="btn btn-success">Nộp đơn</button>
                     }
-                   
+                    else
+                    {
+                        <button type="button" onclick="ShowLoginModal()" class="btn btn-success">Nộp đơn</button>
+                    }
+
                 </div>
+                @{
+                    TimeSpan difference = DateTime.Now - Model.Job.PostedDate.GetValueOrDefault();
+                    if (difference.Days == 0)
+                    {
+                        <div class="pull-left small padding-15" style="margin-top:61%">Đăng hôm nay</div>
+                    }
+                    else
+                    {
+                        <div class="pull-left small padding-15" style="margin-top:61%">Đăng @difference.Days ngày trước</div>
+                    }
+                }
             </div>
             <br>
         </div>
@@ -254,28 +276,7 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                         {
                             <button type="button" class="btn btn-green btn-outlined btn-square">@item.SkillTag<i class="fa fa-tags" style="margin-left:5px"></i></button>
                         }
-                    }
-
-                    @*<button type="button" class="btn btn-green btn-outlined btn-square">Software Develop<i class="fa fa-tags" style="margin-left:5px"></i></button>
-                    <button type="button" class="btn btn-green btn-outlined btn-square">Android<i class="fa fa-tags" style="margin-left:5px"></i></button>*@
-
-                        @*<div class="push-top-sm job-tag-add-skill1">
-                            <span class="tag-xs active view-only" title="Android">
-                                <span class="tag-name">Android</span>
-                                <label>
-                                    <i class="fa btn-add fa-check added-tag"></i>
-                                    <input type="checkbox" value="687" hidden="hidden" disabled="disabled">
-                                </label>
-                            </span> <br class="visible-xs visible-sm">
-                            <span class="tag-xs active view-only" title="Software Development">
-                                <span class="tag-name">Software Development</span>
-                                <label>
-                                    <i class="fa btn-add fa-check added-tag" data-original-title="" title=""></i>
-                                    <input type="checkbox" value="356" checked="checked" hidden="hidden" disabled="disabled">
-                                </label>
-                            </span> <br class="visible-xs visible-sm">
-                        </div>*@
-
+                    }                   
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -350,21 +351,23 @@ using (Html.BeginForm("AppliedJob", "Job", FormMethod.Post))
                     <div class="push-top-xs"></div>
                     <div class="list-group">
                         <h5 style="font-weight: 600">Cấp Bậc</h5>
-                        <a href="#" title="@Model.Job.JobLevelName">@Model.Job.JobLevelName</a>
+                        @*<a href="#" title="@Model.Job.JobLevelName">@Model.Job.JobLevelName</a>*@
+                        <label style="color: #428BCA">@Model.Job.JobLevelName</label><br>
                     </div>
 
                     <div class="list-group push-top-xs">
                         <h5 style="font-weight: 600">Ngành Nghề</h5>
                         @foreach (var item in Model.Job.JobCategory)
                         {
-                            <a href="#" title="@item.Name">@item.Name</a><br>
+                            @*<a href="#" title="@item.Name">@item.Name</a>*@
+                        <label style="color: #428BCA">@item.Name</label><br>
                         }
 
                     </div>
-                    <div class="list-group push-top-xs">
+                    @*<div class="list-group push-top-xs">
                         <h5 style="font-weight: 600">Ngôn Ngữ Trình Bày Hồ Sơ</h5>
                         Tiếng Anh
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

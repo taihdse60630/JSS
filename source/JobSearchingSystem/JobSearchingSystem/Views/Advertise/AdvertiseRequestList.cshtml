@@ -7,7 +7,10 @@
 
 
 @model JobSearchingSystem.Models.AdvertiseRequestListViewModels
+
+
 <script>
+
     function AcceptMultiJobPackage() {
         $('form#acceptForm').submit();
     }
@@ -191,7 +194,7 @@
 
                                     </td>
                                     <td>
-                                        <a href="/Advertise/DeleteMultiAdvertise?PurchaseAdsID=@item.PurchaseAdsID" class="btn btn-danger btn-sm">
+                                        <a id="/Advertise/DeleteMultiAdvertise?PurchaseAdsID=@item.PurchaseAdsID" href="#" class="btn btn-danger btn-sm confirmation">
                                             <i class="fa fa-times"></i>&nbsp;
                                             Xóa
                                         </a>

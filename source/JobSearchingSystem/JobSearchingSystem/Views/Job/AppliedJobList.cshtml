@@ -6,11 +6,7 @@
 
 @model JobSearchingSystem.Models.AppliedJobViewModel
 
-<script>
-    function DeleteAppliedJob() {
-        
-    }
-</script>
+
 
 <div class="page-content" style="padding: 20px 100px 20px 220px">
     <div class="col-lg-9 panel panel-default">
@@ -61,7 +57,7 @@
                                 </td>
                               
                         <td>
-                            <a href="/Job/DeleteAppliedRequest?JobID=@item.JobID&&JobSeekerID=@item.JobSeekerID" class="label label-sm label-danger">
+                            <a id="/Job/DeleteAppliedRequest?JobID=@item.JobID&&JobSeekerID=@item.JobSeekerID" href="#" class="label label-sm label-danger confirmation">
                                 <i class="fa fa-times"></i>&nbsp;
                                 Xóa
                             </a></td>

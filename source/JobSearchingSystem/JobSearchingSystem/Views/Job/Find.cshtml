@@ -347,7 +347,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">                                          
-                                            <input id="searchString" name="searchString" value="@Model.searchString" type="text" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan..." class="form-control">
+                                            <input id="searchString" name="searchString" value="@Model.searchString" type="text" placeholder="Nhập chức danh công việc..." class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -368,7 +368,15 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <input id="minSalary" name="minSalary" type="text" placeholder="Mức lương tối thiểu" class="form-control" value="@Model.minSalary">
+                                            @if (Model.minSalary == 0)
+                                            {
+                                                  <input id="minSalary" name="minSalary" type="text" placeholder="Mức lương tối thiểu" class="form-control" >
+                                            }
+                                            else 
+                                            {
+                                                 <input id="minSalary" name="minSalary" type="text" placeholder="Mức lương tối thiểu" class="form-control" value="@Model.minSalary"> 
+                                            }
+                                           
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -574,7 +582,7 @@
                                                     <span style="margin-right: 10px;">
                                                         <i class="fa fa-fw fa-calendar"></i>Posted: @String.Format("{0:d}", item.PostedDate)
                                                     </span>
-                                                    <span><i class="fa fa-fw fa-eye"></i>Views: 2300</span><br />
+                                                    <span><i class="fa fa-fw fa-eye"></i>Views: @item.JobView</span><br />
                                                     @{
                                                                 int i = 1;
                                                                 foreach (var item3 in item.JobSkills)
@@ -614,8 +622,15 @@
                                                     </div><em style="font-size: x-small;">English; Japanese</em>*@
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <strong>$@item.MinSalary.ToString().TrimEnd('0').TrimEnd(',')- $@item.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</strong><br />
-                                                    <a href="#"> <img class="salesLogoImage img-responsive" src="@item.LogoURL" width="88" height="43" alt="Việc làm, tuyển dụng, tìm việc làm, viec lam - Viethung" title="Việc làm tại Viethung" border="0"></a>
+                                                    @if (item.MinSalary == 0 && item.MaxSalary == 0)
+                                                    {
+                                                        <strong>Thỏa thuận</strong><br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <strong>$@item.MinSalary.ToString().TrimEnd('0').TrimEnd(',')- $@item.MaxSalary.ToString().TrimEnd('0').TrimEnd(',')</strong><br />
+                                                    }
+                                                    <a href="#"> <img class="salesLogoImage img-responsive" src="@item.LogoURL" width="88" height="43" border="0"></a>
                                                 </div>
                                             </div>
 
@@ -706,7 +721,7 @@
             </div>
         </div>
 
-        <div id="slider2_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
+        @*<div id="slider2_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 100px; overflow: hidden; ">
 
             <!-- Loading Screen -->
             <div u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -744,7 +759,7 @@
             </div>
             <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
         </div>
-        <!-- Jssor Slider End -->
+        <!-- Jssor Slider End -->*@
     </div>
 
 </div>
