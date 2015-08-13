@@ -12,15 +12,6 @@ namespace JobSearchingSystem.Controllers
     {
         private ProfileUnitOfWork profileUnitOfWork = new ProfileUnitOfWork();
 
-        /*private JobUnitOfWork jobUnitOfWork = new JobUnitOfWork();
-        public ActionResult Matching()
-        {
-            int profileId = 1;
-            int jobId = 6;
-            int result = jobUnitOfWork.Matching(profileId, jobId);
-            return View();
-        }*/
-
         [Authorize(Roles = "Jobseeker")]
         public ActionResult Index()
         {

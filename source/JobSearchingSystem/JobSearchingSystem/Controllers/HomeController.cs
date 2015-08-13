@@ -18,6 +18,8 @@ namespace JobSearchingSystem.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.message = TempData["message"];
+
             HIndexViewModel hIndexViewModel = new HIndexViewModel();
             homeUnitOfWork.getAllJob(hIndexViewModel);
             hIndexViewModel.jobCities = homeUnitOfWork.getAllCities();

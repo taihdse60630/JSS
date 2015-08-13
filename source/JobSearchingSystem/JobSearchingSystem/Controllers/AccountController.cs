@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using JobSearchingSystem.Models;
 using JobSearchingSystem.DAL;
+using System.Net.Mail;
 
 namespace JobSearchingSystem.Controllers
 {
@@ -45,7 +46,7 @@ namespace JobSearchingSystem.Controllers
             }
             else
             {
-                TempData["message"] = "Đăng nhập thất bại";
+                TempData["message"] = "Username hoặc Mật khẩu không đúng";
             }
 
             if (!String.IsNullOrEmpty(returnUrl))
@@ -111,7 +112,7 @@ namespace JobSearchingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangePassword([Bind(Include = "OldPassword, NewPassword, ConfirmPassword")]ManageUserViewModel model)
+        public async Task<ActionResult> ChangePassword([Bind(Include = "OldPassword, NewPassword, ConfirmPassword")]ChangePasswordViewModel model)
         {
             bool hasPassword = HasPassword();
             ViewBag.HasLocalPassword = hasPassword;
@@ -120,11 +121,13 @@ namespace JobSearchingSystem.Controllers
                 IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                 if (result.Succeeded)
                 {
+                    TempData["message"] = "Đổi mật khẩu mới thành công";
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    AddErrors(result);
+                    TempData["message"] = "Quá trình đổi mật khẩu mới gặp lỗi";
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else
@@ -138,19 +141,90 @@ namespace JobSearchingSystem.Controllers
                 IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                 if (result.Succeeded)
                 {
+                    TempData["message"] = "Đổi mật khẩu mới thành công";
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    AddErrors(result);
+                    TempData["message"] = "Quá trình đổi mật khẩu mới gặp lỗi";
+                    return RedirectToAction("Index", "Home");
                 }
             }
-
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public ActionResult LogOff()
+        [AllowAnonymous]
+        public async Task<ActionResult> ResetPassword(string emailAdress)
+        {
+            if (!String.IsNullOrEmpty(emailAdress))
+            {
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var random = new Random();
+                var newPassword = new string(Enumerable.Repeat(chars, 8)
+                                             .Select(s => s[random.Next(s.Length)])
+                                             .ToArray());
+                string userId = "";
+
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+
+                    UnitOfWork unitOfWork = new UnitOfWork();
+                    mail.From = new MailAddress("jss.noreply.email@gmail.com");
+                    Jobseeker jobseeker = unitOfWork.JobseekerRepository.Get(s => s.Email == emailAdress && s.IsDeleted == false).FirstOrDefault();
+                    Recruiter recruiter = unitOfWork.RecruiterRepository.Get(s => s.Email == emailAdress && s.IsDeleted == false).FirstOrDefault();
+                    if (jobseeker != null){
+                        mail.To.Add(jobseeker.Email);
+                        userId = jobseeker.JobSeekerID;
+                    }
+                    else if (recruiter != null)
+                    {
+                        mail.To.Add(recruiter.Email);
+                        userId = recruiter.RecruiterID;
+                    }
+                    else
+                    {
+                        TempData["message"] = "Không tìm thấy Id tài khoản";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    mail.Subject = "[JSS] Thông báo mật khẩu mới";
+                    mail.Body = "Mật khẩu của bạn đã được tạo mới là: " + newPassword;
+
+                    smtpClient.Port = 587;
+                    smtpClient.Credentials = new System.Net.NetworkCredential("jss.noreply.email@gmail.com", "Kogarashi789");
+                    smtpClient.EnableSsl = true;
+
+                    smtpClient.Send(mail);
+                }
+                catch (Exception)
+                {
+                    TempData["message"] = "Quá trình gửi mật khẩu mới gặp lỗi";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                await UserManager.RemovePasswordAsync(userId);
+                IdentityResult result = await UserManager.AddPasswordAsync(userId, newPassword);
+                if (result.Succeeded)
+                {
+                    TempData["message"] = "Bạn hãy vào mail để xem mật khẩu mới";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["message"] = "Quá trình tạo mật khẩu mới gặp lỗi";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                TempData["message"] = "Email trống";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
