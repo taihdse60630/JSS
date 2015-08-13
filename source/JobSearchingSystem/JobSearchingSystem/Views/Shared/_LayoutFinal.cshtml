@@ -156,7 +156,7 @@
                         <div class="forget-password">
                             <h4>Quên mật khẩu?</h4>
 
-                            <p>Nhấn <a href='#' class='btn-forgot-pwd'>vào đây</a> để lấy lại password.</p>
+                            <p>Nhấn <a data-target="#modal-default-resetpassword" data-dismiss="modal" data-toggle="modal">vào đây</a> để lấy lại password.</p>
                         </div>
                         <hr>
                         <p>Chưa có tài khoản? <a data-target="#modal-default-register" data-dismiss="modal" data-toggle="modal">Đăng ký ngay</a></p>
@@ -164,6 +164,33 @@
                 </form>
             </div>
         </div>
+    }
+
+    @using (Html.BeginForm("ResetPassword", "Account", FormMethod.Post))
+    {
+        <!--RESET PASSWORD MODAL-->
+    <div id="modal-default-resetpassword" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true" class="modal fade">
+        <div class="page-form">
+            <form action="~/Account/ResetPassword" method="post" class="form" role="form">
+                <input type="hidden" name="returnUrl" value="Home/Index" />
+                <div class="header-content"><h1 style=" font-family: sans-serif;">Lấy lại mật khẩu</h1></div>
+                <div class="body-content">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-icon right"><i class="fa fa-envelope"></i><input type="text" data-val="true" data-val-email="Email không đúng định dạng." data-val-length="Độ dài Email không được vượt quá 150." data-val-length-max="150" data-val-required="Email không được trống." placeholder="vd: abc@gmail.com" name="emailAdress" class="form-control" value=""></div>
+                        <span class="field-validation-valid ErrorMessage" data-valmsg-for="emailAdress" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="submit" value="ResetPassword" class="btn btn-success">
+                            Gửi Email
+                            &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                        </button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </div>
     }
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post))
@@ -509,19 +536,45 @@
                             <ul class="dropdown-menu dropdown-user pull-right">
                                 @if (User.IsInRole("Jobseeker"))
                                 {
-                                    <li><a href="@Url.Action("List", "Profile")"><i class="fa fa-user"></i>Hồ sơ</a></li>
-                                    <li><a href="@Url.Action("AppliedJobList", "Job")"><i class="fa fa-user"></i>Quản lý tình trạng ứng tuyển</a></li>
+                                    <li><a href="@Url.Action("List", "Profile")"><i class="fa fa-file"></i>Hồ sơ của tôi</a></li>
+                                    <li><a href="@Url.Action("AppliedJobList", "Job")"><i class="fa fa-star"></i>Quản lý tình trạng ứng tuyển</a></li>
                                 }
                                 else if (User.IsInRole("Recruiter"))
                                 {
-                                    <li><a href="@Url.Action("Choose", "JobPackage")"><i class="fa fa-user"></i>Mua gói công việc</a></li>
-                                    <li><a href="@Url.Action("OwnList", "Job")"><i class="fa fa-user"></i>Danh sách công việc</a></li>
+                                    <li><a href="@Url.Action("Choose", "JobPackage")"><i class="fa fa-book"></i>Gói công việc của tôi (chưa làm)</a></li>
+                                    <li><a href="@Url.Action("OwnList", "Job")"><i class="fa fa-list"></i>Danh sách công việc</a></li>
+                                    <li><a href="@Url.Action("Update", "CompanyInfo")"><i class="fa fa-pencil"></i>Sửa thông tin công ty</a></li>
                                 }
-                                <li><a href="@Url.Action("List", "Message")"><i class="fa fa-envelope"></i>Hộp thư<span class="badge badge-danger">3</span></a></li>
+                                else if (User.IsInRole("Staff"))
+                                {
+                                    <li><a href="@Url.Action("JobPackageRequestList", "JobPackage")"><i class="fa fa-book"></i>Quản lý gói công việc</a></li>
+                                    <li><a href="@Url.Action("Index", "CommonList")"><i class="fa fa-book"></i>Quản lý các danh sách</a></li>
+                                    <li><a href="@Url.Action("Index", "Report")"><i class="fa fa-warning"></i>Quản lý báo cáo lỗi</a></li>
+                                }
+                                else if (User.IsInRole("Manager"))
+                                {
+                                    <li><a href="@Url.Action("AdvertiseRequestList", "Advertise")"><i class="fa fa-book"></i>Quản lý quảng cáo</a></li>
+                                    <li><a href="@Url.Action("Index", "Report")"><i class="fa fa-warning"></i>Quản lý báo cáo lỗi</a></li>
+                                }
+                                else if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("List", "Account")"><i class="fa fa-user"></i>Quản lý tài khoản</a></li>
+                                    <li><a href="@Url.Action("Index", "Report")"><i class="fa fa-warning"></i>Quản lý báo cáo lỗi</a></li>
+                                }
+                                <li class="divider"></li>
+                                <li><a href="@Url.Action("List", "Message")"><i class="fa fa-envelope"></i>Hòm thư<!--<span class="badge badge-danger">3</span>--></a></li>
+                                <li class="divider"></li>
+                                <li><a href="@Url.Action("Create", "Topic")"><i class="fa fa-pencil"></i>Tạo bài viết</a></li>
+                                <li><a href="@Url.Action("List", "Topic")"><i class="fa fa-list"></i>Xem các bài viết</a></li>
+                                <li><a href="@Url.Action("OwnList", "Topic")"><i class="fa fa-list"></i>Bài viết của tôi</a></li>
+                                @if (User.IsInRole("Staff"))
+                                {
+                                    <li><a href="@Url.Action("PendingList", "Topic")"><i class="fa fa-list"></i>Quản lý bài viết</a></li>
+                                }
                                 <li class="divider"></li>
                                 <li><a data-target="#modal-default-changepassword" data-toggle="modal"><i class="fa fa-pencil"></i>Đổi mật khẩu</a></li>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "LogOffForm" })) { }
-                                <li><a onclick="document.getElementById('LogOffForm').submit();"><i class="fa fa-key"></i>Log Out</a></li>
+                                @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "LogoutForm" })) { }
+                                <li><a onclick="document.getElementById('LogoutForm').submit();"><i class="fa fa-key"></i>Log Out</a></li>
                             </ul>
                         </li>
                         <!--

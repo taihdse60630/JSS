@@ -133,21 +133,21 @@
                                     </td>
                                     <td>
                                         <button type="button" data-target="#ModalApproveConfirm" data-id="@item.ApplicantID" data-toggle="modal" class="open-ModalApproveConfirm btn btn-success">
-                                            &nbsp;<i class="fa fa-check"></i>
+                                            &nbsp;<i class="fa fa-check" data-toggle="tooltip" title="Duyệt"></i>
                                         </button>
                                         <button type="button" data-target="#ModalDisapproveConfirm" data-id="@item.ApplicantID" data-toggle="modal" class="open-ModalDisapproveConfirm btn btn-danger">
-                                            &nbsp;<i class="fa fa-times"></i>
+                                            &nbsp;<i class="fa fa-times" data-toggle="tooltip" title="Từ chối"></i>
                                         </button>
                                     </td>
                                 }
                                 else if (item.Status == 1)
                                 {
                                     <td>
-                                        <span class="label label-sm label-success">Đã tuyển</span>
+                                        <span class="label label-sm label-success">Đã duyệt</span>
                                     </td>
                                     <td>
                                         <button type="button" data-target="#ModalDisapproveConfirm" data-id="@item.ApplicantID" data-toggle="modal" class="open-ModalDisapproveConfirm btn btn-danger">
-                                            &nbsp;<i class="fa fa-times"></i>
+                                            &nbsp;<i class="fa fa-times" data-toggle="tooltip" title="Từ chối"></i>
                                         </button>
                                     </td>
                                 }
@@ -158,7 +158,7 @@
                                     </td>
                                     <td>
                                         <button type="button" data-target="#ModalApproveConfirm" data-id="@item.ApplicantID" data-toggle="modal" class="open-ModalApproveConfirm btn btn-success">
-                                            &nbsp;<i class="fa fa-check"></i>
+                                            &nbsp;<i class="fa fa-check" data-toggle="tooltip" title="Duyệt"></i>
                                         </button>
                                     </td>
                                 }

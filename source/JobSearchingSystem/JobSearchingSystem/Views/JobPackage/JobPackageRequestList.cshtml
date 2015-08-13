@@ -175,18 +175,18 @@
                                     <td><a href="#" style="color: #428bca;">@item.JobPackageName</a></td>
 
                                     <td>
-                                        @if (item.IsApproved)
+                                        @if (item.IsApproved == null)
                                         {
-                                            <span class="label label-sm label-success">Đã chấp thuận</span>
+                                            <span class="label label-sm label-blue">Chưa xử lý</span>
+                                            
                                         }
-                                        else if (!item.IsApproved)
+                                        else if (item.IsApproved == false)
                                         {
                                             <span class="label label-sm label-danger">Đã từ chối</span>
-
                                         }
                                         else
                                         {
-                                            <span class="label label-sm label-blue">Chưa xử lý</span>
+                                            <span class="label label-sm label-success">Đã chấp thuận</span>
                                         }
 
                                     </td>
