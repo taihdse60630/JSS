@@ -12,8 +12,8 @@ namespace JobSearchingSystem.Models
         //Properties
         public string JobTitle { get; set; }
         public string RecruiterID { get; set; }
-        public string Address { get; set; }
-        public string Company { get; set; }
+        //public string Address { get; set; }
+        //public string Company { get; set; }
         public Nullable<decimal> MinSalary { get; set; }
         public Nullable<decimal> MaxSalary { get; set; }
         public string JobDescription { get; set; }
@@ -29,9 +29,9 @@ namespace JobSearchingSystem.Models
         public JobCoreInformation()
         {
             this.JobTitle = "";
-            this.Address = "";
+            //this.Address = "";
             this.RecruiterID = "1";
-            this.Company = "FPT Software";
+            //this.Company = "FPT Software";
             this.MinSalary = null;
             this.MaxSalary = null;
             this.JobDescription = "";

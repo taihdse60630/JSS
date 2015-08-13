@@ -22,6 +22,8 @@ namespace JobSearchingSystem.Models
         public string Address { get; set; }
         public long JobView { get; set; }
         public int ApplicantNumber { get; set; }
+        public bool isHightLight { get; set; }
+        public int? purchaseJobPackageId { get; set; }
         //[DataType(DataType.Date)]
         public DateTime? PostedDate { get; set; }
         public IEnumerable<JJobCategory> JobCategory { get; set; }
