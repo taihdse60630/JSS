@@ -10,7 +10,7 @@ namespace JobSearchingSystem.Models
         public int PurchaseJobPackageID { get; set; }
         public string RecruiterID { get; set; }
         public int JobPackageID { get; set; }
-        public bool IsApproved { get; set; }
+        public bool? IsApproved { get; set; }
         public string RecruiterName { get; set; }
         public string JobPackageName { get; set; }
     }

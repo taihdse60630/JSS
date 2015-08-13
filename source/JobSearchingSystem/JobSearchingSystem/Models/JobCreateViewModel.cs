@@ -45,6 +45,11 @@ namespace JobSearchingSystem.Models
         }
     }
 
+    public class JobPackageSelectItem {
+        public int PurchaseJobPackageID { get; set; }
+        public string JobPackageName { get; set; }
+    }
+
     //MODEL USED FOR CREATING NEW JOB
     public class JobCreateModel
     {
@@ -55,6 +60,7 @@ namespace JobSearchingSystem.Models
         public IEnumerable<Category> CategoryList { get; set; }
         public IEnumerable<Skill> SkillList { get; set; }
 
+        public List<JobPackageSelectItem> JobPackageItemSelectItemList { get; set; }
         public List<int> CategorySelectList { get; set; }
         public List<int> CitySelectList { get; set; }
         public List<int> SkillSelectList { get; set; }
@@ -68,6 +74,8 @@ namespace JobSearchingSystem.Models
             SkillList = new List<Skill>();
             CityList = new List<City>();
             CategoryList = new List<Category>();
+            JobPackageItemSelectItemList = new List<JobPackageSelectItem>();
+
             CategorySelectList = new List<int>();
             CitySelectList = new List<int>();
             SkillSelectList = new List<int>();

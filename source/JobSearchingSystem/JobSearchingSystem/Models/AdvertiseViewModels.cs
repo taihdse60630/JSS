@@ -16,7 +16,7 @@ namespace JobSearchingSystem.Models
         public string RecruiterID { get; set; }
         public string RecruiterName { get; set; }
         public bool isVisible { get; set; }
-        public bool isApproved { get; set; }
+        public bool? isApproved { get; set; }
         public string AdvertiseName { get; set; }
         public string Position { get; set; }
         public decimal Cost { get; set; }

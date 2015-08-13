@@ -9,7 +9,7 @@ namespace JobSearchingSystem.Models
         public string UserName { get; set; }
     }*/
 
-    public class ManageUserViewModel
+    public class ChangePasswordViewModel
     {
         [Required]
         [DataType(DataType.Password)]
