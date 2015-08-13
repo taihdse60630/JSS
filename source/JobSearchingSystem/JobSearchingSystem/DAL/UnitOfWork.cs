@@ -12,7 +12,6 @@ namespace JobSearchingSystem.DAL
          */
         private GenericRepository<Administrator> administratorRepository;
         private GenericRepository<Advertise> advertiseRepository;
-        private GenericRepository<AlertEmail> alertEmailRepository;
         private GenericRepository<AppliedJob> appliedJobRepository;
         private GenericRepository<AspNetRole> aspNetRoleRepository;
         private GenericRepository<AspNetUser> aspNetUserRepository;
@@ -29,7 +28,6 @@ namespace JobSearchingSystem.DAL
         private GenericRepository<EmploymentHistory> employmentHistoryRepository;
         private GenericRepository<ExpectedCategory> expectedCategoryRepository;
         private GenericRepository<ExpectedCity> expectedCityRepository;
-        private GenericRepository<Guest> guestRepository;
         private GenericRepository<Job> jobRepository;
         private GenericRepository<JobBenefit> jobBenefitRepository;
         private GenericRepository<JobCategory> jobCategoryRepository;
@@ -78,18 +76,6 @@ namespace JobSearchingSystem.DAL
                     this.advertiseRepository = new GenericRepository<Advertise>(context);
                 }
                 return advertiseRepository;
-            }
-        }
-
-        public GenericRepository<AlertEmail> AlertEmailRepository
-        {
-            get
-            {
-                if (this.alertEmailRepository == null)
-                {
-                    this.alertEmailRepository = new GenericRepository<AlertEmail>(context);
-                }
-                return alertEmailRepository;
             }
         }
 
@@ -282,18 +268,6 @@ namespace JobSearchingSystem.DAL
                     this.expectedCityRepository = new GenericRepository<ExpectedCity>(context);
                 }
                 return expectedCityRepository;
-            }
-        }
-
-        public GenericRepository<Guest> GuestRepository
-        {
-            get
-            {
-                if (this.guestRepository == null)
-                {
-                    this.guestRepository = new GenericRepository<Guest>(context);
-                }
-                return guestRepository;
             }
         }
 

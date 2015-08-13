@@ -58,63 +58,63 @@ namespace JobSearchingSystem.DAL
         }
         public IEnumerable<JJobItem> FindJob(String searchString, double minSalary, int schoolLevel, IEnumerable<int> jobCities, IEnumerable<int> jobCategories)
         {
-           
-            var jobList = (from j in this.JobRepository.Get()
-                    join c in this.CompanyInfoRepository.Get() on j.RecruiterID equals c.RecruiterID
-                    join d in this.JobLevelRepository.Get() on j.JobLevel_ID equals d.JobLevel_ID                  
-                    join f in this.SchoolLevelRepository.Get() on j.MinSchoolLevel_ID equals f.SchoolLevel_ID
-                    where (c.IsVisible = true && (j.IsPublic = true) && (j.StartedDate <= DateTime.Now) && (j.EndedDate >= DateTime.Now))
-                    select new JJobItem()
-                    {
-                        JobID = j.JobID,
-                        RecruiterID = j.RecruiterID,
-                        JobTitle = j.JobTitle,
-                        LogoURL = c.LogoURL,
-                        JobLevelName = d.Name,
-                        MinSalary = j.MinSalary,
-                        MaxSalary = j.MaxSalary,
-                        PostedDate = j.StartedDate,                       
-                        SchoolLevel = f.LevelNum,
-                        CompanyDescription = c.Description
-                    }
-                   ).ToArray();
+
+            IEnumerable<JJobItem> jobList = (from j in this.JobRepository.Get()
+                                            join c in this.CompanyInfoRepository.Get() on j.RecruiterID equals c.RecruiterID
+                                            join d in this.JobLevelRepository.Get() on j.JobLevel_ID equals d.JobLevel_ID                  
+                                            join f in this.SchoolLevelRepository.Get() on j.MinSchoolLevel_ID equals f.SchoolLevel_ID
+                                            where (c.IsVisible == true && (j.IsPublic == true) && (j.StartedDate <= DateTime.Now) && (j.EndedDate >= DateTime.Now))
+                                            select new JJobItem()
+                                            {
+                                                JobID = j.JobID,
+                                                RecruiterID = j.RecruiterID,
+                                                JobTitle = j.JobTitle,
+                                                LogoURL = c.LogoURL,
+                                                JobLevelName = d.Name,
+                                                MinSalary = j.MinSalary,
+                                                MaxSalary = j.MaxSalary,
+                                                PostedDate = j.StartedDate,                       
+                                                SchoolLevel = f.LevelNum,
+                                                CompanyDescription = c.Description
+                                            }
+                                           ).AsEnumerable();
             
-            for (int i = 0; i < jobList.Length; i++)
+            for (int i = 0; i < jobList.Count(); i++)
             {
-                jobList[i].JobCities = (from a in this.JobCityRepository.Get()
+                jobList.ElementAt(i).JobCities = (from a in this.JobCityRepository.Get()
                                         join b in this.CityRepository.Get() on a.CityID equals b.CityID
-                                        where a.JobID == jobList[i].JobID
+                                                  where a.JobID == jobList.ElementAt(i).JobID
                                         select new JJobCity()
                                         {
                                             CityID = a.CityID,
                                             Name = b.Name
-                                        }).ToArray();
+                                        }).AsEnumerable();
             }
 
-            for (int i = 0; i < jobList.Length; i++)
+            for (int i = 0; i < jobList.Count(); i++)
             {
-                jobList[i].JobSkills = (from a in this.JobSkillRepository.Get()
+                jobList.ElementAt(i).JobSkills = (from a in this.JobSkillRepository.Get()
                                         join b in this.SkillRepository.Get() on a.Skill_ID equals b.Skill_ID
-                                        where a.JobID == jobList[i].JobID
+                                                  where a.JobID == jobList.ElementAt(i).JobID
                                         select new JJobSkill()
                                         {
                                             JobID = a.JobID,
                                             SkillID = b.Skill_ID,
                                             SkillTag = b.SkillTag
-                                        }).ToArray();
+                                        }).AsEnumerable();
             }
 
-            for (int i = 0; i < jobList.Length; i++)
+            for (int i = 0; i < jobList.Count(); i++)
             {
-                jobList[i].JobCategory = (from a in this.JobCategoryRepository.Get()
+                jobList.ElementAt(i).JobCategory = (from a in this.JobCategoryRepository.Get()
                                         join b in this.CategoryRepository.Get() on a.CategoryID equals b.CategoryID
-                                        where a.JobID == jobList[i].JobID
+                                                    where a.JobID == jobList.ElementAt(i).JobID
                                         select new JJobCategory()
                                         {
                                             JobID = a.JobID,
                                             CategoryID = b.CategoryID,
                                             Name = b.Name
-                                        }).ToArray();
+                                        }).AsEnumerable();
             }
 
              if (!String.IsNullOrEmpty(searchString))
@@ -122,12 +122,13 @@ namespace JobSearchingSystem.DAL
                 jobList = jobList.Where(s => s.JobTitle.ToUpper().Contains(searchString.ToUpper())
                                          && ((double)s.MinSalary >= minSalary) && (s.SchoolLevel <= schoolLevel) && checkCity(jobCities,s.JobCities)
                                          && checkCategories(jobCategories, s.JobCategory)
-                    ).ToArray();
+                    ).AsEnumerable();
             }
              else
              {
                  jobList = jobList.Where(s => ((double)s.MinSalary >= minSalary) && (s.SchoolLevel <= schoolLevel) && checkCity(jobCities, s.JobCities)
-                                         && checkCategories(jobCategories, s.JobCategory)).ToArray();
+                                         && checkCategories(jobCategories, s.JobCategory)
+                                         ).AsEnumerable();
              }
                
             return jobList;
@@ -241,39 +242,53 @@ namespace JobSearchingSystem.DAL
             return ProfileRepository.Get(s => s.JobSeekerID == userID).AsEnumerable();
         }
 
-        public bool AppliedJob(int jobID, int profileID, string userID)
+        public bool ApplyJob(int jobID, int profileID, string userID)
         {
-            int count = AppliedJobRepository.Get().ToArray().Length;
-            AppliedJob appliedJob = new AppliedJob();
-            appliedJob.JobID = jobID;
-            appliedJob.ProfileID = profileID;
-            appliedJob.JobSeekerID = userID;
-            appliedJob.ApplyDate = DateTime.Now;
-            appliedJob.Status = 0;
-            appliedJob.IsDeleted = false;
+            Job job = this.JobRepository.GetByID(jobID);
+            Profile profile = this.ProfileRepository.GetByID(profileID);
+            Jobseeker jobseeker = this.JobseekerRepository.GetByID(userID);
 
-            //try
-            //{
-                AppliedJobRepository.Insert(appliedJob);
-                Save();
-            //}
-            //catch (Exception e)
-            //{
-            //    return false;
-            //}
-       
-            if (count < AppliedJobRepository.Get().ToArray().Length)
+            if (job != null && profile != null && jobseeker != null)
             {
-                return true;
+                AppliedJob appliedJob = this.AppliedJobRepository.Get(s => s.JobID == jobID && s.ProfileID == profileID).FirstOrDefault();
+                if (appliedJob != null)
+                {
+                    if (appliedJob.IsDeleted == true)
+                    {
+                        appliedJob.IsDeleted = false;
+                        this.AppliedJobRepository.Update(appliedJob);
+                        this.Save();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    AppliedJob newAppliedJob = new AppliedJob();
+                    newAppliedJob.JobID = jobID;
+                    newAppliedJob.ProfileID = profileID;
+                    newAppliedJob.JobSeekerID = userID;
+                    newAppliedJob.ApplyDate = DateTime.Now;
+                    newAppliedJob.MatchingPercent = this.Matching(profileID, jobID);
+                    newAppliedJob.Status = 0;
+                    newAppliedJob.IsDeleted = false;
+
+                    this.AppliedJobRepository.Insert(newAppliedJob);
+                    this.Save();
+
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         //Change model information into Topic class
-        public Job Model_Topic(JobCreateModel model)
+        public Job Model_Topic(JobCreateModel model, int PurchaseJobPackageId)
         {
             Job temp = new Job();
             temp.RecruiterID = model.JobInfo.RecruiterID;
@@ -290,15 +305,16 @@ namespace JobSearchingSystem.DAL
             temp.StartedDate = DateTime.Now;
             temp.EndedDate = DateTime.Now.AddDays(30);
             temp.IsPublic = model.JobInfo.IsPublic;
+            temp.PurchaseJobPackageId = PurchaseJobPackageId;
             return temp;
         }
 
         //Create new job
-        public bool CreateJob(JobCreateModel model)
+        public bool CreateJob(JobCreateModel model, int PurchaseJobPackageId)
         {
             //try
             //{
-                this.JobRepository.Insert(Model_Topic(model));
+            this.JobRepository.Insert(Model_Topic(model, PurchaseJobPackageId));
                 this.Save();
 
                 Job temp = this.JobRepository.Get(job => job.RecruiterID == model.JobInfo.RecruiterID && job.JobTitle == model.JobInfo.JobTitle).Last();
@@ -408,6 +424,123 @@ namespace JobSearchingSystem.DAL
             {
                 return false;
             }
+        }
+
+        public bool CheckIfCanPostJob(string recruiterId)
+        {
+            Recruiter recruiter = this.RecruiterRepository.GetByID(recruiterId);
+            if (recruiter != null)
+            {
+                IEnumerable<PurchaseJobPackage> purchaseJobPackage = this.PurchaseJobPackageRepository.Get(s => s.RecruiterID == recruiterId && s.IsApproved == true && DateTime.Now <= s.EndDate && s.IsDeleted == false).AsEnumerable();
+                if (purchaseJobPackage.Count() > 0)
+                {
+                    int jobNumCanPost = 0;
+                    foreach (PurchaseJobPackage item in purchaseJobPackage)
+                    {
+                        jobNumCanPost += this.JobPackageRepository.GetByID(item.JobPackageID).JobNumber;
+                    }
+
+                    int jobNumPosted = this.JobRepository.Get(s => s.RecruiterID == recruiterId && s.PurchaseJobPackageId != null).Count();
+
+                    if (jobNumPosted <= jobNumCanPost - 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public int Matching(int profileId, int jobId)
+        {
+            int matchingPercent = 0;
+
+            Profile profile = this.ProfileRepository.GetByID(profileId);
+            Job job = this.JobRepository.GetByID(jobId);
+
+            if (profile != null && job != null)
+            {
+                // MinSalary - MaxSalary Nullable - 20
+                decimal expectedSalary = profile.ExpectedSalary;
+                decimal? minSalary = job.MinSalary;
+                decimal? maxSalary = job.MaxSalary;
+                if (expectedSalary == 0
+                    || (minSalary != null && maxSalary != null && minSalary <= expectedSalary && expectedSalary <= maxSalary)
+                    || (minSalary != null && maxSalary == null && minSalary <= expectedSalary)
+                    || (minSalary == null && maxSalary != null && expectedSalary <= maxSalary))
+                {
+                    matchingPercent += 20;
+                }
+
+                // JobLevel_ID - 10
+                JobLevel expectedJobLevel = this.JobLevelRepository.GetByID(profile.ExpectedJobLevel_ID);
+                JobLevel jobLevel = this.JobLevelRepository.GetByID(job.JobLevel_ID);
+                if (expectedJobLevel != null && jobLevel != null)
+                {
+                    if (jobLevel.LevelNum >= expectedJobLevel.LevelNum)
+                    {
+                        matchingPercent += 10;
+                    }
+                }
+
+                // MinSchoolLevel_ID - 10
+                SchoolLevel highestSchoolLevel = this.SchoolLevelRepository.GetByID(profile.HighestSchoolLevel_ID);
+                SchoolLevel minSchoolLevel = this.SchoolLevelRepository.GetByID(job.MinSchoolLevel_ID);
+                if (highestSchoolLevel != null && minSchoolLevel != null)
+                {
+                    if (highestSchoolLevel.LevelNum >= minSchoolLevel.LevelNum)
+                    {
+                        matchingPercent += 10;
+                    }
+                }
+
+                // Skill (nhieu TH) - 20
+                IEnumerable<int> jobSkillIdList = this.JobSkillRepository.Get(s => s.JobID == jobId && s.IsDeleted == false).Select(s => s.Skill_ID).AsEnumerable();
+                IEnumerable<int> ownSkillIdList = this.OwnSkillRepository.Get(s => s.JobSeekerID == profile.JobSeekerID && s.IsDeleted == false).Select(s => s.Skill_ID).AsEnumerable();
+                IEnumerable<int> skillIdIntersectList = jobSkillIdList.Intersect(ownSkillIdList);
+                if (jobSkillIdList.Count() == 0)
+                {
+                    matchingPercent += 20;
+                }
+                else if (skillIdIntersectList.Count() > 0)
+                {
+                    matchingPercent += skillIdIntersectList.Count() * 20 / jobSkillIdList.Count();
+                }
+
+                // Benefit (nhieu TH) - 20
+                IEnumerable<int> jobBenefitIdList = this.JobBenefitRepository.Get(s => s.JobID == jobId && s.IsDeleted == false).Select(s => s.BenefitID).AsEnumerable();
+                IEnumerable<int> desiredBenefit = this.DesiredBenefitRepository.Get(s => s.JobSeekerID == profile.JobSeekerID && s.IsDeleted == false).Select(s => s.BenefitID).AsEnumerable();
+                IEnumerable<int> benefitIdIntersectList = jobBenefitIdList.Intersect(desiredBenefit);
+                if (jobBenefitIdList.Count() == 0)
+                {
+                    matchingPercent += 20;
+                }
+                if (benefitIdIntersectList.Count() > 0)
+                {
+                    matchingPercent += benefitIdIntersectList.Count() * 20 / jobBenefitIdList.Count();
+                }
+
+                // Category - 10
+                IEnumerable<int> jobCategoryIdList = this.JobCategoryRepository.Get(s => s.JobID == jobId && s.IsDeleted == false).Select(s => s.CategoryID).AsEnumerable();
+                IEnumerable<int> expectedCategoryIdList = this.ExpectedCategoryRepository.Get(s => s.ProfileID == profileId && s.IsDeleted == false).Select(s => s.CategoryID).AsEnumerable();
+                IEnumerable<int> categoryIdIntersectList = jobCategoryIdList.Intersect(expectedCategoryIdList);
+                if (categoryIdIntersectList.Count() > 0)
+                {
+                    matchingPercent += 10;
+                }
+
+                // City - 10
+                IEnumerable<int> jobCityIdList = this.JobCityRepository.Get(s => s.JobID == jobId && s.IsDeleted == false).Select(s => s.CityID).AsEnumerable();
+                IEnumerable<int> expectedCityIdList = this.ExpectedCityRepository.Get(s => s.ProfileID == profileId && s.IsDeleted == false).Select(s => s.CityID).AsEnumerable();
+                IEnumerable<int> cityIdIntersectList = jobCityIdList.Intersect(expectedCityIdList);
+                if (cityIdIntersectList.Count() > 0)
+                {
+                    matchingPercent += 10;
+                }
+            }
+
+            return matchingPercent;
         }
     }
 }
