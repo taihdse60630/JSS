@@ -262,7 +262,7 @@ namespace JobSearchingSystem.DAL
 
         public IEnumerable<Profile> getJobSeekerProfile(string userID)
         {
-            return ProfileRepository.Get(s => s.JobSeekerID == userID).AsEnumerable();
+            return ProfileRepository.Get(s => s.JobSeekerID == userID && s.IsDeleted == false).AsEnumerable();
         }
 
         public bool ApplyJob(int jobID, int profileID, string userID)
@@ -273,11 +273,12 @@ namespace JobSearchingSystem.DAL
 
             if (job != null && profile != null && jobseeker != null)
             {
-                AppliedJob appliedJob = this.AppliedJobRepository.Get(s => s.JobID == jobID && s.ProfileID == profileID).FirstOrDefault();
+                AppliedJob appliedJob = this.AppliedJobRepository.Get(s => s.JobID == jobID && s.JobSeekerID == userID).FirstOrDefault();
                 if (appliedJob != null)
                 {
                     if (appliedJob.IsDeleted == true)
                     {
+                        appliedJob.ProfileID = profileID;
                         appliedJob.IsDeleted = false;
                         this.AppliedJobRepository.Update(appliedJob);
                         this.Save();
